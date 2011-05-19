@@ -1,0 +1,476 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3E5F0AEC1385B5F400555871 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E5F0AEB1385B5F400555871 /* UIKit.framework */; };
+		3E5F0AEE1385B5F400555871 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E5F0AED1385B5F400555871 /* Foundation.framework */; };
+		3E5F0AF01385B5F400555871 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E5F0AEF1385B5F400555871 /* CoreGraphics.framework */; };
+		3E5F0AF61385B5F500555871 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3E5F0AF41385B5F500555871 /* InfoPlist.strings */; };
+		3E5F0AF91385B5F500555871 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E5F0AF81385B5F500555871 /* main.m */; };
+		3E5F0AFC1385B5F500555871 /* RoskildeAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E5F0AFB1385B5F500555871 /* RoskildeAppDelegate.m */; };
+		3E5F0AFF1385B5F500555871 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E5F0AFD1385B5F500555871 /* MainWindow.xib */; };
+		3E5F0B021385B5F500555871 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E5F0B011385B5F500555871 /* FirstViewController.m */; };
+		3E5F0B051385B5F500555871 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E5F0B041385B5F500555871 /* SecondViewController.m */; };
+		3E5F0B081385B5F500555871 /* FirstView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E5F0B061385B5F500555871 /* FirstView.xib */; };
+		3E5F0B0B1385B5F500555871 /* SecondView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E5F0B091385B5F500555871 /* SecondView.xib */; };
+		3E5F0B121385B5F500555871 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E5F0AEB1385B5F400555871 /* UIKit.framework */; };
+		3E5F0B131385B5F500555871 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E5F0AED1385B5F400555871 /* Foundation.framework */; };
+		3E5F0B141385B5F500555871 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E5F0AEF1385B5F400555871 /* CoreGraphics.framework */; };
+		3E5F0B1C1385B5F600555871 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3E5F0B1A1385B5F600555871 /* InfoPlist.strings */; };
+		3E5F0B1F1385B5F600555871 /* RoskildeTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 3E5F0B1E1385B5F600555871 /* RoskildeTests.h */; };
+		3E5F0B211385B5F600555871 /* RoskildeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E5F0B201385B5F600555871 /* RoskildeTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3E5F0B151385B5F500555871 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3E5F0ADE1385B5F400555871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3E5F0AE61385B5F400555871;
+			remoteInfo = Roskilde;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		3E5F0AE71385B5F400555871 /* Roskilde.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Roskilde.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E5F0AEB1385B5F400555871 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		3E5F0AED1385B5F400555871 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		3E5F0AEF1385B5F400555871 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		3E5F0AF31385B5F500555871 /* Roskilde-Info.plist */ = {isa = PBXFileReference; path = "Roskilde-Info.plist"; sourceTree = "<group>"; };
+		3E5F0AF51385B5F500555871 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3E5F0AF71385B5F500555871 /* Roskilde-Prefix.pch */ = {isa = PBXFileReference; path = "Roskilde-Prefix.pch"; sourceTree = "<group>"; };
+		3E5F0AF81385B5F500555871 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		3E5F0AFA1385B5F500555871 /* RoskildeAppDelegate.h */ = {isa = PBXFileReference; path = RoskildeAppDelegate.h; sourceTree = "<group>"; };
+		3E5F0AFB1385B5F500555871 /* RoskildeAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RoskildeAppDelegate.m; sourceTree = "<group>"; };
+		3E5F0AFE1385B5F500555871 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		3E5F0B001385B5F500555871 /* FirstViewController.h */ = {isa = PBXFileReference; path = FirstViewController.h; sourceTree = "<group>"; };
+		3E5F0B011385B5F500555871 /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
+		3E5F0B031385B5F500555871 /* SecondViewController.h */ = {isa = PBXFileReference; path = SecondViewController.h; sourceTree = "<group>"; };
+		3E5F0B041385B5F500555871 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		3E5F0B071385B5F500555871 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/FirstView.xib; sourceTree = "<group>"; };
+		3E5F0B0A1385B5F500555871 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SecondView.xib; sourceTree = "<group>"; };
+		3E5F0B111385B5F500555871 /* RoskildeTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RoskildeTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E5F0B191385B5F600555871 /* RoskildeTests-Info.plist */ = {isa = PBXFileReference; path = "RoskildeTests-Info.plist"; sourceTree = "<group>"; };
+		3E5F0B1B1385B5F600555871 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3E5F0B1D1385B5F600555871 /* RoskildeTests-Prefix.pch */ = {isa = PBXFileReference; path = "RoskildeTests-Prefix.pch"; sourceTree = "<group>"; };
+		3E5F0B1E1385B5F600555871 /* RoskildeTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoskildeTests.h; sourceTree = "<group>"; };
+		3E5F0B201385B5F600555871 /* RoskildeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RoskildeTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3E5F0AE41385B5F400555871 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E5F0AEC1385B5F400555871 /* UIKit.framework in Frameworks */,
+				3E5F0AEE1385B5F400555871 /* Foundation.framework in Frameworks */,
+				3E5F0AF01385B5F400555871 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3E5F0B0D1385B5F500555871 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E5F0B121385B5F500555871 /* UIKit.framework in Frameworks */,
+				3E5F0B131385B5F500555871 /* Foundation.framework in Frameworks */,
+				3E5F0B141385B5F500555871 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3E5F0ADC1385B5F400555871 = {
+			isa = PBXGroup;
+			children = (
+				3E5F0AF11385B5F400555871 /* Roskilde */,
+				3E5F0B171385B5F500555871 /* RoskildeTests */,
+				3E5F0AEA1385B5F400555871 /* Frameworks */,
+				3E5F0AE81385B5F400555871 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3E5F0AE81385B5F400555871 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3E5F0AE71385B5F400555871 /* Roskilde.app */,
+				3E5F0B111385B5F500555871 /* RoskildeTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3E5F0AEA1385B5F400555871 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3E5F0AEB1385B5F400555871 /* UIKit.framework */,
+				3E5F0AED1385B5F400555871 /* Foundation.framework */,
+				3E5F0AEF1385B5F400555871 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3E5F0AF11385B5F400555871 /* Roskilde */ = {
+			isa = PBXGroup;
+			children = (
+				3E5F0AFA1385B5F500555871 /* RoskildeAppDelegate.h */,
+				3E5F0AFB1385B5F500555871 /* RoskildeAppDelegate.m */,
+				3E5F0AFD1385B5F500555871 /* MainWindow.xib */,
+				3E5F0B001385B5F500555871 /* FirstViewController.h */,
+				3E5F0B011385B5F500555871 /* FirstViewController.m */,
+				3E5F0B031385B5F500555871 /* SecondViewController.h */,
+				3E5F0B041385B5F500555871 /* SecondViewController.m */,
+				3E5F0B061385B5F500555871 /* FirstView.xib */,
+				3E5F0B091385B5F500555871 /* SecondView.xib */,
+				3E5F0AF21385B5F500555871 /* Supporting Files */,
+			);
+			path = Roskilde;
+			sourceTree = "<group>";
+		};
+		3E5F0AF21385B5F500555871 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3E5F0AF31385B5F500555871 /* Roskilde-Info.plist */,
+				3E5F0AF41385B5F500555871 /* InfoPlist.strings */,
+				3E5F0AF71385B5F500555871 /* Roskilde-Prefix.pch */,
+				3E5F0AF81385B5F500555871 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3E5F0B171385B5F500555871 /* RoskildeTests */ = {
+			isa = PBXGroup;
+			children = (
+				3E5F0B1E1385B5F600555871 /* RoskildeTests.h */,
+				3E5F0B201385B5F600555871 /* RoskildeTests.m */,
+				3E5F0B181385B5F600555871 /* Supporting Files */,
+			);
+			path = RoskildeTests;
+			sourceTree = "<group>";
+		};
+		3E5F0B181385B5F600555871 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3E5F0B191385B5F600555871 /* RoskildeTests-Info.plist */,
+				3E5F0B1A1385B5F600555871 /* InfoPlist.strings */,
+				3E5F0B1D1385B5F600555871 /* RoskildeTests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3E5F0AE61385B5F400555871 /* Roskilde */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3E5F0B241385B5F600555871 /* Build configuration list for PBXNativeTarget "Roskilde" */;
+			buildPhases = (
+				3E5F0AE31385B5F400555871 /* Sources */,
+				3E5F0AE41385B5F400555871 /* Frameworks */,
+				3E5F0AE51385B5F400555871 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Roskilde;
+			productName = Roskilde;
+			productReference = 3E5F0AE71385B5F400555871 /* Roskilde.app */;
+			productType = "com.apple.product-type.application";
+		};
+		3E5F0B101385B5F500555871 /* RoskildeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3E5F0B271385B5F600555871 /* Build configuration list for PBXNativeTarget "RoskildeTests" */;
+			buildPhases = (
+				3E5F0B0C1385B5F500555871 /* Sources */,
+				3E5F0B0D1385B5F500555871 /* Frameworks */,
+				3E5F0B0E1385B5F500555871 /* Resources */,
+				3E5F0B0F1385B5F500555871 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3E5F0B161385B5F500555871 /* PBXTargetDependency */,
+			);
+			name = RoskildeTests;
+			productName = RoskildeTests;
+			productReference = 3E5F0B111385B5F500555871 /* RoskildeTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3E5F0ADE1385B5F400555871 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 3E5F0AE11385B5F400555871 /* Build configuration list for PBXProject "Roskilde" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 3E5F0ADC1385B5F400555871;
+			productRefGroup = 3E5F0AE81385B5F400555871 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3E5F0AE61385B5F400555871 /* Roskilde */,
+				3E5F0B101385B5F500555871 /* RoskildeTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3E5F0AE51385B5F400555871 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E5F0AF61385B5F500555871 /* InfoPlist.strings in Resources */,
+				3E5F0AFF1385B5F500555871 /* MainWindow.xib in Resources */,
+				3E5F0B081385B5F500555871 /* FirstView.xib in Resources */,
+				3E5F0B0B1385B5F500555871 /* SecondView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3E5F0B0E1385B5F500555871 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E5F0B1C1385B5F600555871 /* InfoPlist.strings in Resources */,
+				3E5F0B1F1385B5F600555871 /* RoskildeTests.h in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3E5F0B0F1385B5F500555871 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3E5F0AE31385B5F400555871 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E5F0AF91385B5F500555871 /* main.m in Sources */,
+				3E5F0AFC1385B5F500555871 /* RoskildeAppDelegate.m in Sources */,
+				3E5F0B021385B5F500555871 /* FirstViewController.m in Sources */,
+				3E5F0B051385B5F500555871 /* SecondViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3E5F0B0C1385B5F500555871 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E5F0B211385B5F600555871 /* RoskildeTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3E5F0B161385B5F500555871 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3E5F0AE61385B5F400555871 /* Roskilde */;
+			targetProxy = 3E5F0B151385B5F500555871 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		3E5F0AF41385B5F500555871 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3E5F0AF51385B5F500555871 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		3E5F0AFD1385B5F500555871 /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3E5F0AFE1385B5F500555871 /* en */,
+			);
+			name = MainWindow.xib;
+			sourceTree = "<group>";
+		};
+		3E5F0B061385B5F500555871 /* FirstView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3E5F0B071385B5F500555871 /* en */,
+			);
+			name = FirstView.xib;
+			sourceTree = "<group>";
+		};
+		3E5F0B091385B5F500555871 /* SecondView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3E5F0B0A1385B5F500555871 /* en */,
+			);
+			name = SecondView.xib;
+			sourceTree = "<group>";
+		};
+		3E5F0B1A1385B5F600555871 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3E5F0B1B1385B5F600555871 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		3E5F0B221385B5F600555871 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		3E5F0B231385B5F600555871 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		3E5F0B251385B5F600555871 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Roskilde/Roskilde-Prefix.pch";
+				INFOPLIST_FILE = "Roskilde/Roskilde-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		3E5F0B261385B5F600555871 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Roskilde/Roskilde-Prefix.pch";
+				INFOPLIST_FILE = "Roskilde/Roskilde-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		3E5F0B281385B5F600555871 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Roskilde.app/Roskilde";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RoskildeTests/RoskildeTests-Prefix.pch";
+				INFOPLIST_FILE = "RoskildeTests/RoskildeTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-framework",
+					SenTestingKit,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		3E5F0B291385B5F600555871 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Roskilde.app/Roskilde";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RoskildeTests/RoskildeTests-Prefix.pch";
+				INFOPLIST_FILE = "RoskildeTests/RoskildeTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-framework",
+					SenTestingKit,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3E5F0AE11385B5F400555871 /* Build configuration list for PBXProject "Roskilde" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3E5F0B221385B5F600555871 /* Debug */,
+				3E5F0B231385B5F600555871 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3E5F0B241385B5F600555871 /* Build configuration list for PBXNativeTarget "Roskilde" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3E5F0B251385B5F600555871 /* Debug */,
+				3E5F0B261385B5F600555871 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		3E5F0B271385B5F600555871 /* Build configuration list for PBXNativeTarget "RoskildeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3E5F0B281385B5F600555871 /* Debug */,
+				3E5F0B291385B5F600555871 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3E5F0ADE1385B5F400555871 /* Project object */;
+}

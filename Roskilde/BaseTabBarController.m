@@ -12,7 +12,6 @@
 
 @implementation BaseTabBarController
 
-//@synthesize overlayViewController;
 
 // Create a view controller and setup it's tab bar item with a title and image
 -(UIViewController*) viewControllerWithTabTitle:(NSString*) title image:(UIImage*)image
@@ -26,28 +25,22 @@
 -(void) addCenterButtonWithImage:(UIImage*)buttonImage highlightImage:(UIImage*)highlightImage
 {
 	UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
-	button.frame = CGRectMake(0.0, 0.0, buttonImage.size.width, buttonImage.size.height);
+	button.frame = CGRectMake(127.0, 2.0, buttonImage.size.width, buttonImage.size.height);
 	[button setBackgroundImage:buttonImage forState:UIControlStateNormal];
 	[button setBackgroundImage:highlightImage forState:UIControlStateHighlighted];
 	[button addTarget:self action:@selector(cameraButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 	
-	CGFloat heightDifference = buttonImage.size.height - self.tabBar.frame.size.height;
-	if (heightDifference < 0)
-		button.center = self.tabBar.center;
-	else
-	{
-		CGPoint center = self.tabBar.center;
-		center.y = center.y - heightDifference/2.0;
-		button.center = center;
-	}
+//	CGFloat heightDifference = buttonImage.size.height - self.tabBar.frame.size.height;
+//	if (heightDifference < 0)
+//		button.center = self.tabBar.center;
+//	else
+//	{
+//		CGPoint center = self.tabBar.center;
+//		center.y = center.y - heightDifference/2.0;
+//		button.center = center;
+//	}
 	
-	[self.view addSubview:button];
-	
-//	self.overlayViewController =
-//	[[[OverlayViewController alloc] initWithNibName:@"OverlayViewController" bundle:nil] autorelease];
-//	
-//    // as a delegate we will be notified when pictures are taken and when to dismiss the image picker
-//    self.overlayViewController.delegate = self;
+	[self.tabBar addSubview:button];
 }
 
 

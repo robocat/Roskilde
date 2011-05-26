@@ -7,12 +7,14 @@
 //
 
 #import "RFPictureTableViewController.h"
+#import "RKCustomNavigationBar.h"
 #import "EntryTableViewCell.h"
 #import "ASIHTTPRequest.h"
 #import "ASIDownloadCache.h"
 #import "JSONKit.h"
 #import "RFPictureDetailTableViewController.h"
 #import "AuthorHeaderView.h"
+
 
 
 @implementation RFPictureTableViewController
@@ -73,6 +75,11 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+	
+	// Custom navbar
+	RKCustomNavigationBar *navBar = (RKCustomNavigationBar*)self.navigationController.navigationBar;
+	[navBar setBackgroundWith:[UIImage imageNamed:@"navbar.png"]];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -99,9 +106,7 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-	LOG_EXPR([self.entries count]);
-	
+{	
     return [self.entries count];
 }
 
@@ -247,6 +252,7 @@
 {	
 	RFPictureDetailTableViewController *detailViewController = [[RFPictureDetailTableViewController alloc] initWithNibName:@"RFPictureDetailTableViewController" bundle:nil];
 	detailViewController.entry = [self.entries objectAtIndex:indexPath.section];
+	detailViewController.hidesBottomBarWhenPushed = YES;
 	[self.navigationController pushViewController:detailViewController animated:YES];
 	[detailViewController release];
 }

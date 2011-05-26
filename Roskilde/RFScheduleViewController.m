@@ -60,11 +60,11 @@
 	self.title = NSLocalizedString(@"Schedule", @"");
 	
 	self.timelineScrollView.decelerationRate = UIScrollViewDecelerationRateFast;
-	self.timelineScrollView.contentSize = CGSizeMake(1031.0f, 296.0f);
+	self.timelineScrollView.contentSize = CGSizeMake(1212.0f, 296.0f);
 	
 	RFDateScrollerViewController *scroller = [[RFDateScrollerViewController alloc] initWithNibName:@"RFDateScrollerViewController" bundle:nil];
 	scroller.delegate = self;
-	scroller.view.frame = CGRectMake(0.0f, 67.0f, 320.0f, 27.0f);
+	scroller.view.frame = CGRectMake(0.0f, 66.0f, 320.0f, 27.0f);
 	self.dateScroller = scroller;
 	[self.view addSubview:scroller.view];
 	[scroller release];

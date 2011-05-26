@@ -1,6 +1,6 @@
 //
 //  RKCustomNavigationBar.m
-//  XKamera
+//  Robokit
 //
 //  Created by Willi Wu on 20/02/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.

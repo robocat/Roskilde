@@ -7,11 +7,15 @@
 //
 
 #import "RFPictureDetailTableViewController.h"
+#import "RKCustomNavigationBar.h"
+#import "ZoomingViewController.h"
+
 
 
 @implementation RFPictureDetailTableViewController
 
 @synthesize entry = _entry;
+@synthesize zoomingView;
 
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -26,6 +30,8 @@
 - (void)dealloc
 {
 	self.entry = nil;
+	[zoomingViewController release];
+	zoomingViewController = nil;
 	
     [super dealloc];
 }
@@ -49,6 +55,24 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+	
+	// Custom navbar
+	RKCustomNavigationBar *navBar = (RKCustomNavigationBar*)self.navigationController.navigationBar;
+	[navBar clearBackground];
+	
+	self.title = @"Picture";
+	
+	
+	zoomingViewController = [[ZoomingViewController alloc] init];
+	zoomingViewController.view = zoomingView;
+	
+//	CGRect zoomingViewFrame = zoomingViewController.view.frame;
+//	CGRect ownBounds = self.view.bounds;
+//	zoomingViewController.view.frame = CGRectMake(ownBounds.origin.x + 0.5 * (ownBounds.size.width - zoomingViewFrame.size.width),
+//												  ownBounds.origin.y + 0.5 * (ownBounds.size.height - zoomingViewFrame.size.height),
+//												  zoomingViewFrame.size.width,
+//												  zoomingViewFrame.size.height);
+	
 }
 
 - (void)viewDidUnload
@@ -56,6 +80,8 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+	
+	self.zoomingView = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -71,6 +97,8 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+	
+	[zoomingViewController dismissFullscreenView];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -84,34 +112,58 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	if (indexPath.row == 0)
+	{
+		return 300.0;
+	}
+	else {
+		return 100.0;
+	}
+}
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return 10;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-    }
-    
-    // Configure the cell...
-    
-    return cell;
+	static NSString *FirstCellIdentifier = @"FirstCell";
+	static NSString *CellIdentifier = @"Cell";
+
+	UITableViewCell *cell = nil;
+	
+	if (indexPath.row == 0)
+	{
+		cell = [tableView dequeueReusableCellWithIdentifier:FirstCellIdentifier];
+		if (cell == nil) {
+			cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:FirstCellIdentifier] autorelease];
+			[cell addSubview:self.zoomingView];
+		}
+	}
+	else
+	{
+		cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+		if (cell == nil) {
+			cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+		}
+	}
+	
+	// Configure the cell...
+
+	return cell;
 }
 
 /*

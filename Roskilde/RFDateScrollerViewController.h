@@ -14,13 +14,13 @@
 @interface RFDateScrollerViewController : UIViewController <UIScrollViewDelegate> {
 	id delegate;
 	
-	IBOutlet UIScrollView	*_scrollView;
+	UIScrollView	*_scrollView;
 	NSUInteger currentPageNumber;
 }
 
 @property (nonatomic, assign) id<RFDateScrollerViewControllerDelegate> delegate;
 @property (nonatomic, assign) NSUInteger currentPageNumber;
-
+@property (nonatomic, retain) IBOutlet UIScrollView	*_scrollView;
 
 - (void)changePage:(NSString *)date;
 

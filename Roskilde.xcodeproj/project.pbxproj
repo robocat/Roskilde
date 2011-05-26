@@ -12,6 +12,8 @@
 		3E53C46D138DBC3F00A0E95C /* RFPassThroughView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E53C46A138DBC3F00A0E95C /* RFPassThroughView.m */; };
 		3E53C470138DC1B300A0E95C /* timeline_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E53C46E138DC1B300A0E95C /* timeline_bg.png */; };
 		3E53C471138DC1B300A0E95C /* timeline_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E53C46F138DC1B300A0E95C /* timeline_bg@2x.png */; };
+		3E53C486138E403600A0E95C /* GradientBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E53C483138E403600A0E95C /* GradientBackgroundView.m */; };
+		3E53C487138E403600A0E95C /* ZoomingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E53C485138E403600A0E95C /* ZoomingViewController.m */; };
 		3E54C498138BE6B400C47A88 /* RFGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E54C497138BE6B400C47A88 /* RFGlobal.m */; };
 		3E5F0AEC1385B5F400555871 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E5F0AEB1385B5F400555871 /* UIKit.framework */; };
 		3E5F0AEE1385B5F400555871 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E5F0AED1385B5F400555871 /* Foundation.framework */; };
@@ -295,6 +297,10 @@
 		3E53C46A138DBC3F00A0E95C /* RFPassThroughView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFPassThroughView.m; sourceTree = "<group>"; };
 		3E53C46E138DC1B300A0E95C /* timeline_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = timeline_bg.png; sourceTree = "<group>"; };
 		3E53C46F138DC1B300A0E95C /* timeline_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "timeline_bg@2x.png"; sourceTree = "<group>"; };
+		3E53C482138E403600A0E95C /* GradientBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientBackgroundView.h; sourceTree = "<group>"; };
+		3E53C483138E403600A0E95C /* GradientBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientBackgroundView.m; sourceTree = "<group>"; };
+		3E53C484138E403600A0E95C /* ZoomingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZoomingViewController.h; sourceTree = "<group>"; };
+		3E53C485138E403600A0E95C /* ZoomingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZoomingViewController.m; sourceTree = "<group>"; };
 		3E54C496138BE6B400C47A88 /* RFGlobal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFGlobal.h; sourceTree = "<group>"; };
 		3E54C497138BE6B400C47A88 /* RFGlobal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFGlobal.m; sourceTree = "<group>"; };
 		3E5F0AE71385B5F400555871 /* Roskilde.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Roskilde.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -585,18 +591,18 @@
 		3EF92F88138D7E2F00AFFC2D /* DDKCustomTabbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDKCustomTabbar.m; sourceTree = "<group>"; };
 		3EF92F89138D7E2F00AFFC2D /* DDKCustomTabButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDKCustomTabButton.h; sourceTree = "<group>"; };
 		3EF92F8A138D7E2F00AFFC2D /* DDKCustomTabButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDKCustomTabButton.m; sourceTree = "<group>"; };
-		3EF92F8F138D80E300AFFC2D /* CamDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CamDevice.h; sourceTree = "<group>"; };
-		3EF92F90138D80E300AFFC2D /* CamDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CamDevice.m; sourceTree = "<group>"; };
-		3EF92F91138D80E300AFFC2D /* CamPreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CamPreviewController.h; sourceTree = "<group>"; };
-		3EF92F92138D80E300AFFC2D /* CamPreviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CamPreviewController.m; sourceTree = "<group>"; };
-		3EF92F93138D80E300AFFC2D /* CamPreviewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CamPreviewController.xib; sourceTree = "<group>"; };
-		3EF92F94138D80E300AFFC2D /* CamThumbnailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CamThumbnailView.h; sourceTree = "<group>"; };
-		3EF92F95138D80E300AFFC2D /* CamThumbnailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CamThumbnailView.m; sourceTree = "<group>"; };
-		3EF92F96138D80E300AFFC2D /* CamView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CamView.h; sourceTree = "<group>"; };
-		3EF92F97138D80E300AFFC2D /* CamView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CamView.m; sourceTree = "<group>"; };
-		3EF92F98138D80E300AFFC2D /* CamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CamViewController.h; sourceTree = "<group>"; };
-		3EF92F99138D80E300AFFC2D /* CamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CamViewController.m; sourceTree = "<group>"; };
-		3EF92F9A138D80E300AFFC2D /* CamViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CamViewController.xib; sourceTree = "<group>"; };
+		3EF92F8F138D80E300AFFC2D /* CamDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CamDevice.h; path = Cam/CamDevice.h; sourceTree = "<group>"; };
+		3EF92F90138D80E300AFFC2D /* CamDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CamDevice.m; path = Cam/CamDevice.m; sourceTree = "<group>"; };
+		3EF92F91138D80E300AFFC2D /* CamPreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CamPreviewController.h; path = Cam/CamPreviewController.h; sourceTree = "<group>"; };
+		3EF92F92138D80E300AFFC2D /* CamPreviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CamPreviewController.m; path = Cam/CamPreviewController.m; sourceTree = "<group>"; };
+		3EF92F93138D80E300AFFC2D /* CamPreviewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CamPreviewController.xib; path = Cam/CamPreviewController.xib; sourceTree = "<group>"; };
+		3EF92F94138D80E300AFFC2D /* CamThumbnailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CamThumbnailView.h; path = Cam/CamThumbnailView.h; sourceTree = "<group>"; };
+		3EF92F95138D80E300AFFC2D /* CamThumbnailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CamThumbnailView.m; path = Cam/CamThumbnailView.m; sourceTree = "<group>"; };
+		3EF92F96138D80E300AFFC2D /* CamView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CamView.h; path = Cam/CamView.h; sourceTree = "<group>"; };
+		3EF92F97138D80E300AFFC2D /* CamView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CamView.m; path = Cam/CamView.m; sourceTree = "<group>"; };
+		3EF92F98138D80E300AFFC2D /* CamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CamViewController.h; path = Cam/CamViewController.h; sourceTree = "<group>"; };
+		3EF92F99138D80E300AFFC2D /* CamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CamViewController.m; path = Cam/CamViewController.m; sourceTree = "<group>"; };
+		3EF92F9A138D80E300AFFC2D /* CamViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CamViewController.xib; path = Cam/CamViewController.xib; sourceTree = "<group>"; };
 		3EF92FA2138D80FB00AFFC2D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		3EF92FA4138D810600AFFC2D /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		3EF92FA6138D810B00AFFC2D /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
@@ -906,7 +912,18 @@
 		3EEF29C8138A92FA00A8E34A /* Camera */ = {
 			isa = PBXGroup;
 			children = (
-				3EF92F8E138D80E300AFFC2D /* Cam */,
+				3EF92F8F138D80E300AFFC2D /* CamDevice.h */,
+				3EF92F90138D80E300AFFC2D /* CamDevice.m */,
+				3EF92F91138D80E300AFFC2D /* CamPreviewController.h */,
+				3EF92F92138D80E300AFFC2D /* CamPreviewController.m */,
+				3EF92F93138D80E300AFFC2D /* CamPreviewController.xib */,
+				3EF92F94138D80E300AFFC2D /* CamThumbnailView.h */,
+				3EF92F95138D80E300AFFC2D /* CamThumbnailView.m */,
+				3EF92F96138D80E300AFFC2D /* CamView.h */,
+				3EF92F97138D80E300AFFC2D /* CamView.m */,
+				3EF92F98138D80E300AFFC2D /* CamViewController.h */,
+				3EF92F99138D80E300AFFC2D /* CamViewController.m */,
+				3EF92F9A138D80E300AFFC2D /* CamViewController.xib */,
 			);
 			name = Camera;
 			sourceTree = "<group>";
@@ -962,6 +979,10 @@
 		3EEF29DA138A955400A8E34A /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				3E53C482138E403600A0E95C /* GradientBackgroundView.h */,
+				3E53C483138E403600A0E95C /* GradientBackgroundView.m */,
+				3E53C484138E403600A0E95C /* ZoomingViewController.h */,
+				3E53C485138E403600A0E95C /* ZoomingViewController.m */,
 				3EEF29DB138A955400A8E34A /* RKCustomNavigationBar.h */,
 				3EEF29DC138A955400A8E34A /* RKCustomNavigationBar.m */,
 				3EEF29DD138A955400A8E34A /* RKTableViewCell.h */,
@@ -1241,25 +1262,6 @@
 				3EF92F8A138D7E2F00AFFC2D /* DDKCustomTabButton.m */,
 			);
 			path = DDKCustomTabbar;
-			sourceTree = "<group>";
-		};
-		3EF92F8E138D80E300AFFC2D /* Cam */ = {
-			isa = PBXGroup;
-			children = (
-				3EF92F8F138D80E300AFFC2D /* CamDevice.h */,
-				3EF92F90138D80E300AFFC2D /* CamDevice.m */,
-				3EF92F91138D80E300AFFC2D /* CamPreviewController.h */,
-				3EF92F92138D80E300AFFC2D /* CamPreviewController.m */,
-				3EF92F93138D80E300AFFC2D /* CamPreviewController.xib */,
-				3EF92F94138D80E300AFFC2D /* CamThumbnailView.h */,
-				3EF92F95138D80E300AFFC2D /* CamThumbnailView.m */,
-				3EF92F96138D80E300AFFC2D /* CamView.h */,
-				3EF92F97138D80E300AFFC2D /* CamView.m */,
-				3EF92F98138D80E300AFFC2D /* CamViewController.h */,
-				3EF92F99138D80E300AFFC2D /* CamViewController.m */,
-				3EF92F9A138D80E300AFFC2D /* CamViewController.xib */,
-			);
-			path = Cam;
 			sourceTree = "<group>";
 		};
 		3EF92FAE138D819F00AFFC2D /* UIImageHelper */ = {
@@ -1645,6 +1647,8 @@
 				3EF92FD4138D903A00AFFC2D /* BaseViewController.m in Sources */,
 				3E53C46B138DBC3F00A0E95C /* RFDateScrollerViewController.m in Sources */,
 				3E53C46D138DBC3F00A0E95C /* RFPassThroughView.m in Sources */,
+				3E53C486138E403600A0E95C /* GradientBackgroundView.m in Sources */,
+				3E53C487138E403600A0E95C /* ZoomingViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

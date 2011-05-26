@@ -9,12 +9,9 @@
 #import <Foundation/Foundation.h>
 
 
-@interface BaseTabBarController : UITabBarController { //<OverlayViewControllerDelegate>
-//	OverlayViewController *overlayViewController;
+@interface BaseTabBarController : UITabBarController {
 }
 
-
-//@property (nonatomic, retain) OverlayViewController *overlayViewController;
 
 // Create a view controller and setup it's tab bar item with a title and image
 -(UIViewController*) viewControllerWithTabTitle:(NSString*)title image:(UIImage*)image;

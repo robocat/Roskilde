@@ -7,9 +7,12 @@
 //
 
 #import "RFCreateProfileViewController.h"
+#import <QuartzCore/QuartzCore.h>
+#import "RFLoginViewController.h"
 
 
 @implementation RFCreateProfileViewController
+@synthesize loginButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -22,6 +25,7 @@
 
 - (void)dealloc
 {
+	[loginButton release];
     [super dealloc];
 }
 
@@ -37,12 +41,17 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+	[super viewDidLoad];
+	// Do any additional setup after loading the view from its nib.
+
+	self.title = @"Create Profile";
+	
+	loginButton.layer.cornerRadius = 8;
 }
 
 - (void)viewDidUnload
 {
+	[self setLoginButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -52,6 +61,12 @@
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (IBAction) loginButtonPressed:(id)sender {
+	RFLoginViewController *controller = [[RFLoginViewController alloc] initWithNibName:@"RFLoginViewController" bundle:nil];
+	[self.navigationController pushViewController:controller animated:YES];
+	[controller release];
 }
 
 @end

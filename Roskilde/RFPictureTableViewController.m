@@ -14,7 +14,7 @@
 #import "JSONKit.h"
 #import "RFPictureDetailTableViewController.h"
 #import "NSDateHelper.h"
-
+#import "RFCreateProfileViewController.h"
 
 
 @implementation RFPictureTableViewController
@@ -61,6 +61,13 @@
     [super viewDidLoad];
 	
 	self.title = NSLocalizedString(@"Pictures", @"");
+	
+	
+	// Create cancel button and assign it
+	UIBarButtonItem *createButton = [[UIBarButtonItem alloc] initWithTitle:@"Profile" style:UIBarButtonItemStyleBordered target:self action:@selector(createProfile)];
+	self.navigationItem.leftBarButtonItem = createButton;
+	[createButton release];
+
 	
 	[self performSelector:@selector(refresh) withObject:nil afterDelay:0.0];
 }
@@ -283,6 +290,30 @@
 		[self refreshDone];
 	}];
 	[request startAsynchronous];
+}
+
+
+- (void)dismissModal {
+	[self.modalViewController dismissModalViewControllerAnimated:YES];
+}
+
+- (void)createProfile {
+	RFCreateProfileViewController *controller = [[RFCreateProfileViewController alloc] initWithNibName:@"RFCreateProfileViewController" bundle:nil];
+	
+	// Create navigation controller and adjust tint color
+	UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
+	navigationController.navigationBar.barStyle = UIBarStyleBlack;
+	
+	// Create cancel button and assign it
+	UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(dismissModal)];
+	controller.navigationItem.leftBarButtonItem = cancelButton;
+	[cancelButton release];
+	
+	// Present controller and release it
+	[self presentModalViewController:navigationController animated:YES];
+	[controller release];
+	[navigationController release];	
+
 }
 
 @end

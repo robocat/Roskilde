@@ -11,6 +11,11 @@
 
 @interface RFCreateProfileViewController : UIViewController {
     
+	UIButton *loginButton;
 }
+
+@property (nonatomic, retain) IBOutlet UIButton *loginButton;
+
+- (IBAction) loginButtonPressed:(id)sender;
 
 @end

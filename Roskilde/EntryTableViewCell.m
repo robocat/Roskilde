@@ -101,32 +101,25 @@
 {
 	// Subclasses should implement this
 	
+	UIFont *timeFont		= [UIFont boldSystemFontOfSize:12];
 	UIFont * infoFont	= [UIFont systemFontOfSize:kInfoFontSize];
-	
-	//	_highlighted ? [[UIColor lightGrayColor] set] : [[UIColor lightGrayColor] set];
-	[[UIColor lightGrayColor] set];
-
-	
 	CGFloat x = 320.0 - kPadding;
 	CGFloat y = 300.0;
+		
+	//	_highlighted ? [[UIColor lightGrayColor] set] : [[UIColor lightGrayColor] set];
+	[[UIColor colorWithRed:0.878 green:0.846 blue:0.800 alpha:1.000] set];
 	
-	
-	UIFont *timeFont		= [UIFont boldSystemFontOfSize:12];
-	UIFont *locationFont	= [UIFont systemFontOfSize:12];
-	
-	[[UIColor colorWithRed:0.651 green:0.651 blue:0.651 alpha:1.000] set];
-	
-	if (self.location) {
+	if (![self.location isEqualToString:@""]) {
 		[self.author drawInRect:CGRectMake(50.0, 4.0, 200.0, 20.0)
 					   withFont:timeFont];
 	}
 	else {
-		[self.author drawInRect:CGRectMake(50.0, 14.0, 200.0, 20.0)
+		[self.author drawInRect:CGRectMake(50.0, 10.0, 200.0, 20.0)
 					   withFont:timeFont];
 	}
 	
 	[self.location drawInRect:CGRectMake(50.0, 16.0, 200.0, 20.0)
-				withFont:locationFont];
+				withFont:infoFont];
 	
 	NSString *dateString	= [creationDate formattedExactRelativeShortDate];
 	
@@ -144,6 +137,7 @@
 	
 	y = imageHeight + kAuthorBarHeight + 3.0;
 	
+	[[UIColor colorWithRed:0.651 green:0.651 blue:0.651 alpha:1.000] set];
 	
 	UIImage *bottom = [UIImage imageNamed:@"picture_bottom.png"];
 	[bottom drawAtPoint:CGPointMake(kPadding, y)];
@@ -223,7 +217,7 @@
 	
 	[self addSubview:self.imageView];
 	
-	UIImage * placeholder = [UIImage imageNamed:@"Default.png"];
+	UIImage * placeholder = [UIImage imageNamed:@"xbg.png"];
 	NSString *urlString = [NSString stringWithFormat:@"%@=s%.f", url, size.width * placeholder.scale];
 	[self.imageView loadImageAtURLString:urlString placeholderImage:placeholder];
 }

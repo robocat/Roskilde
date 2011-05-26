@@ -198,4 +198,19 @@
 	}
 }
 
+
++ (BOOL)hasFrontCamera {
+	return [UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceFront];
+}
+
+
++ (BOOL)hasBackCamera {
+	return [UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceRear];
+}
+
+
++ (BOOL)hasCamera {
+	return [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
+}
+
 @end

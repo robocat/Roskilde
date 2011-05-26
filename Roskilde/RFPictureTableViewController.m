@@ -13,7 +13,6 @@
 #import "ASIDownloadCache.h"
 #import "JSONKit.h"
 #import "RFPictureDetailTableViewController.h"
-#import "AuthorHeaderView.h"
 #import "NSDateHelper.h"
 
 

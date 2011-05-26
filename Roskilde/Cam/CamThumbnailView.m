@@ -17,7 +17,6 @@
 @end
 
 
-
 @implementation CamThumbnailView
 
 @synthesize thumbnails;
@@ -47,6 +46,33 @@
 - (void)buttonAction:(UIButton*)sender {
 	[thumbnailDelegate ThumbnailViewThumbnailPressed:[self.thumbnails count]-1-[self.thumbnails indexOfObject:sender]];
 }
+
+
+- (void)removeThumbnailAtIndex:(int)index {
+	/*NSLog(@"thumbnails 1: %@", thumbnails);
+	
+	[[self.thumbnails objectAtIndex:index] removeFromSuperview];
+	[self.thumbnails removeObjectAtIndex:index];
+	
+	NSLog(@"thumbnails 2: %@", thumbnails);
+	
+	int i;
+	for (i = index-1; i >= 0; i--) {
+		NSLog(@"%i", i);
+		
+		[self.thumbnails insertObject:[self.thumbnails objectAtIndex:i] atIndex:i+1];
+		
+		if (i == 0) {
+			[self.thumbnails removeObjectAtIndex:0];
+		}
+		
+		UIImageView *thumb = [thumbnails objectAtIndex:i+1];
+		thumb.frame = CGRectMake((i-1)*60+15, 5, 50, 50);
+	}
+	
+	NSLog(@"thumbnails 2: %@", thumbnails);*/
+}
+
 
 - (void)addThumbnail:(UIImage*)thumbnail {
 	UIButton *imageView = [UIButton buttonWithType:UIButtonTypeRoundedRect];

@@ -10,8 +10,9 @@
 #import "CamView.h"
 #import "CamThumbnailView.h"
 #import <AudioToolbox/AudioServices.h>
+#import "CamPreviewController.h"
 
-@interface CamViewController : UIViewController <CamThumbnailViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
+@interface CamViewController : UIViewController <CamThumbnailViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CamPreviewDelegate> {
 	BOOL camOrientation;
 	BOOL timer;
 	SystemSoundID tickSound;
@@ -35,6 +36,7 @@
 - (IBAction)flipCamera:(id)sender;
 - (IBAction)close:(id)sender;
 - (IBAction)library:(id)sender;
-- (IBAction)timer:(id)sender;
+- (IBAction)timerUp:(id)sender;
+- (IBAction)timerDown:(id)sender;
 
 @end

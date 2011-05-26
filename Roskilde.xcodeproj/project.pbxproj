@@ -21,7 +21,7 @@
 		3E5F0AF61385B5F500555871 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3E5F0AF41385B5F500555871 /* InfoPlist.strings */; };
 		3E5F0AF91385B5F500555871 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E5F0AF81385B5F500555871 /* main.m */; };
 		3E5F0AFC1385B5F500555871 /* RoskildeAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E5F0AFB1385B5F500555871 /* RoskildeAppDelegate.m */; };
-		3E5F0AFF1385B5F500555871 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E5F0AFD1385B5F500555871 /* MainWindow.xib */; };
+		3E5F0AFF1385B5F500555871 /* RoskildeMainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E5F0AFD1385B5F500555871 /* RoskildeMainWindow.xib */; };
 		3E5F0B121385B5F500555871 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E5F0AEB1385B5F400555871 /* UIKit.framework */; };
 		3E5F0B131385B5F500555871 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E5F0AED1385B5F400555871 /* Foundation.framework */; };
 		3E5F0B141385B5F500555871 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E5F0AEF1385B5F400555871 /* CoreGraphics.framework */; };
@@ -44,13 +44,14 @@
 		3E5F0B6D1385BCCD00555871 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E5F0B5E1385BCCD00555871 /* JSONKit.m */; };
 		3E5F0B6E1385BCCD00555871 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E5F0B601385BCCD00555871 /* arrow.png */; };
 		3E5F0B6F1385BCCD00555871 /* PullRefreshTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E5F0B621385BCCD00555871 /* PullRefreshTableViewController.m */; };
-		3E6136DC138EA0560008833A /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E6136D5138EA0560008833A /* Icon-72.png */; };
-		3E6136DD138EA0560008833A /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E6136D6138EA0560008833A /* Icon-Small-50.png */; };
-		3E6136DE138EA0560008833A /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E6136D7138EA0560008833A /* Icon-Small.png */; };
-		3E6136DF138EA0560008833A /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E6136D8138EA0560008833A /* Icon-Small@2x.png */; };
-		3E6136E0138EA0560008833A /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E6136D9138EA0560008833A /* Icon.png */; };
-		3E6136E1138EA0560008833A /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E6136DA138EA0560008833A /* Icon@2x.png */; };
-		3E6136E2138EA0560008833A /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E6136DB138EA0560008833A /* iTunesArtwork.png */; };
+		3E6136FE138EA2720008833A /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E6136F7138EA2720008833A /* Icon-72.png */; };
+		3E6136FF138EA2720008833A /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E6136F8138EA2720008833A /* Icon-Small-50.png */; };
+		3E613700138EA2720008833A /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E6136F9138EA2720008833A /* Icon-Small.png */; };
+		3E613701138EA2720008833A /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E6136FA138EA2720008833A /* Icon-Small@2x.png */; };
+		3E613702138EA2720008833A /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E6136FB138EA2720008833A /* Icon.png */; };
+		3E613703138EA2720008833A /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E6136FC138EA2720008833A /* Icon@2x.png */; };
+		3E613704138EA2720008833A /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E6136FD138EA2720008833A /* iTunesArtwork.png */; };
+		3E613715138EAF480008833A /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3E613714138EAF480008833A /* Entitlements.plist */; };
 		3EEF29B6138A8FBD00A8E34A /* BaseTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF29B5138A8FBD00A8E34A /* BaseTabBarController.m */; };
 		3EEF29BB138A912400A8E34A /* RFScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF29B9138A912400A8E34A /* RFScheduleViewController.m */; };
 		3EEF29BC138A912400A8E34A /* RFScheduleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EEF29BA138A912400A8E34A /* RFScheduleViewController.xib */; };
@@ -83,7 +84,6 @@
 		3EEF2A19138AA0E000A8E34A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EEF2A18138AA0E000A8E34A /* CoreData.framework */; };
 		3EEF2A1E138AA16600A8E34A /* _RFMusic.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF2A1B138AA16600A8E34A /* _RFMusic.m */; };
 		3EEF2A1F138AA16600A8E34A /* RFMusic.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF2A1D138AA16600A8E34A /* RFMusic.m */; };
-		3EF92E20138D737300AFFC2D /* AuthorHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF92E1D138D737200AFFC2D /* AuthorHeaderView.m */; };
 		3EF92E21138D737300AFFC2D /* EntryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF92E1F138D737200AFFC2D /* EntryTableViewCell.m */; };
 		3EF92E25138D73B100AFFC2D /* BaseRefreshTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF92E24138D73B100AFFC2D /* BaseRefreshTableViewController.m */; };
 		3EF92E28138D73CC00AFFC2D /* UIButton+CustomButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF92E27138D73CC00AFFC2D /* UIButton+CustomButtons.m */; };
@@ -320,7 +320,7 @@
 		3E5F0AF81385B5F500555871 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3E5F0AFA1385B5F500555871 /* RoskildeAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoskildeAppDelegate.h; sourceTree = "<group>"; };
 		3E5F0AFB1385B5F500555871 /* RoskildeAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RoskildeAppDelegate.m; sourceTree = "<group>"; };
-		3E5F0AFE1385B5F500555871 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		3E5F0AFE1385B5F500555871 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RoskildeMainWindow.xib; sourceTree = "<group>"; };
 		3E5F0B111385B5F500555871 /* RoskildeTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RoskildeTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E5F0B191385B5F600555871 /* RoskildeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RoskildeTests-Info.plist"; sourceTree = "<group>"; };
 		3E5F0B1B1385B5F600555871 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -361,13 +361,14 @@
 		3E5F0B601385BCCD00555871 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
 		3E5F0B611385BCCD00555871 /* PullRefreshTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PullRefreshTableViewController.h; sourceTree = "<group>"; };
 		3E5F0B621385BCCD00555871 /* PullRefreshTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PullRefreshTableViewController.m; sourceTree = "<group>"; };
-		3E6136D5138EA0560008833A /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
-		3E6136D6138EA0560008833A /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
-		3E6136D7138EA0560008833A /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
-		3E6136D8138EA0560008833A /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
-		3E6136D9138EA0560008833A /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		3E6136DA138EA0560008833A /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
-		3E6136DB138EA0560008833A /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
+		3E6136F7138EA2720008833A /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		3E6136F8138EA2720008833A /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
+		3E6136F9138EA2720008833A /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
+		3E6136FA138EA2720008833A /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
+		3E6136FB138EA2720008833A /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		3E6136FC138EA2720008833A /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		3E6136FD138EA2720008833A /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
+		3E613714138EAF480008833A /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = SOURCE_ROOT; };
 		3EEF29B4138A8FBD00A8E34A /* BaseTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTabBarController.h; sourceTree = "<group>"; };
 		3EEF29B5138A8FBD00A8E34A /* BaseTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTabBarController.m; sourceTree = "<group>"; };
 		3EEF29B8138A912400A8E34A /* RFScheduleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFScheduleViewController.h; sourceTree = "<group>"; };
@@ -423,8 +424,6 @@
 		3EEF2A1B138AA16600A8E34A /* _RFMusic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _RFMusic.m; sourceTree = "<group>"; };
 		3EEF2A1C138AA16600A8E34A /* RFMusic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFMusic.h; sourceTree = "<group>"; };
 		3EEF2A1D138AA16600A8E34A /* RFMusic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFMusic.m; sourceTree = "<group>"; };
-		3EF92E1C138D737200AFFC2D /* AuthorHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthorHeaderView.h; sourceTree = "<group>"; };
-		3EF92E1D138D737200AFFC2D /* AuthorHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthorHeaderView.m; sourceTree = "<group>"; };
 		3EF92E1E138D737200AFFC2D /* EntryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryTableViewCell.h; sourceTree = "<group>"; };
 		3EF92E1F138D737200AFFC2D /* EntryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryTableViewCell.m; sourceTree = "<group>"; };
 		3EF92E23138D73B100AFFC2D /* BaseRefreshTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseRefreshTableViewController.h; sourceTree = "<group>"; };
@@ -688,7 +687,6 @@
 				3EEF29D5138A955400A8E34A /* RoboKit */,
 				3E5F0B3A1385BC9200555871 /* External */,
 				3EF92E2E138D765500AFFC2D /* Resources */,
-				3E6136D4138EA0560008833A /* Icons */,
 				3E5F0B171385B5F500555871 /* RoskildeTests */,
 				3E5F0AEA1385B5F400555871 /* Frameworks */,
 				3E5F0AE81385B5F400555871 /* Products */,
@@ -752,6 +750,7 @@
 				3E5F0AF41385B5F500555871 /* InfoPlist.strings */,
 				3E5F0AF71385B5F500555871 /* Roskilde-Prefix.pch */,
 				3E5F0AF81385B5F500555871 /* main.m */,
+				3E613714138EAF480008833A /* Entitlements.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -869,19 +868,18 @@
 			path = PullToRefresh;
 			sourceTree = "<group>";
 		};
-		3E6136D4138EA0560008833A /* Icons */ = {
+		3E6136F6138EA2720008833A /* Icons */ = {
 			isa = PBXGroup;
 			children = (
-				3E6136D5138EA0560008833A /* Icon-72.png */,
-				3E6136D6138EA0560008833A /* Icon-Small-50.png */,
-				3E6136D7138EA0560008833A /* Icon-Small.png */,
-				3E6136D8138EA0560008833A /* Icon-Small@2x.png */,
-				3E6136D9138EA0560008833A /* Icon.png */,
-				3E6136DA138EA0560008833A /* Icon@2x.png */,
-				3E6136DB138EA0560008833A /* iTunesArtwork.png */,
+				3E6136F7138EA2720008833A /* Icon-72.png */,
+				3E6136F8138EA2720008833A /* Icon-Small-50.png */,
+				3E6136F9138EA2720008833A /* Icon-Small.png */,
+				3E6136FA138EA2720008833A /* Icon-Small@2x.png */,
+				3E6136FB138EA2720008833A /* Icon.png */,
+				3E6136FC138EA2720008833A /* Icon@2x.png */,
+				3E6136FD138EA2720008833A /* iTunesArtwork.png */,
 			);
-			name = Icons;
-			path = Resources/Icons;
+			path = Icons;
 			sourceTree = "<group>";
 		};
 		3EEF29AE138A8F7100A8E34A /* App Delegate */ = {
@@ -889,7 +887,7 @@
 			children = (
 				3E5F0AFA1385B5F500555871 /* RoskildeAppDelegate.h */,
 				3E5F0AFB1385B5F500555871 /* RoskildeAppDelegate.m */,
-				3E5F0AFD1385B5F500555871 /* MainWindow.xib */,
+				3E5F0AFD1385B5F500555871 /* RoskildeMainWindow.xib */,
 			);
 			name = "App Delegate";
 			sourceTree = "<group>";
@@ -964,8 +962,6 @@
 				3EEF29D0138A935700A8E34A /* RFPictureTableViewController.h */,
 				3EEF29D1138A935700A8E34A /* RFPictureTableViewController.m */,
 				3EEF29D2138A935700A8E34A /* RFPictureTableViewController.xib */,
-				3EF92E1C138D737200AFFC2D /* AuthorHeaderView.h */,
-				3EF92E1D138D737200AFFC2D /* AuthorHeaderView.m */,
 				3EF92E1E138D737200AFFC2D /* EntryTableViewCell.h */,
 				3EF92E1F138D737200AFFC2D /* EntryTableViewCell.m */,
 				3EF92E29138D740100AFFC2D /* RFPictureDetailTableViewController.h */,
@@ -1100,6 +1096,7 @@
 		3EF92E2E138D765500AFFC2D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3E6136F6138EA2720008833A /* Icons */,
 				3EF92E2F138D765500AFFC2D /* Images */,
 				3EF92FBA138D84A300AFFC2D /* Sounds */,
 			);
@@ -1373,6 +1370,9 @@
 /* Begin PBXProject section */
 		3E5F0ADE1385B5F400555871 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0410;
+			};
 			buildConfigurationList = 3E5F0AE11385B5F400555871 /* Build configuration list for PBXProject "Roskilde" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
@@ -1397,7 +1397,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E5F0AF61385B5F500555871 /* InfoPlist.strings in Resources */,
-				3E5F0AFF1385B5F500555871 /* MainWindow.xib in Resources */,
+				3E5F0AFF1385B5F500555871 /* RoskildeMainWindow.xib in Resources */,
 				3E5F0B6E1385BCCD00555871 /* arrow.png in Resources */,
 				3EEF29BC138A912400A8E34A /* RFScheduleViewController.xib in Resources */,
 				3EEF29C1138A927D00A8E34A /* RFTimelineViewController.xib in Resources */,
@@ -1583,13 +1583,14 @@
 				3E53C46C138DBC3F00A0E95C /* RFDateScrollerViewController.xib in Resources */,
 				3E53C470138DC1B300A0E95C /* timeline_bg.png in Resources */,
 				3E53C471138DC1B300A0E95C /* timeline_bg@2x.png in Resources */,
-				3E6136DC138EA0560008833A /* Icon-72.png in Resources */,
-				3E6136DD138EA0560008833A /* Icon-Small-50.png in Resources */,
-				3E6136DE138EA0560008833A /* Icon-Small.png in Resources */,
-				3E6136DF138EA0560008833A /* Icon-Small@2x.png in Resources */,
-				3E6136E0138EA0560008833A /* Icon.png in Resources */,
-				3E6136E1138EA0560008833A /* Icon@2x.png in Resources */,
-				3E6136E2138EA0560008833A /* iTunesArtwork.png in Resources */,
+				3E6136FE138EA2720008833A /* Icon-72.png in Resources */,
+				3E6136FF138EA2720008833A /* Icon-Small-50.png in Resources */,
+				3E613700138EA2720008833A /* Icon-Small.png in Resources */,
+				3E613701138EA2720008833A /* Icon-Small@2x.png in Resources */,
+				3E613702138EA2720008833A /* Icon.png in Resources */,
+				3E613703138EA2720008833A /* Icon@2x.png in Resources */,
+				3E613704138EA2720008833A /* iTunesArtwork.png in Resources */,
+				3E613715138EAF480008833A /* Entitlements.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1664,7 +1665,6 @@
 				3EEF2A1E138AA16600A8E34A /* _RFMusic.m in Sources */,
 				3EEF2A1F138AA16600A8E34A /* RFMusic.m in Sources */,
 				3E54C498138BE6B400C47A88 /* RFGlobal.m in Sources */,
-				3EF92E20138D737300AFFC2D /* AuthorHeaderView.m in Sources */,
 				3EF92E21138D737300AFFC2D /* EntryTableViewCell.m in Sources */,
 				3EF92E25138D73B100AFFC2D /* BaseRefreshTableViewController.m in Sources */,
 				3EF92E28138D73CC00AFFC2D /* UIButton+CustomButtons.m in Sources */,
@@ -1716,12 +1716,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		3E5F0AFD1385B5F500555871 /* MainWindow.xib */ = {
+		3E5F0AFD1385B5F500555871 /* RoskildeMainWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				3E5F0AFE1385B5F500555871 /* en */,
 			);
-			name = MainWindow.xib;
+			name = RoskildeMainWindow.xib;
 			sourceTree = "<group>";
 		};
 		3E5F0B1A1385B5F600555871 /* InfoPlist.strings */ = {
@@ -1739,15 +1739,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Willi Wu (P5EC6B73UQ)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9218BB29-FF6C-49F3-ACD6-2AAD591F7E2F";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1756,13 +1762,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Willi Wu (P5EC6B73UQ)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9218BB29-FF6C-49F3-ACD6-2AAD591F7E2F";
 				SDKROOT = iphoneos;
 			};
 			name = Release;
@@ -1841,6 +1853,66 @@
 			};
 			name = Release;
 		};
+		3E613711138EAE0A0008833A /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: icelantern";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CA03C973-66AE-4F20-AB41-6627E9C5C030";
+				SDKROOT = iphoneos;
+			};
+			name = AdHoc;
+		};
+		3E613712138EAE0A0008833A /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Roskilde/Roskilde-Prefix.pch";
+				INFOPLIST_FILE = "Roskilde/Roskilde-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = AdHoc;
+		};
+		3E613713138EAE0A0008833A /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Roskilde.app/Roskilde";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RoskildeTests/RoskildeTests-Prefix.pch";
+				INFOPLIST_FILE = "RoskildeTests/RoskildeTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-framework",
+					SenTestingKit,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = AdHoc;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1849,6 +1921,7 @@
 			buildConfigurations = (
 				3E5F0B221385B5F600555871 /* Debug */,
 				3E5F0B231385B5F600555871 /* Release */,
+				3E613711138EAE0A0008833A /* AdHoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1858,6 +1931,7 @@
 			buildConfigurations = (
 				3E5F0B251385B5F600555871 /* Debug */,
 				3E5F0B261385B5F600555871 /* Release */,
+				3E613712138EAE0A0008833A /* AdHoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1867,6 +1941,7 @@
 			buildConfigurations = (
 				3E5F0B281385B5F600555871 /* Debug */,
 				3E5F0B291385B5F600555871 /* Release */,
+				3E613713138EAE0A0008833A /* AdHoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

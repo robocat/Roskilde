@@ -14,6 +14,7 @@
 
 @property (nonatomic, retain) UIImage *image;
 @property (nonatomic, retain) NSArray *images;
+@property (nonatomic, retain) NSArray *scrollviews;
 @property (nonatomic, retain) UITapGestureRecognizer *hideUploadviewGesture;
 @property (nonatomic, retain) UITapGestureRecognizer *showUploadGesture;
 @property (nonatomic, retain) CLLocationManager *locationManager;
@@ -38,10 +39,12 @@
 @synthesize description;
 @synthesize location;
 @synthesize scrollView;
-@synthesize pageControl;
 @synthesize locationManager;
 @synthesize reverseGeocoder;
 @synthesize navbar;
+@synthesize delegate;
+@synthesize pageControl;
+@synthesize scrollviews;
 
 - (void)viewDidUnload {
 	self.uploadView = nil;
@@ -56,6 +59,7 @@
 	[self setLocation:nil];
 	[self setScrollView:nil];
 	[self setPageControl:nil];
+	[self setPageControl:nil];
 	[super viewDidUnload];
 }
 
@@ -64,6 +68,7 @@
 	if ((self = [super init])) {
 		self.images = initimages;
 		selectedIndex = index;
+		self.scrollviews = nil;
 	}
 	
 	return self;
@@ -74,6 +79,13 @@
 
 
 - (void)viewDidLoad {
+	if ([self.images count] > 1) {
+		self.pageControl.numberOfPages = [self.images count];
+		self.pageControl.currentPage = selectedIndex;
+	} else {
+		self.pageControl.hidden = YES;
+	}
+	
 	self.uploadView.frame = CGRectMake(0, -220, self.view.frame.size.width, 200);
 	
 	self.uploadView.layer.shadowColor = [UIColor blackColor].CGColor;
@@ -99,19 +111,33 @@
 	
 	UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320*[self.images count]+1, self.scrollView.frame.size.height)];
 	
+	NSMutableArray *imagescrollviews = [NSMutableArray arrayWithCapacity:5];
+	
 	int i;
 	for (i = 0; i < [self.images count]; i++) {
-		UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(320*i, 0, self.view.bounds.size.width, self.scrollView.bounds.size.height)];
+		UIScrollView *imageScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(320*i, 0, self.view.bounds.size.width, self.scrollView.bounds.size.height)];
+		imageScrollView.delegate = self;
+		imageScrollView.maximumZoomScale = 3.0;
+		imageScrollView.minimumZoomScale = 1.0;
+		imageScrollView.canCancelContentTouches = YES;
+		
+		UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.scrollView.bounds.size.height)];
 		imageView.image = [self.images objectAtIndex:i];
-		imageView.clipsToBounds = YES;
+		imageScrollView.clipsToBounds = YES;
 		
 		if (imageView.image.size.width > imageView.image.size.height) {
 			imageView.contentMode = UIViewContentModeScaleAspectFit;
 		}
 		
-		[contentView addSubview:imageView];
+		[imageScrollView addSubview:imageView];
+		[contentView addSubview:imageScrollView];
 		[imageView release];
+		
+		[imagescrollviews addObject:imageScrollView];
+		[imageScrollView release];
 	}
+	
+	self.scrollviews = imagescrollviews;
 	
 	[self.scrollView addSubview:contentView];
 	self.scrollView.contentSize = contentView.frame.size;
@@ -150,9 +176,6 @@
 		self.uploadView.frame = CGRectMake(0, -220, self.view.frame.size.width, 200);
 		self.previewView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
 	} completion:^(BOOL finished) {
-		self.description.text = @"";
-		self.descriptionPlaceholder.hidden = NO;
-		
 		[self.uploadView removeFromSuperview];
 	}];
 }
@@ -229,6 +252,10 @@
 		[UIView animateWithDuration:0.3 delay:1 options:0 animations:^(void) {
 			waitView.alpha = 0;
 		} completion:^(BOOL finished) {
+			if (self.delegate && [self.delegate respondsToSelector:@selector(CamPreview:didSucceedUploadingIndex:)]) {
+				[self.delegate CamPreview:self didSucceedUploadingIndex:selectedIndex];
+			}
+			
 			[waitView removeFromSuperview];
 			[self back:self];
 		}];
@@ -242,6 +269,10 @@
 		[UIView animateWithDuration:0.3 delay:1 options:0 animations:^(void) {
 			waitView.alpha = 0;
 		} completion:^(BOOL finished) {
+			if (self.delegate && [self.delegate respondsToSelector:@selector(CamPreview:didFailUploadingIndex:)]) {
+				[self.delegate CamPreview:self didFailUploadingIndex:selectedIndex];
+			}
+			
 			[waitView removeFromSuperview];
 			[self back:self];
 		}];
@@ -257,12 +288,29 @@
 #pragma mark delegate methods
 
 
-- (IBAction)pageControlValueChanged:(id)sender {
-	[self.scrollView scrollRectToVisible:CGRectMake(320*self.pageControl.currentPage, 0, 320, self.scrollView.frame.size.height) animated:YES];
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)tmpscrollView {
+	if ([self.scrollviews containsObject:tmpscrollView]) {
+		return [[tmpscrollView subviews] objectAtIndex:0];
+	}
+	
+	return nil;
 }
 
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)tmpscrollView {
+	if ([self.scrollviews containsObject:tmpscrollView]) {
+		return;
+	}
+	
+	int scrollviewindex = tmpscrollView.contentOffset.x/320;
+	
+	int i;
+	for (i = 0; i < [self.scrollviews count]; i++) {
+		if (i != scrollviewindex) {
+			[[self.scrollviews objectAtIndex:i] setZoomScale:1.0];
+		}
+	}
+	
 	self.pageControl.currentPage = self.scrollView.contentOffset.x/320;
 }
 
@@ -284,6 +332,7 @@
 	[description release];
 	[location release];
 	[scrollView release];
+	[pageControl release];
 	[pageControl release];
 	[super dealloc];
 }

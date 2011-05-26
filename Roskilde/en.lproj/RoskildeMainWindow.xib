@@ -262,7 +262,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBUIViewController" id="189415422">
 								<object class="IBUINavigationItem" key="IBUINavigationItem" id="419948005">
-									<reference key="IBUINavigationBar"/>
 									<string key="IBUITitle">About</string>
 									<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								</object>

@@ -8,12 +8,11 @@
 
 #import "CamViewController.h"
 #import "CamDevice.h"
-#import "CamPreviewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "UIImage+Resize.h"
 
-#define BackCam YES
-#define FrontCam NO
+#define BackCam 1
+#define FrontCam 0
 
 #define OFF NO
 #define ON YES
@@ -21,7 +20,7 @@
 @interface CamViewController ()
 
 - (void)takePhoto;
-- (void)didRotateToInterfaceOrientation:(UIDeviceOrientation)orientation;
+- (void)rotateInterfaceToOrientation:(UIDeviceOrientation)orientation animated:(BOOL)animated;
 
 @property (nonatomic, retain) CamDevice *camdevice;
 @property (nonatomic, retain) UILabel *flashLabel;
@@ -49,7 +48,15 @@
 	
 	self.camdevice = nil;
 	
-	camOrientation = FrontCam;
+	if (![CamDevice hasFrontCamera]) {
+		[[NSUserDefaults standardUserDefaults] setInteger:BackCam forKey:@"com.robocat.Roskilde.selectedCameraType"];
+		self.flipButton.hidden = YES;
+	} else if (![CamDevice hasBackCamera]) {
+		[[NSUserDefaults standardUserDefaults] setInteger:FrontCam forKey:@"com.robocat.Roskilde.selectedCameraType"];
+		self.flipButton.hidden = YES;
+	}
+	
+	camOrientation = [[NSUserDefaults standardUserDefaults] integerForKey:@"com.robocat.Roskilde.selectedCameraType"];
 	
 	timer = OFF;
 	timerView.hidden = YES;
@@ -66,8 +73,10 @@
 	}];
 	
 	[[NSNotificationCenter defaultCenter] addObserverForName:@"UIDeviceOrientationDidChangeNotification" object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *lol) {
-		[self didRotateToInterfaceOrientation:[UIDevice currentDevice].orientation];
+		[self rotateInterfaceToOrientation:[UIDevice currentDevice].orientation animated:YES];
 	}];
+	
+	[self rotateInterfaceToOrientation:[UIDevice currentDevice].orientation animated:NO];
 	
 	self.flashLabel = [[[UILabel alloc] initWithFrame:CGRectMake(23, 8, 35, 15)] autorelease];
 	self.flashLabel.font = [UIFont italicSystemFontOfSize:13];
@@ -94,8 +103,8 @@
 }
 
 
-- (void)didRotateToInterfaceOrientation:(UIDeviceOrientation)orientation {
-	[UIView animateWithDuration:0.3 animations:^(void) {
+- (void)rotateInterfaceToOrientation:(UIDeviceOrientation)orientation animated:(BOOL)animated {
+	void (^changeBlock)(void) = ^{
 		CGFloat rotation = (orientation == UIInterfaceOrientationPortrait? 0:
 							orientation == UIInterfaceOrientationPortraitUpsideDown? M_PI:
 							orientation == UIInterfaceOrientationLandscapeLeft? -M_PI_2:
@@ -112,7 +121,18 @@
 			self.flipButton.frame = CGRectMake(240, 20, 60, 31);
 			self.flashButton.frame = CGRectMake(20, 20, 60, 31);
 		}
-	}];
+	};
+	
+	if (animated) {
+		[UIView animateWithDuration:0.3 animations:changeBlock];
+	} else {
+		changeBlock();
+	}
+}
+
+
+- (void)didRotateToInterfaceOrientation:(UIDeviceOrientation)orientation {
+	[self rotateInterfaceToOrientation:orientation animated:YES];
 }
 
 
@@ -230,6 +250,7 @@
 	}
 	
 	camOrientation = !camOrientation;
+	[[NSUserDefaults standardUserDefaults] setInteger:camOrientation forKey:@"com.robocat.Roskilde.selectedCameraType"];
 }
 
 
@@ -250,8 +271,19 @@
 
 - (void)ThumbnailViewThumbnailPressed:(NSUInteger)index {
 	CamPreviewController *previewController = [[CamPreviewController alloc] initWithImages:thumbnailView.allThumbnails selectedIndex:index];
+	previewController.delegate = self;
 	[self.navigationController pushViewController:previewController animated:YES];
 	[previewController release];
+}
+
+
+- (void)CamPreview:(CamPreviewController*)camPreview didFailUploadingIndex:(int)index {
+	
+}
+
+
+- (void)CamPreview:(CamPreviewController*)camPreview didSucceedUploadingIndex:(int)index {
+	[self.thumbnailView removeThumbnailAtIndex:index];
 }
 
 
@@ -301,10 +333,7 @@
 	[self dismissModalViewControllerAnimated:YES];
 }
 
-- (IBAction)timer:(id)sender {
-	timer = !timer;
-	timerButton.selected = timer;
-	
+- (IBAction)timerUp:(id)sender {
 	if (timer) {
 		timerView.hidden = NO;
 		timerIcon.hidden = NO;
@@ -312,6 +341,12 @@
 		timerView.hidden = YES;
 		timerIcon.hidden = YES;
 	}
+}
+
+
+- (IBAction)timerDown:(id)sender {
+	timer = !timer;
+	timerButton.selected = timer;
 }
 
 - (void)dealloc {

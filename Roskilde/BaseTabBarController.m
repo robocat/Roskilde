@@ -8,6 +8,7 @@
 
 #import "BaseTabBarController.h"
 #import "CamViewController.h"
+#import "CamDevice.h"
 
 
 @implementation BaseTabBarController
@@ -44,9 +45,8 @@
 }
 
 
-- (void)cameraButtonPressed:(id)sender
-{
-	if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+- (void)cameraButtonPressed:(id)sender {
+	if ([CamDevice hasCamera]) {
 		CamViewController *camViewController = [[CamViewController alloc] initWithNibName:@"CamViewController" bundle:nil];
 		UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:camViewController];
 		
@@ -55,6 +55,8 @@
 		[self presentModalViewController:navigationController animated:NO];
 		[navigationController release];
 		[camViewController release];
+	} else {
+		[[[[UIAlertView alloc] initWithTitle:@"No camera detected" message:@"This device doesn't have a camera" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
 	}
 }
 

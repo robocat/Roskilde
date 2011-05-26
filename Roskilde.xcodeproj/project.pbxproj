@@ -44,6 +44,13 @@
 		3E5F0B6D1385BCCD00555871 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E5F0B5E1385BCCD00555871 /* JSONKit.m */; };
 		3E5F0B6E1385BCCD00555871 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E5F0B601385BCCD00555871 /* arrow.png */; };
 		3E5F0B6F1385BCCD00555871 /* PullRefreshTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E5F0B621385BCCD00555871 /* PullRefreshTableViewController.m */; };
+		3E6136DC138EA0560008833A /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E6136D5138EA0560008833A /* Icon-72.png */; };
+		3E6136DD138EA0560008833A /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E6136D6138EA0560008833A /* Icon-Small-50.png */; };
+		3E6136DE138EA0560008833A /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E6136D7138EA0560008833A /* Icon-Small.png */; };
+		3E6136DF138EA0560008833A /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E6136D8138EA0560008833A /* Icon-Small@2x.png */; };
+		3E6136E0138EA0560008833A /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E6136D9138EA0560008833A /* Icon.png */; };
+		3E6136E1138EA0560008833A /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E6136DA138EA0560008833A /* Icon@2x.png */; };
+		3E6136E2138EA0560008833A /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E6136DB138EA0560008833A /* iTunesArtwork.png */; };
 		3EEF29B6138A8FBD00A8E34A /* BaseTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF29B5138A8FBD00A8E34A /* BaseTabBarController.m */; };
 		3EEF29BB138A912400A8E34A /* RFScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF29B9138A912400A8E34A /* RFScheduleViewController.m */; };
 		3EEF29BC138A912400A8E34A /* RFScheduleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EEF29BA138A912400A8E34A /* RFScheduleViewController.xib */; };
@@ -354,6 +361,13 @@
 		3E5F0B601385BCCD00555871 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
 		3E5F0B611385BCCD00555871 /* PullRefreshTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PullRefreshTableViewController.h; sourceTree = "<group>"; };
 		3E5F0B621385BCCD00555871 /* PullRefreshTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PullRefreshTableViewController.m; sourceTree = "<group>"; };
+		3E6136D5138EA0560008833A /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		3E6136D6138EA0560008833A /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
+		3E6136D7138EA0560008833A /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
+		3E6136D8138EA0560008833A /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
+		3E6136D9138EA0560008833A /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		3E6136DA138EA0560008833A /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		3E6136DB138EA0560008833A /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
 		3EEF29B4138A8FBD00A8E34A /* BaseTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTabBarController.h; sourceTree = "<group>"; };
 		3EEF29B5138A8FBD00A8E34A /* BaseTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTabBarController.m; sourceTree = "<group>"; };
 		3EEF29B8138A912400A8E34A /* RFScheduleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFScheduleViewController.h; sourceTree = "<group>"; };
@@ -674,6 +688,7 @@
 				3EEF29D5138A955400A8E34A /* RoboKit */,
 				3E5F0B3A1385BC9200555871 /* External */,
 				3EF92E2E138D765500AFFC2D /* Resources */,
+				3E6136D4138EA0560008833A /* Icons */,
 				3E5F0B171385B5F500555871 /* RoskildeTests */,
 				3E5F0AEA1385B5F400555871 /* Frameworks */,
 				3E5F0AE81385B5F400555871 /* Products */,
@@ -852,6 +867,21 @@
 				3E5F0B621385BCCD00555871 /* PullRefreshTableViewController.m */,
 			);
 			path = PullToRefresh;
+			sourceTree = "<group>";
+		};
+		3E6136D4138EA0560008833A /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				3E6136D5138EA0560008833A /* Icon-72.png */,
+				3E6136D6138EA0560008833A /* Icon-Small-50.png */,
+				3E6136D7138EA0560008833A /* Icon-Small.png */,
+				3E6136D8138EA0560008833A /* Icon-Small@2x.png */,
+				3E6136D9138EA0560008833A /* Icon.png */,
+				3E6136DA138EA0560008833A /* Icon@2x.png */,
+				3E6136DB138EA0560008833A /* iTunesArtwork.png */,
+			);
+			name = Icons;
+			path = Resources/Icons;
 			sourceTree = "<group>";
 		};
 		3EEF29AE138A8F7100A8E34A /* App Delegate */ = {
@@ -1553,6 +1583,13 @@
 				3E53C46C138DBC3F00A0E95C /* RFDateScrollerViewController.xib in Resources */,
 				3E53C470138DC1B300A0E95C /* timeline_bg.png in Resources */,
 				3E53C471138DC1B300A0E95C /* timeline_bg@2x.png in Resources */,
+				3E6136DC138EA0560008833A /* Icon-72.png in Resources */,
+				3E6136DD138EA0560008833A /* Icon-Small-50.png in Resources */,
+				3E6136DE138EA0560008833A /* Icon-Small.png in Resources */,
+				3E6136DF138EA0560008833A /* Icon-Small@2x.png in Resources */,
+				3E6136E0138EA0560008833A /* Icon.png in Resources */,
+				3E6136E1138EA0560008833A /* Icon@2x.png in Resources */,
+				3E6136E2138EA0560008833A /* iTunesArtwork.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

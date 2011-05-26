@@ -26,6 +26,8 @@
 
 #import "FLImageView.h"
 #import "FullyLoaded.h"
+#import "UIImage+Resize.h"
+
 
 @interface FLImageView()
 
@@ -73,6 +75,7 @@
 - (void)imageLoaded:(NSNotification *)aNote {
 	UIImage *anImage = [[FullyLoaded sharedFullyLoaded] imageForURL:self.imageURLString];
 	if (anImage) {
+//		UIImage *resized = [anImage resizedImage:CGSizeMake(320.0, 240.0) interpolationQuality:1.0];
 		self.image = anImage;
 		[self.superview setNeedsDisplay];
 	}

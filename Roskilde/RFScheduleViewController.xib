@@ -99,7 +99,6 @@
 						<string key="NSFrame">{{0, 311}, {195, 56}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
@@ -232,6 +231,7 @@
 					<int key="NSColorSpace">1</int>
 					<bytes key="NSRGB">MC4xMDE5NjA3ODQzIDAuMTAxOTYwNzg0MyAwLjEwMTk2MDc4NDMAA</bytes>
 				</object>
+				<bool key="IBUIAutoresizesSubviews">NO</bool>
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
 				<object class="IBUISimulatedNavigationBarMetrics" key="IBUISimulatedTopBarMetrics">
 					<bool key="IBUIPrompted">NO</bool>
@@ -666,8 +666,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>arenaButton</string>
 							<string>cosmopolButton</string>
-							<string>dateScrollView</string>
-							<string>dateScrollerView</string>
 							<string>odeonButton</string>
 							<string>orangeButton</string>
 							<string>pavilionButton</string>
@@ -677,8 +675,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>UIButton</string>
 							<string>UIButton</string>
-							<string>UIScrollView</string>
-							<string>UIView</string>
 							<string>UIButton</string>
 							<string>UIButton</string>
 							<string>UIButton</string>
@@ -691,8 +687,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>arenaButton</string>
 							<string>cosmopolButton</string>
-							<string>dateScrollView</string>
-							<string>dateScrollerView</string>
 							<string>odeonButton</string>
 							<string>orangeButton</string>
 							<string>pavilionButton</string>
@@ -707,14 +701,6 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">cosmopolButton</string>
 								<string key="candidateClassName">UIButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">dateScrollView</string>
-								<string key="candidateClassName">UIScrollView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">dateScrollerView</string>
-								<string key="candidateClassName">UIView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">odeonButton</string>

@@ -64,7 +64,7 @@
 	
 	RFDateScrollerViewController *scroller = [[RFDateScrollerViewController alloc] initWithNibName:@"RFDateScrollerViewController" bundle:nil];
 	scroller.delegate = self;
-	scroller.view.frame = CGRectMake(0.0f, 66.0f, 320.0f, 27.0f);
+	scroller.view.frame = CGRectMake(0.0f, 0.0f, 320.0f, 66.0f);
 	self.dateScroller = scroller;
 	[self.view addSubview:scroller.view];
 	[scroller release];

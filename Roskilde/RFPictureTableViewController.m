@@ -14,6 +14,7 @@
 #import "JSONKit.h"
 #import "RFPictureDetailTableViewController.h"
 #import "AuthorHeaderView.h"
+#import "NSDateHelper.h"
 
 
 
@@ -116,44 +117,29 @@
 }
 
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	//	UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
-	//	return cell.frame.size.height;
-	
-	NSDictionary *entry = [self.entries objectAtIndex:indexPath.section];
-	float defaultWidth = 300.0;
-	int width	= [[entry objectForKey:@"width"] intValue];
-	int height	= [[entry objectForKey:@"height"] intValue];
+- (CGFloat) entryHeightWithWidth:(CGFloat)width height:(CGFloat)height {
+	float defaultWidth = 280.0;
 	if (width == 0)
 		width = 640;
 	if (height == 0)
 		height = 480;
 	
-	float newHeight = defaultWidth / ((float)width / (float)height);
-	
-	return newHeight;
+	return (defaultWidth / ((float)width / (float)height));
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-	return 30.0;
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	NSDictionary *entry = [self.entries objectAtIndex:indexPath.section];
+	int width	= [[entry objectForKey:@"width"] intValue];
+	int height	= [[entry objectForKey:@"height"] intValue];
+	CGFloat newHeight = [self entryHeightWithWidth:width height:height];
+	
+	return newHeight + 80.0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
 	return 20.0;
 }
-
-- (UIView*)tableView:(UITableView*)tableView viewForHeaderInSection:(NSInteger)section
-{
-	NSDictionary *entry = [self.entries objectAtIndex:section];
-	AuthorHeaderView *authorView = nil;
-	if (entry)
-	{
-		authorView = [[[AuthorHeaderView alloc] initWithEntry:entry frame:CGRectMake(0, 0, 320, 30)] autorelease];
-	}
-	
-	return authorView;
-}
-
 
 - (UIView*)tableView:(UITableView*)tableView viewForFooterInSection:(NSInteger)section
 {	
@@ -172,21 +158,23 @@
 	
 	NSDictionary *entry = [self.entries objectAtIndex:indexPath.section];
 	
+	NSDictionary *author		= [entry objectForKey:@"created_by"];
+	cell.author					= [author objectForKey:@"fullname"];
+	cell.location				= [entry objectForKey:@"location"];
+	cell.creationDate			= [NSDate localDateFromUTCFormattedDate:[NSDate dateWithDateTimeString:[entry objectForKey:@"created_at"]]];
 	cell.imageReplies			= [[entry objectForKey:@"image_replies_count"] intValue];
 	cell.views					= 3;
 	cell.replies				= [[entry objectForKey:@"comment_replies_count"] intValue];
 	cell.likes					= 4;
 	
-	float defaultWidth = 280.0;
 	int width	= [[entry objectForKey:@"width"] intValue];
 	int height	= [[entry objectForKey:@"height"] intValue];
-	if (width == 0)
-		width = 640;
-	if (height == 0)
-		height = 480;
-	float newHeight = defaultWidth / ((float)width / (float)height);
+	CGFloat newHeight = [self entryHeightWithWidth:width height:height];
 	
-	[cell setImageUrl:[entry objectForKey:@"image_url"] size:CGSizeMake(defaultWidth, newHeight)];
+	cell.imageHeight = newHeight;
+	
+	[cell setAvatarUrl:[author objectForKey:@"avatar_url"] size:CGSizeMake(22.0, 22.0)];
+	[cell setImageUrl:[entry objectForKey:@"image_url"] size:CGSizeMake(280.0, newHeight)];
 }
 
 

@@ -15,7 +15,6 @@
 	
 	FLImageView *imageView;
 	UIButton *nameButton;
-	
 	NSString	*location;
 	NSDate		*creationDate;
 }

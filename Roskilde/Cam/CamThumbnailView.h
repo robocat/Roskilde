@@ -24,5 +24,6 @@
 @property (nonatomic, readonly) NSArray *allThumbnails;
 
 - (void)addThumbnail:(UIImage*)thumbnail;
+- (void)removeThumbnailAtIndex:(int)index;
 
 @end

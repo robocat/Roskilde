@@ -11,6 +11,15 @@
 #import <MapKit/MapKit.h>
 #import "RKCustomNavigationBar.h"
 
+@class CamPreviewController;
+
+@protocol CamPreviewDelegate <NSObject>
+@optional
+- (void)CamPreview:(CamPreviewController*)camPreview didFailUploadingIndex:(int)index;
+- (void)CamPreview:(CamPreviewController*)camPreview didSucceedUploadingIndex:(int)index;
+
+@end
+
 @interface CamPreviewController : UIViewController <UITextViewDelegate, UIScrollViewDelegate> {
 	NSUInteger selectedIndex;
 }
@@ -21,8 +30,9 @@
 @property (nonatomic, retain) IBOutlet UITextView *description;
 @property (nonatomic, retain) IBOutlet UITextField *location;
 @property (nonatomic, retain) IBOutlet UIScrollView *scrollView;
-@property (nonatomic, retain) IBOutlet UIPageControl *pageControl;
 @property (nonatomic, retain) IBOutlet RKCustomNavigationBar *navbar;
+@property (nonatomic, assign) id<CamPreviewDelegate> delegate;
+@property (nonatomic, retain) IBOutlet UIPageControl *pageControl;
 
 - (id)initWithImages:(NSArray*)initimages selectedIndex:(NSUInteger)index;
 
@@ -30,6 +40,5 @@
 - (IBAction)back:(id)sender;
 - (IBAction)performUpload:(id)sender;
 - (IBAction)back:(id)sender;
-- (IBAction)pageControlValueChanged:(id)sender;
 
 @end

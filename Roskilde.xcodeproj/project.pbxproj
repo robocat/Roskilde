@@ -277,6 +277,8 @@
 		3EF92FCB138D864400AFFC2D /* xbg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EF92FC9138D864400AFFC2D /* xbg@2x.png */; };
 		3EF92FCF138D8DBB00AFFC2D /* BaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF92FCD138D8DB900AFFC2D /* BaseTableViewController.m */; };
 		3EF92FD4138D903A00AFFC2D /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF92FD2138D903900AFFC2D /* BaseViewController.m */; };
+		FFF430C3138E6CBF00B5438E /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FFF430C2138E6CB700B5438E /* icon.png */; };
+		FFF430C6138E6CFF00B5438E /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FFF430C5138E6CF900B5438E /* icon@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -628,6 +630,8 @@
 		3EF92FCD138D8DB900AFFC2D /* BaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewController.m; sourceTree = "<group>"; };
 		3EF92FD1138D903800AFFC2D /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		3EF92FD2138D903900AFFC2D /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
+		FFF430C2138E6CB700B5438E /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = SOURCE_ROOT; };
+		FFF430C5138E6CF900B5438E /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1079,6 +1083,8 @@
 		3EF92E2F138D765500AFFC2D /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				FFF430C2138E6CB700B5438E /* icon.png */,
+				FFF430C5138E6CF900B5438E /* icon@2x.png */,
 				3E53C46E138DC1B300A0E95C /* timeline_bg.png */,
 				3E53C46F138DC1B300A0E95C /* timeline_bg@2x.png */,
 				3EF92FBD138D851100AFFC2D /* Camera */,
@@ -1343,6 +1349,9 @@
 /* Begin PBXProject section */
 		3E5F0ADE1385B5F400555871 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0410;
+			};
 			buildConfigurationList = 3E5F0AE11385B5F400555871 /* Build configuration list for PBXProject "Roskilde" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
@@ -1553,6 +1562,8 @@
 				3E53C46C138DBC3F00A0E95C /* RFDateScrollerViewController.xib in Resources */,
 				3E53C470138DC1B300A0E95C /* timeline_bg.png in Resources */,
 				3E53C471138DC1B300A0E95C /* timeline_bg@2x.png in Resources */,
+				FFF430C3138E6CBF00B5438E /* icon.png in Resources */,
+				FFF430C6138E6CFF00B5438E /* icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1708,6 +1719,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
@@ -1722,6 +1734,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;

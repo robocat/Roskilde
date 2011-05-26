@@ -44,4 +44,8 @@ typedef enum {
 - (void)setSampleBufferDelegate:(id<AVCaptureVideoDataOutputSampleBufferDelegate>)delegate;
 - (void)takePhotoWithCompletionHandler:(void (^)(UIImage *image))completion;
 
++ (BOOL)hasFrontCamera;
++ (BOOL)hasBackCamera;
++ (BOOL)hasCamera;
+
 @end

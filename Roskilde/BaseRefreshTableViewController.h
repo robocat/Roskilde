@@ -13,4 +13,6 @@
     
 }
 
+- (void)setWhiteTitle:(NSString *)title;
+
 @end

@@ -53,28 +53,29 @@
 }
 
 - (void)addPullToRefreshHeader {
-    refreshHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0 - REFRESH_HEADER_HEIGHT, 320, REFRESH_HEADER_HEIGHT)];
-    refreshHeaderView.backgroundColor = [UIColor clearColor];
+	refreshHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0 - REFRESH_HEADER_HEIGHT, 320, REFRESH_HEADER_HEIGHT)];
+	refreshHeaderView.backgroundColor = [UIColor clearColor];
 
-    refreshLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, REFRESH_HEADER_HEIGHT)];
-    refreshLabel.backgroundColor = [UIColor clearColor];
-    refreshLabel.font = [UIFont boldSystemFontOfSize:12.0];
+	refreshLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, REFRESH_HEADER_HEIGHT)];
+	refreshLabel.backgroundColor = [UIColor clearColor];
+	refreshLabel.font = [UIFont boldSystemFontOfSize:12.0];
 	refreshLabel.textColor = [UIColor lightGrayColor];
-    refreshLabel.textAlignment = UITextAlignmentCenter;
+	refreshLabel.textAlignment = UITextAlignmentCenter;
 
-    refreshArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow.png"]];
-    refreshArrow.frame = CGRectMake((REFRESH_HEADER_HEIGHT - 27) / 2,
-                                    (REFRESH_HEADER_HEIGHT - 44) / 2,
-                                    27, 44);
+	refreshArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow.png"]];
+	refreshArrow.frame = CGRectMake((REFRESH_HEADER_HEIGHT - 27) / 2,
+									(REFRESH_HEADER_HEIGHT - 44) / 2,
+									27, 44);
 
-    refreshSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    refreshSpinner.frame = CGRectMake((REFRESH_HEADER_HEIGHT - 20) / 2, (REFRESH_HEADER_HEIGHT - 20) / 2, 20, 20);
-    refreshSpinner.hidesWhenStopped = YES;
+	refreshSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+//	refreshSpinner.frame = CGRectMake((REFRESH_HEADER_HEIGHT - 20) / 2, (REFRESH_HEADER_HEIGHT - 20) / 2, 20, 20);
+	refreshSpinner.frame = CGRectMake((320 - refreshSpinner.frame.size.width)/2, (REFRESH_HEADER_HEIGHT - 20) / 2, 20, 20);
+	refreshSpinner.hidesWhenStopped = YES;
 
-    [refreshHeaderView addSubview:refreshLabel];
-    [refreshHeaderView addSubview:refreshArrow];
-    [refreshHeaderView addSubview:refreshSpinner];
-    [self.tableView addSubview:refreshHeaderView];
+	[refreshHeaderView addSubview:refreshLabel];
+//	[refreshHeaderView addSubview:refreshArrow];
+	[refreshHeaderView addSubview:refreshSpinner];
+	[self.tableView addSubview:refreshHeaderView];
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {

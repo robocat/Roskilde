@@ -32,12 +32,6 @@
     return self;
 }
 
-- (void)awakeFromNib {
-	[super awakeFromNib];
-	
-	//	self.entries = [[NSMutableArray alloc] init];
-}
-
 - (void)dealloc
 {
 	[_entries release];
@@ -55,6 +49,12 @@
 }
 
 #pragma mark - View lifecycle
+
+- (void)awakeFromNib {
+	[super awakeFromNib];
+	
+	//	self.entries = [[NSMutableArray alloc] init];
+}
 
 - (void)viewDidLoad
 {

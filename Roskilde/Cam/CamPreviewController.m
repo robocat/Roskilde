@@ -10,6 +10,7 @@
 #import "ASIFormDataRequest.h"
 #import <QuartzCore/QuartzCore.h>
 
+
 @interface CamPreviewController ()
 
 @property (nonatomic, retain) UIImage *image;
@@ -86,8 +87,10 @@
 		self.pageControl.hidden = YES;
 	}
 	
-	self.uploadView.frame = CGRectMake(0, -220, self.view.frame.size.width, 200);
+	// Custom navbar
+	[self.navbar setBackgroundWith:[UIImage imageNamed:@"sortbg.png"]];
 	
+	self.uploadView.frame = CGRectMake(0, -220, self.view.frame.size.width, 200);
 	self.uploadView.layer.shadowColor = [UIColor blackColor].CGColor;
 	self.uploadView.layer.shadowOffset = CGSizeMake(0, 10);
 	self.uploadView.layer.shadowRadius = 10;

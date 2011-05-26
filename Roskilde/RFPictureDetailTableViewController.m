@@ -9,12 +9,15 @@
 #import "RFPictureDetailTableViewController.h"
 #import "RKCustomNavigationBar.h"
 #import "ZoomingViewController.h"
-
+#import "ASIHTTPRequest.h"
+#import "ASIDownloadCache.h"
+#import "JSONKit.h"
 
 
 @implementation RFPictureDetailTableViewController
 
 @synthesize entry = _entry;
+@synthesize replies = _replies;
 @synthesize zoomingView;
 
 
@@ -30,6 +33,7 @@
 - (void)dealloc
 {
 	self.entry = nil;
+	self.replies = nil;
 	[zoomingViewController release];
 	zoomingViewController = nil;
 	
@@ -46,6 +50,12 @@
 
 #pragma mark - View lifecycle
 
+- (void)awakeFromNib {
+	[super awakeFromNib];
+	
+	//	self.entries = [[NSMutableArray alloc] init];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -58,9 +68,12 @@
 	
 	// Custom navbar
 	RKCustomNavigationBar *navBar = (RKCustomNavigationBar*)self.navigationController.navigationBar;
-	[navBar clearBackground];
+	[navBar setBackgroundWith:[UIImage imageNamed:@"sortbg.png"]];
 	
-	self.title = @"Picture";
+	NSDictionary *author = [self.entry objectForKey:@"created_by"];
+	NSString *username = [author objectForKey:@"username"];
+	
+	[self setWhiteTitle:[NSString stringWithFormat:@"%@'s Picture", username]];
 	
 	
 	zoomingViewController = [[ZoomingViewController alloc] init];
@@ -72,6 +85,9 @@
 //												  ownBounds.origin.y + 0.5 * (ownBounds.size.height - zoomingViewFrame.size.height),
 //												  zoomingViewFrame.size.width,
 //												  zoomingViewFrame.size.height);
+	
+	
+	[self performSelector:@selector(refresh) withObject:nil afterDelay:0.0];
 	
 }
 
@@ -135,8 +151,21 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 10;
+    return [self.replies count] + 1;
 }
+
+
+- (void)configureCell:(UITableViewCell *)cell_
+          atIndexPath:(NSIndexPath*)indexPath {
+	
+//	EntryTableViewCell * cell	= (EntryTableViewCell *)cell_;
+	
+//	NSDictionary *reply = [self.replies objectAtIndex:indexPath.section];
+	
+	cell_.textLabel.text = @"hi";
+}
+
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -159,10 +188,12 @@
 		if (cell == nil) {
 			cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
 		}
+		
+//		[self configureCell:cell atIndexPath:indexPath];
 	}
 	
 	// Configure the cell...
-
+	
 	return cell;
 }
 
@@ -218,5 +249,49 @@
      [detailViewController release];
      */
 }
+
+
+- (void)refresh {
+    [self performSelector:@selector(fetchReplies) withObject:nil afterDelay:0.0];
+}
+
+- (void)refreshDone {
+	[self.tableView reloadData];
+	[self stopLoading];
+}
+
+- (void)fetchReplies {
+	NSString *urlString = [NSString stringWithFormat:@"%@/entries/%@/replies", kXdkAPIBaseUrl, [self.entry objectForKey:@"entry_id"]];
+	NSURL *url = [NSURL URLWithString:urlString];
+	__block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+	[request setDownloadCache:[ASIDownloadCache sharedCache]];
+	[request setCachePolicy:ASIAskServerIfModifiedCachePolicy|ASIFallbackToCacheIfLoadFailsCachePolicy];
+	[request setCacheStoragePolicy:ASICachePermanentlyCacheStoragePolicy];
+	[request setSecondsToCache:3600];
+	
+	[request setCompletionBlock:^{
+		// Use when fetching text data
+		NSString *responseString = [request responseString];
+		
+		// JSONKit parse
+		id parsedData = [responseString objectFromJSONString];
+		
+		LOG_EXPR(parsedData);
+		
+		self.replies = nil;
+		//		[self.entries addObjectsFromArray:parsedData];
+		self.replies = [[[NSMutableArray alloc] initWithArray:parsedData] autorelease];
+		
+		[self refreshDone];
+	}];
+	[request setFailedBlock:^{
+		NSError *error = [request error];
+		NSLog(@"error: %@", error);
+		
+		[self refreshDone];
+	}];
+	[request startAsynchronous];
+}
+
 
 @end

@@ -11,7 +11,7 @@
 
 
 @interface RFArtistsTableViewController : BaseTableViewController {
-    
+	
 }
 
 @end

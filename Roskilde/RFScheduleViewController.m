@@ -72,7 +72,7 @@
 	// Set currentPageNumber to now date!
 	currentPageNumber = 0;
 	
-	[self performSelector:@selector(animateAllScenes) withObject:nil afterDelay:0.0];
+	[self performSelector:@selector(animateAllScenes) withObject:nil afterDelay:0.1];
 }
 
 - (void)viewDidUnload
@@ -137,7 +137,7 @@
 
 
 - (void) animateAllScenes {
-	CGFloat time = 1.5;
+	CGFloat time = 1.0;
 	
 	[self performSelector:@selector(hideSceneButton:) withObject:self.orangeButton afterDelay:time];
 	[self performSelector:@selector(hideSceneButton:) withObject:self.arenaButton afterDelay:time + 0.1];

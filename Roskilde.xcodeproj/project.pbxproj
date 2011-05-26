@@ -52,6 +52,12 @@
 		3E613703138EA2720008833A /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E6136FC138EA2720008833A /* Icon@2x.png */; };
 		3E613704138EA2720008833A /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E6136FD138EA2720008833A /* iTunesArtwork.png */; };
 		3E613715138EAF480008833A /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3E613714138EAF480008833A /* Entitlements.plist */; };
+		3E613723138EDA8D0008833A /* RFConcertDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E613721138EDA8D0008833A /* RFConcertDetailViewController.m */; };
+		3E613724138EDA8D0008833A /* RFConcertDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E613722138EDA8D0008833A /* RFConcertDetailViewController.xib */; };
+		3E613729138EF2120008833A /* RFCreateProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E613727138EF2120008833A /* RFCreateProfileViewController.m */; };
+		3E61372A138EF2120008833A /* RFCreateProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E613728138EF2120008833A /* RFCreateProfileViewController.xib */; };
+		3E61372E138EF5FC0008833A /* RFLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E61372C138EF5FC0008833A /* RFLoginViewController.m */; };
+		3E61372F138EF5FC0008833A /* RFLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E61372D138EF5FC0008833A /* RFLoginViewController.xib */; };
 		3EEF29B6138A8FBD00A8E34A /* BaseTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF29B5138A8FBD00A8E34A /* BaseTabBarController.m */; };
 		3EEF29BB138A912400A8E34A /* RFScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF29B9138A912400A8E34A /* RFScheduleViewController.m */; };
 		3EEF29BC138A912400A8E34A /* RFScheduleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EEF29BA138A912400A8E34A /* RFScheduleViewController.xib */; };
@@ -369,6 +375,15 @@
 		3E6136FC138EA2720008833A /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		3E6136FD138EA2720008833A /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
 		3E613714138EAF480008833A /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = SOURCE_ROOT; };
+		3E613720138EDA8D0008833A /* RFConcertDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFConcertDetailViewController.h; sourceTree = "<group>"; };
+		3E613721138EDA8D0008833A /* RFConcertDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFConcertDetailViewController.m; sourceTree = "<group>"; };
+		3E613722138EDA8D0008833A /* RFConcertDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RFConcertDetailViewController.xib; sourceTree = "<group>"; };
+		3E613726138EF2120008833A /* RFCreateProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFCreateProfileViewController.h; sourceTree = "<group>"; };
+		3E613727138EF2120008833A /* RFCreateProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFCreateProfileViewController.m; sourceTree = "<group>"; };
+		3E613728138EF2120008833A /* RFCreateProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RFCreateProfileViewController.xib; sourceTree = "<group>"; };
+		3E61372B138EF5FC0008833A /* RFLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFLoginViewController.h; sourceTree = "<group>"; };
+		3E61372C138EF5FC0008833A /* RFLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFLoginViewController.m; sourceTree = "<group>"; };
+		3E61372D138EF5FC0008833A /* RFLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RFLoginViewController.xib; sourceTree = "<group>"; };
 		3EEF29B4138A8FBD00A8E34A /* BaseTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTabBarController.h; sourceTree = "<group>"; };
 		3EEF29B5138A8FBD00A8E34A /* BaseTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTabBarController.m; sourceTree = "<group>"; };
 		3EEF29B8138A912400A8E34A /* RFScheduleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFScheduleViewController.h; sourceTree = "<group>"; };
@@ -732,7 +747,9 @@
 				3E5F0B301385B8B200555871 /* Model */,
 				3EEF29B7138A90F800A8E34A /* Schedule */,
 				3EEF29C2138A929200A8E34A /* Artists */,
+				3E61371E138EDA640008833A /* Concert Detail */,
 				3EEF29CA138A931100A8E34A /* About */,
+				3E613725138EF1E40008833A /* Login */,
 				3EEF29C9138A930000A8E34A /* Pictures */,
 				3EEF29C8138A92FA00A8E34A /* Camera */,
 				3EEF29B0138A8F8800A8E34A /* Custom Controls */,
@@ -880,6 +897,29 @@
 				3E6136FD138EA2720008833A /* iTunesArtwork.png */,
 			);
 			path = Icons;
+			sourceTree = "<group>";
+		};
+		3E61371E138EDA640008833A /* Concert Detail */ = {
+			isa = PBXGroup;
+			children = (
+				3E613720138EDA8D0008833A /* RFConcertDetailViewController.h */,
+				3E613721138EDA8D0008833A /* RFConcertDetailViewController.m */,
+				3E613722138EDA8D0008833A /* RFConcertDetailViewController.xib */,
+			);
+			name = "Concert Detail";
+			sourceTree = "<group>";
+		};
+		3E613725138EF1E40008833A /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				3E613726138EF2120008833A /* RFCreateProfileViewController.h */,
+				3E613727138EF2120008833A /* RFCreateProfileViewController.m */,
+				3E613728138EF2120008833A /* RFCreateProfileViewController.xib */,
+				3E61372B138EF5FC0008833A /* RFLoginViewController.h */,
+				3E61372C138EF5FC0008833A /* RFLoginViewController.m */,
+				3E61372D138EF5FC0008833A /* RFLoginViewController.xib */,
+			);
+			name = Login;
 			sourceTree = "<group>";
 		};
 		3EEF29AE138A8F7100A8E34A /* App Delegate */ = {
@@ -1591,6 +1631,9 @@
 				3E613703138EA2720008833A /* Icon@2x.png in Resources */,
 				3E613704138EA2720008833A /* iTunesArtwork.png in Resources */,
 				3E613715138EAF480008833A /* Entitlements.plist in Resources */,
+				3E613724138EDA8D0008833A /* RFConcertDetailViewController.xib in Resources */,
+				3E61372A138EF2120008833A /* RFCreateProfileViewController.xib in Resources */,
+				3E61372F138EF5FC0008833A /* RFLoginViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1686,6 +1729,9 @@
 				3E53C46D138DBC3F00A0E95C /* RFPassThroughView.m in Sources */,
 				3E53C486138E403600A0E95C /* GradientBackgroundView.m in Sources */,
 				3E53C487138E403600A0E95C /* ZoomingViewController.m in Sources */,
+				3E613723138EDA8D0008833A /* RFConcertDetailViewController.m in Sources */,
+				3E613729138EF2120008833A /* RFCreateProfileViewController.m in Sources */,
+				3E61372E138EF5FC0008833A /* RFLoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

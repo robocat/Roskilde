@@ -50,6 +50,6 @@
 @property (assign) SEL action;
 
 - (void)setAvatarUrl:(NSString*)url size:(CGSize)size;
-- (void)setImageUrl:(NSString*)url size:(CGSize)size;
+- (void)setImageUrl:(NSString*)url size:(CGSize)size dlsize:(CGSize)dlsize;
 
 @end

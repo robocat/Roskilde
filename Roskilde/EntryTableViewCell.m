@@ -135,22 +135,22 @@
 	
 	
 	
-	y = imageHeight + kAuthorBarHeight + 3.0;
+	y = imageHeight + kAuthorBarHeight + 4.0;
 	
 	[[UIColor colorWithRed:0.651 green:0.651 blue:0.651 alpha:1.000] set];
 	
 	UIImage *bottom = [UIImage imageNamed:@"picture_bottom.png"];
 	[bottom drawAtPoint:CGPointMake(kPadding, y)];
 	
+	y += 8;
 	
-//	if (self.imageReplies > 0) {
-		y += 8;
+	if (self.imageReplies > 0) {
 		[imageRepliesIcon drawAtPoint:CGPointMake(kPadding + 10, y)];
 		CGSize imageRepliesSize = [self infoSize:imageReplies];
 		[int2str(imageReplies) drawInRect:CGRectMake(kPadding + 12 + kIconSpaceX + imageRepliesIcon.size.width, y+kIconSpaceY,
 													 imageRepliesSize.width, imageRepliesSize.height)
 								 withFont:infoFont];
-//	}
+	}
 	
 	CGSize likesSize = [self infoSize:likes];
 	x -= kIconSpaceX + likesIcon.size.width + likesSize.width + 10.0;
@@ -196,7 +196,8 @@
 }
 
 - (void)setImageUrl:(NSString*)url
-			   size:(CGSize)size {
+			   size:(CGSize)size
+			 dlsize:(CGSize)dlsize {
 	
 	if (self.imageView) {
 		[self.imageView removeFromSuperview];
@@ -214,11 +215,18 @@
 //	self.imageView.layer.shadowRadius = 0.8f;
 //	self.imageView.layer.masksToBounds = NO;
 //	self.imageView.layer.shadowPath = [self renderPaperCurl:imageView.bounds.size];
+	self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+	self.imageView.clipsToBounds = YES;
+	
+	CGFloat scale = ([[UIScreen mainScreen] respondsToSelector:@selector (scale)] ? [[UIScreen mainScreen] scale] : 1);
 	
 	[self addSubview:self.imageView];
 	
+	float maxsize = round(MAX(dlsize.width, dlsize.height));
+	
 	UIImage * placeholder = [UIImage imageNamed:@"xbg.png"];
-	NSString *urlString = [NSString stringWithFormat:@"%@=s%.f", url, size.width * placeholder.scale];
+	NSString *urlString = [NSString stringWithFormat:@"%@=s%.f", url, maxsize * scale];
+	
 	[self.imageView loadImageAtURLString:urlString placeholderImage:placeholder];
 }
 

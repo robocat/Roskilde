@@ -17,6 +17,13 @@
 #import "RFCreateProfileViewController.h"
 
 
+
+#define kImageDisplayWidth		280.0
+#define kImageDisplayHeight		210.0
+#define kImageDownloadWidth		320.0
+#define kImageDownloadHeight	240.0
+
+
 @implementation RFPictureTableViewController
 
 @synthesize entries = _entries;
@@ -124,7 +131,7 @@
 
 
 - (CGFloat) entryHeightWithWidth:(CGFloat)width height:(CGFloat)height {
-	float defaultWidth = 280.0;
+	float defaultWidth = kImageDownloadWidth;
 	if (width == 0)
 		width = 640;
 	if (height == 0)
@@ -135,12 +142,12 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	NSDictionary *entry = [self.entries objectAtIndex:indexPath.section];
-	int width	= [[entry objectForKey:@"width"] intValue];
-	int height	= [[entry objectForKey:@"height"] intValue];
-	CGFloat newHeight = [self entryHeightWithWidth:width height:height];
+//	NSDictionary *entry = [self.entries objectAtIndex:indexPath.section];
+//	int width	= [[entry objectForKey:@"width"] intValue];
+//	int height	= [[entry objectForKey:@"height"] intValue];
+//	CGFloat newHeight = [self entryHeightWithWidth:width height:height];
 	
-	return newHeight + 80.0;
+	return kImageDisplayHeight + 80.0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -169,18 +176,20 @@
 	cell.location				= [entry objectForKey:@"location"];
 	cell.creationDate			= [NSDate localDateFromUTCFormattedDate:[NSDate dateWithDateTimeString:[entry objectForKey:@"created_at"]]];
 	cell.imageReplies			= [[entry objectForKey:@"image_replies_count"] intValue];
-	cell.views					= 3;
+	cell.views					= [[entry objectForKey:@"views_count"] intValue];;
 	cell.replies				= [[entry objectForKey:@"comment_replies_count"] intValue];
-	cell.likes					= 4;
+	cell.likes					= [[entry objectForKey:@"likers"] count];
 	
 	int width	= [[entry objectForKey:@"width"] intValue];
 	int height	= [[entry objectForKey:@"height"] intValue];
-	CGFloat newHeight = [self entryHeightWithWidth:width height:height];
+	CGFloat dlHeight = [self entryHeightWithWidth:width height:height];
 	
-	cell.imageHeight = newHeight;
+	cell.imageHeight = kImageDisplayHeight;
 	
 	[cell setAvatarUrl:[author objectForKey:@"avatar_url"] size:CGSizeMake(22.0, 22.0)];
-	[cell setImageUrl:[entry objectForKey:@"image_url"] size:CGSizeMake(280.0, newHeight)];
+	[cell setImageUrl:[entry objectForKey:@"image_url"]
+				 size:CGSizeMake(kImageDisplayWidth, kImageDisplayHeight)
+			   dlsize:CGSizeMake(kImageDownloadWidth, dlHeight)];
 }
 
 

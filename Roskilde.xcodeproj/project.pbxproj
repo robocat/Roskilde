@@ -58,6 +58,10 @@
 		3EE0B9C2138FAB8800CF0531 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EE0B9BB138FAB8800CF0531 /* Icon.png */; };
 		3EE0B9C3138FAB8800CF0531 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EE0B9BC138FAB8800CF0531 /* Icon@2x.png */; };
 		3EE0B9C4138FAB8800CF0531 /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EE0B9BD138FAB8800CF0531 /* iTunesArtwork.png */; };
+		3EE0BA05138FCFC400CF0531 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EE0BA04138FCFC300CF0531 /* ImageIO.framework */; };
+		3EE0BA0D138FD01300CF0531 /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EE0BA08138FD01300CF0531 /* UIImage+Alpha.m */; };
+		3EE0BA0E138FD01300CF0531 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EE0BA0A138FD01300CF0531 /* UIImage+Resize.m */; };
+		3EE0BA0F138FD01300CF0531 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EE0BA0C138FD01300CF0531 /* UIImage+RoundedCorner.m */; };
 		3EEF29B6138A8FBD00A8E34A /* BaseTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF29B5138A8FBD00A8E34A /* BaseTabBarController.m */; };
 		3EEF29BB138A912400A8E34A /* RFScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF29B9138A912400A8E34A /* RFScheduleViewController.m */; };
 		3EEF29BC138A912400A8E34A /* RFScheduleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EEF29BA138A912400A8E34A /* RFScheduleViewController.xib */; };
@@ -276,9 +280,6 @@
 		3EF92FA9138D811300AFFC2D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EF92FA8138D811300AFFC2D /* OpenGLES.framework */; };
 		3EF92FAB138D812100AFFC2D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EF92FAA138D812100AFFC2D /* CoreLocation.framework */; };
 		3EF92FAD138D812700AFFC2D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EF92FAC138D812600AFFC2D /* MapKit.framework */; };
-		3EF92FB5138D819F00AFFC2D /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF92FB0138D819F00AFFC2D /* UIImage+Alpha.m */; };
-		3EF92FB6138D819F00AFFC2D /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF92FB2138D819F00AFFC2D /* UIImage+Resize.m */; };
-		3EF92FB7138D819F00AFFC2D /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF92FB4138D819F00AFFC2D /* UIImage+RoundedCorner.m */; };
 		3EF92FB9138D81B700AFFC2D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EF92FB8138D81B700AFFC2D /* AudioToolbox.framework */; };
 		3EF92FBC138D84A300AFFC2D /* tick.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 3EF92FBB138D84A300AFFC2D /* tick.aiff */; };
 		3EF92FC1138D851100AFFC2D /* camera-flip-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EF92FBE138D851100AFFC2D /* camera-flip-pressed.png */; };
@@ -384,6 +385,13 @@
 		3EE0B9BB138FAB8800CF0531 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		3EE0B9BC138FAB8800CF0531 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		3EE0B9BD138FAB8800CF0531 /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
+		3EE0BA04138FCFC300CF0531 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		3EE0BA07138FD01300CF0531 /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Alpha.h"; sourceTree = "<group>"; };
+		3EE0BA08138FD01300CF0531 /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Alpha.m"; sourceTree = "<group>"; };
+		3EE0BA09138FD01300CF0531 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
+		3EE0BA0A138FD01300CF0531 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
+		3EE0BA0B138FD01300CF0531 /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
+		3EE0BA0C138FD01300CF0531 /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		3EEF29B4138A8FBD00A8E34A /* BaseTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTabBarController.h; sourceTree = "<group>"; };
 		3EEF29B5138A8FBD00A8E34A /* BaseTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTabBarController.m; sourceTree = "<group>"; };
 		3EEF29B8138A912400A8E34A /* RFScheduleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFScheduleViewController.h; sourceTree = "<group>"; };
@@ -637,12 +645,6 @@
 		3EF92FA8138D811300AFFC2D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		3EF92FAA138D812100AFFC2D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		3EF92FAC138D812600AFFC2D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		3EF92FAF138D819F00AFFC2D /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Alpha.h"; sourceTree = "<group>"; };
-		3EF92FB0138D819F00AFFC2D /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Alpha.m"; sourceTree = "<group>"; };
-		3EF92FB1138D819F00AFFC2D /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
-		3EF92FB2138D819F00AFFC2D /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
-		3EF92FB3138D819F00AFFC2D /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
-		3EF92FB4138D819F00AFFC2D /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		3EF92FB8138D81B700AFFC2D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		3EF92FBB138D84A300AFFC2D /* tick.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = tick.aiff; sourceTree = "<group>"; };
 		3EF92FBE138D851100AFFC2D /* camera-flip-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-flip-pressed.png"; sourceTree = "<group>"; };
@@ -663,6 +665,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EE0BA05138FCFC400CF0531 /* ImageIO.framework in Frameworks */,
 				3EF92FB9138D81B700AFFC2D /* AudioToolbox.framework in Frameworks */,
 				3EF92FAD138D812700AFFC2D /* MapKit.framework in Frameworks */,
 				3EF92FAB138D812100AFFC2D /* CoreLocation.framework in Frameworks */,
@@ -720,6 +723,7 @@
 		3E5F0AEA1385B5F400555871 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3EE0BA04138FCFC300CF0531 /* ImageIO.framework */,
 				3EF92FB8138D81B700AFFC2D /* AudioToolbox.framework */,
 				3EF92FAC138D812600AFFC2D /* MapKit.framework */,
 				3EF92FAA138D812100AFFC2D /* CoreLocation.framework */,
@@ -806,7 +810,7 @@
 		3E5F0B3A1385BC9200555871 /* External */ = {
 			isa = PBXGroup;
 			children = (
-				3EF92FAE138D819F00AFFC2D /* UIImageHelper */,
+				3EE0BA06138FD01300CF0531 /* UIImageHelper */,
 				3EF92F84138D7E2F00AFFC2D /* DDKCustomTabbar */,
 				3E5F0B421385BCCD00555871 /* ASIHTTPRequest */,
 				3E5F0B571385BCCD00555871 /* FullyLoaded */,
@@ -920,6 +924,19 @@
 				3EE0B9BD138FAB8800CF0531 /* iTunesArtwork.png */,
 			);
 			path = Icons;
+			sourceTree = "<group>";
+		};
+		3EE0BA06138FD01300CF0531 /* UIImageHelper */ = {
+			isa = PBXGroup;
+			children = (
+				3EE0BA07138FD01300CF0531 /* UIImage+Alpha.h */,
+				3EE0BA08138FD01300CF0531 /* UIImage+Alpha.m */,
+				3EE0BA09138FD01300CF0531 /* UIImage+Resize.h */,
+				3EE0BA0A138FD01300CF0531 /* UIImage+Resize.m */,
+				3EE0BA0B138FD01300CF0531 /* UIImage+RoundedCorner.h */,
+				3EE0BA0C138FD01300CF0531 /* UIImage+RoundedCorner.m */,
+			);
+			path = UIImageHelper;
 			sourceTree = "<group>";
 		};
 		3EEF29AE138A8F7100A8E34A /* App Delegate */ = {
@@ -1331,19 +1348,6 @@
 			path = DDKCustomTabbar;
 			sourceTree = "<group>";
 		};
-		3EF92FAE138D819F00AFFC2D /* UIImageHelper */ = {
-			isa = PBXGroup;
-			children = (
-				3EF92FAF138D819F00AFFC2D /* UIImage+Alpha.h */,
-				3EF92FB0138D819F00AFFC2D /* UIImage+Alpha.m */,
-				3EF92FB1138D819F00AFFC2D /* UIImage+Resize.h */,
-				3EF92FB2138D819F00AFFC2D /* UIImage+Resize.m */,
-				3EF92FB3138D819F00AFFC2D /* UIImage+RoundedCorner.h */,
-				3EF92FB4138D819F00AFFC2D /* UIImage+RoundedCorner.m */,
-			);
-			path = UIImageHelper;
-			sourceTree = "<group>";
-		};
 		3EF92FBA138D84A300AFFC2D /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
@@ -1720,9 +1724,6 @@
 				3EF92F9E138D80E300AFFC2D /* CamThumbnailView.m in Sources */,
 				3EF92F9F138D80E300AFFC2D /* CamView.m in Sources */,
 				3EF92FA0138D80E300AFFC2D /* CamViewController.m in Sources */,
-				3EF92FB5138D819F00AFFC2D /* UIImage+Alpha.m in Sources */,
-				3EF92FB6138D819F00AFFC2D /* UIImage+Resize.m in Sources */,
-				3EF92FB7138D819F00AFFC2D /* UIImage+RoundedCorner.m in Sources */,
 				3EF92FCF138D8DBB00AFFC2D /* BaseTableViewController.m in Sources */,
 				3EF92FD4138D903A00AFFC2D /* BaseViewController.m in Sources */,
 				3E53C46B138DBC3F00A0E95C /* RFDateScrollerViewController.m in Sources */,
@@ -1732,6 +1733,9 @@
 				3E613723138EDA8D0008833A /* RFConcertDetailViewController.m in Sources */,
 				3E613729138EF2120008833A /* RFCreateProfileViewController.m in Sources */,
 				3E61372E138EF5FC0008833A /* RFLoginViewController.m in Sources */,
+				3EE0BA0D138FD01300CF0531 /* UIImage+Alpha.m in Sources */,
+				3EE0BA0E138FD01300CF0531 /* UIImage+Resize.m in Sources */,
+				3EE0BA0F138FD01300CF0531 /* UIImage+RoundedCorner.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

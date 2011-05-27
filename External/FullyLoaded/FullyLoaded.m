@@ -98,12 +98,21 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(FullyLoaded);
 	[self.imageCache removeAllObjects];
 }
 
+- (UIImage *)correctOrientation:(UIImage *)anImage {
+	CGFloat scale = ([[UIScreen mainScreen] respondsToSelector:@selector (scale)] ? [[UIScreen mainScreen] scale] : 1);
+	UIImage *scaledImage = (scale == 1 ? anImage : [UIImage imageWithCGImage:[anImage CGImage] scale:scale orientation:UIImageOrientationUp]);
+	
+	return scaledImage;
+}
+
 - (UIImage *)imageForURL:(NSString *)aURLString {
 	if (aURLString) {
 		UIImage *image = nil;
 		if ((image = [self.imageCache objectForKey:aURLString])) {
 			return image;
 		} else if ((image = [UIImage imageWithContentsOfFile:[self pathForImage:aURLString]])) {
+			if (image.imageOrientation != UIImageOrientationUp)
+				image = [self correctOrientation:image];
 			[self.imageCache setObject:image forKey:aURLString];
 			return image;
 		} else if (![self.inProgressURLStrings containsObject:aURLString]) {
@@ -157,6 +166,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(FullyLoaded);
 	[self.inProgressURLStrings removeObject:[[request url] absoluteString]];
 	UIImage *image = [UIImage imageWithContentsOfFile:[self pathForImage:[[request url] absoluteString]]];
 	if (image) {
+		if (image.imageOrientation != UIImageOrientationUp)
+			image = [self correctOrientation:image];
 		[self.imageCache setObject:image forKey:[[request url] absoluteString]];
 		[[NSNotificationCenter defaultCenter] postNotificationName:FLImageLoadedNotification
 															object:self];		

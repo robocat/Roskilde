@@ -21,13 +21,6 @@
 	[navBar setBackgroundWith:[UIImage imageNamed:@"navbar.png"]];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-	
-	[[UIApplication sharedApplication] setStatusBarHidden:NO];
-}
-
 - (void)setTitle:(NSString *)title
 {
 	[super setTitle:title];

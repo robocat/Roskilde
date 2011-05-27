@@ -62,13 +62,16 @@
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+	
 	
 	// Custom navbar
 	RKCustomNavigationBar *navBar = (RKCustomNavigationBar*)self.navigationController.navigationBar;
 	[navBar setBackgroundWith:[UIImage imageNamed:@"sortbg.png"]];
+	
+	// Create action button and assign it
+	UIBarButtonItem *actionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showActions:)];
+	self.navigationItem.rightBarButtonItem = actionButton;
+	[actionButton release];
 	
 	NSDictionary *author = [self.entry objectForKey:@"created_by"];
 	NSString *username = [author objectForKey:@"username"];
@@ -293,5 +296,9 @@
 	[request startAsynchronous];
 }
 
+
+- (void) showActions:(id)sender {
+	
+}
 
 @end

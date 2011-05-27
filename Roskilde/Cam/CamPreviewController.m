@@ -9,6 +9,7 @@
 #import "CamPreviewController.h"
 #import "ASIFormDataRequest.h"
 #import <QuartzCore/QuartzCore.h>
+#import "LocationManager.h"
 
 
 @interface CamPreviewController ()
@@ -20,6 +21,8 @@
 @property (nonatomic, retain) UITapGestureRecognizer *showUploadGesture;
 @property (nonatomic, retain) CLLocationManager *locationManager;
 @property (nonatomic, retain) MKReverseGeocoder *reverseGeocoder;
+@property (nonatomic, retain) NSArray *nearLocations;
+@property (nonatomic, retain) UITableView *tableView;
 
 - (void)stopUpload:(id)sender;
 - (void)removeKeyboard:(id)sender;
@@ -45,7 +48,10 @@
 @synthesize navbar;
 @synthesize delegate;
 @synthesize pageControl;
+@synthesize locationButton;
 @synthesize scrollviews;
+@synthesize nearLocations;
+@synthesize tableView;
 
 - (void)viewDidUnload {
 	self.uploadView = nil;
@@ -56,11 +62,13 @@
 	self.locationManager = nil;
 	self.reverseGeocoder = nil;
 	self.image = nil;
+	self.nearLocations = nil;
 	
 	[self setLocation:nil];
 	[self setScrollView:nil];
 	[self setPageControl:nil];
 	[self setPageControl:nil];
+	[self setLocationButton:nil];
 	[super viewDidUnload];
 }
 
@@ -148,6 +156,18 @@
 	[contentView release];
 	
 	[self.scrollView scrollRectToVisible:CGRectMake(320*selectedIndex, 0, 320, self.scrollView.frame.size.height) animated:NO];
+	
+	Location *nearestLocation = nil;
+	self.nearLocations = [LocationManager locationObjectsForPosition:CLLocationCoordinate2DMake(55.614628318584074, 12.078001721170397) nearest:&nearestLocation];
+	
+	for (Location *l in self.nearLocations) {
+		if ([l.type isEqualToString:@"stage"]) {
+			nearestLocation = l;
+			break;
+		}
+	}
+	
+	self.location.text = nearestLocation.name;
 }
 
 
@@ -187,6 +207,8 @@
 - (void)removeKeyboard:(id)sender {
 	[self.description resignFirstResponder];
 	[self.location resignFirstResponder];
+	
+	self.locationButton.hidden = NO;
 }
 
 
@@ -201,6 +223,42 @@
 
 - (IBAction)back:(id)sender {
 	[self.navigationController popViewControllerAnimated:YES];
+}
+
+
+- (IBAction)chooseLocation:(id)sender {
+	if (self.tableView) {
+		[UIView animateWithDuration:0.3 animations:^(void) {
+			self.tableView.frame = CGRectOffset(self.tableView.frame, 0, -(self.view.frame.size.height - self.uploadView.frame.size.height));
+		} completion:^(BOOL finished) {
+			[self.tableView removeFromSuperview];
+			self.tableView = nil;
+		}];
+		
+		return;
+	}
+	
+	[self.location resignFirstResponder];
+	
+	self.tableView = [[[UITableView alloc] initWithFrame:CGRectMake(0, -(self.view.frame.size.height - self.uploadView.frame.size.height*2), 320, self.view.frame.size.height - self.uploadView.frame.size.height) style:UITableViewStylePlain] autorelease];
+	self.tableView.dataSource = self;
+	self.tableView.delegate = self;
+	
+	[self.view insertSubview:self.tableView belowSubview:self.uploadView];
+	
+	self.tableView.layer.shadowColor = [UIColor blackColor].CGColor;
+	self.tableView.layer.shadowOffset = CGSizeMake(0, 10);
+	self.tableView.layer.shadowRadius = 10;
+	self.tableView.layer.shadowOpacity = 1;
+	
+	CGMutablePathRef shadowPath = CGPathCreateMutable();
+	CGPathAddRect(shadowPath, NULL, CGRectMake(-20, 0, self.view.frame.size.width+20, self.tableView.frame.size.height));
+	self.tableView.layer.shadowPath = shadowPath;
+	CGPathRelease(shadowPath);
+	
+	[UIView animateWithDuration:0.3 animations:^(void) {
+		self.tableView.frame = CGRectOffset(self.tableView.frame, 0, self.uploadView.frame.size.height - self.tableView.frame.origin.y);
+	}];
 }
 
 
@@ -291,6 +349,35 @@
 #pragma mark delegate methods
 
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	return [self.nearLocations count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tmptableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+	UITableViewCell *cell = nil;
+	
+	if (!(cell = [tmptableView dequeueReusableCellWithIdentifier:@"cellID"])) {
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellID"] autorelease];
+	}
+	
+	cell.textLabel.text = [[self.nearLocations objectAtIndex:indexPath.row] name];
+	
+	return cell;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	self.location.text = [[self.nearLocations objectAtIndex:indexPath.row] name];
+	
+	[UIView animateWithDuration:0.3 animations:^(void) {
+		self.tableView.frame = CGRectOffset(self.tableView.frame, 0, -(self.view.frame.size.height - self.uploadView.frame.size.height));
+	} completion:^(BOOL finished) {
+		[self.tableView removeFromSuperview];
+		self.tableView = nil;
+	}];
+}
+
+
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)tmpscrollView {
 	if ([self.scrollviews containsObject:tmpscrollView]) {
 		return [[tmpscrollView subviews] objectAtIndex:0];
@@ -330,6 +417,45 @@
 }
 
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+	if ([string isEqualToString:@"\n"]) {
+		[textField resignFirstResponder];
+		self.locationButton.hidden = NO;
+		return NO;
+	}
+	
+	if ([[textField.text stringByReplacingCharactersInRange:range withString:string] isEqualToString:@""]) {
+		self.locationButton.hidden = NO;
+	} else {
+		self.locationButton.hidden = YES;
+	}
+	
+	return YES;
+}
+
+
+- (BOOL)textFieldShouldClear:(UITextField *)textField {
+	self.locationButton.hidden = NO;
+	return YES;
+}
+
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+	if (![textField.text isEqualToString:@""]) {
+		self.locationButton.hidden = YES;
+	}
+	
+	if (self.tableView) {
+		[UIView animateWithDuration:0.3 animations:^(void) {
+			self.tableView.frame = CGRectOffset(self.tableView.frame, 0, -(self.view.frame.size.height - self.uploadView.frame.size.height));
+		} completion:^(BOOL finished) {
+			[self.tableView removeFromSuperview];
+			self.tableView = nil;
+		}];
+	}
+}
+
+
 - (void)dealloc {
 	[descriptionPlaceholder release];
 	[description release];
@@ -337,6 +463,7 @@
 	[scrollView release];
 	[pageControl release];
 	[pageControl release];
+	[locationButton release];
 	[super dealloc];
 }
 

@@ -7,6 +7,8 @@
 //
 
 #import "RFMusic.h"
+#import "Location.h"
+#import <CoreLocation/CoreLocation.h>
 
 
 @class RKCoreDataManager, RKSimpleCoreData;
@@ -30,6 +32,11 @@
 - (void) save;
 
 
+- (NSArray*)allLocationsNearCoordinate:(CLLocationCoordinate2D)coordinate;
+- (NSArray*)allLocations;
+- (Location*)newLocation;
+- (void)deleteLocation:(Location*)location;
+
 
 - (NSArray *)musicSortedByDate;
 - (NSArray *)musicSortedByArtist;
@@ -39,7 +46,5 @@
 
 - (void)deleteMusic:(RFMusic *)music;
 - (void)deleteAllMusic;
-
-- (void)save;
 
 @end

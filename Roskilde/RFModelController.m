@@ -75,7 +75,43 @@ static RFModelController *defaultModelController = nil;
 }
 
 
+- (NSArray*)allLocations {
+	return [simpleCoreData objectsInEntityWithName:@"Location" predicate:nil sortedWithDescriptors:[NSArray arrayWithObject:[[[NSSortDescriptor alloc] initWithKey:@"map" ascending:YES] autorelease]]];
+}
 
+
+- (NSArray*)allLocationsNearCoordinate:(CLLocationCoordinate2D)coordinate {
+/*	NSPredicate *pred = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+		Location *location = (Location*)evaluatedObject;
+		float latDiff = coordinate.latitude - location.latValue;
+		float lonDiff = coordinate.longitude - location.lonValue;
+		return ((latDiff < 0? -latDiff: latDiff) < 0.001 && (lonDiff < 0? -lonDiff: lonDiff) < 0.001);
+	}];*/
+	
+	NSPredicate *pred = [NSPredicate predicateWithFormat:
+						 @"lat > %f and lat < %f and lon > %f and lon < %f",
+						 coordinate.latitude - 0.001,
+						 coordinate.latitude + 0.001,
+						 coordinate.longitude - 0.001,
+						 coordinate.longitude + 0.001];
+	
+	return [simpleCoreData objectsInEntityWithName:@"Location" predicate:pred sortedWithDescriptors:[NSArray arrayWithObject:[[[NSSortDescriptor alloc] initWithKey:@"map" ascending:YES] autorelease]]];
+}
+
+
+- (Location*)newLocation {
+	[self willChangeValueForKey:@"location"];
+	Location *location = (Location*)[simpleCoreData newObjectInEntityWithName:@"Location" values:nil];
+	[self didChangeValueForKey:@"music"];
+	return location;
+}
+
+
+- (void)deleteLocation:(Location*)location {
+	[self willChangeValueForKey:@"location"];
+	[[simpleCoreData managedObjectContext] deleteObject:location];
+	[self didChangeValueForKey:@"location"];
+}
 
 
 - (NSArray *)musicSortedByDate {

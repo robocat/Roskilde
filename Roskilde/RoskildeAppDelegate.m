@@ -7,6 +7,7 @@
 //
 
 #import "RoskildeAppDelegate.h"
+#import "LocationManager.h"
 
 @implementation RoskildeAppDelegate
 
@@ -49,6 +50,8 @@
 	[self.tabBarController.tabBar bringSubviewToFront:self.scheduleIcon];
 	
 	[self performSelector:@selector(showSplash)];
+	
+	[LocationManager loadLocationData];
 	
     return YES;
 }

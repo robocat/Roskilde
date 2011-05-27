@@ -89,53 +89,6 @@
 }
 
 
-- (IBAction)changeFlash:(id)sender {
-	if (self.camdevice.flash == CamDeviceFlashOn) {
-		self.camdevice.flash = CamDeviceFlashOff;
-		self.flashLabel.text = @"off";
-	} else if (self.camdevice.flash == CamDeviceFlashOff) {
-		self.camdevice.flash = CamDeviceFlashAuto;
-		self.flashLabel.text = @"auto";
-	} else {
-		self.camdevice.flash = CamDeviceFlashOn;
-		self.flashLabel.text = @"on";
-	}
-}
-
-
-- (void)rotateInterfaceToOrientation:(UIDeviceOrientation)orientation animated:(BOOL)animated {
-	void (^changeBlock)(void) = ^{
-		CGFloat rotation = (orientation == UIInterfaceOrientationPortrait? 0:
-							orientation == UIInterfaceOrientationPortraitUpsideDown? M_PI:
-							orientation == UIInterfaceOrientationLandscapeLeft? -M_PI_2:
-							orientation == UIInterfaceOrientationLandscapeRight? M_PI_2: 0);
-		self.libraryButton.transform = CGAffineTransformMakeRotation(rotation);
-		self.timerButton.transform = CGAffineTransformMakeRotation(rotation);
-		self.flipButton.transform = CGAffineTransformMakeRotation(rotation);
-		self.flashButton.transform = CGAffineTransformMakeRotation(rotation);
-		
-		if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
-			self.flipButton.frame = CGRectMake(271, 20, 31, 60);
-			self.flashButton.frame = CGRectMake(20, 20, 31, 60);
-		} else {
-			self.flipButton.frame = CGRectMake(240, 20, 60, 31);
-			self.flashButton.frame = CGRectMake(20, 20, 60, 31);
-		}
-	};
-	
-	if (animated) {
-		[UIView animateWithDuration:0.3 animations:changeBlock];
-	} else {
-		changeBlock();
-	}
-}
-
-
-- (void)didRotateToInterfaceOrientation:(UIDeviceOrientation)orientation {
-	[self rotateInterfaceToOrientation:orientation animated:YES];
-}
-
-
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
 	
@@ -163,6 +116,21 @@
 - (void)viewWillDisappear:(BOOL)animated {
 	self.camdevice = nil;
 }
+
+
+- (IBAction)changeFlash:(id)sender {
+	if (self.camdevice.flash == CamDeviceFlashOn) {
+		self.camdevice.flash = CamDeviceFlashOff;
+		self.flashLabel.text = @"off";
+	} else if (self.camdevice.flash == CamDeviceFlashOff) {
+		self.camdevice.flash = CamDeviceFlashAuto;
+		self.flashLabel.text = @"auto";
+	} else {
+		self.camdevice.flash = CamDeviceFlashOn;
+		self.flashLabel.text = @"on";
+	}
+}
+
 
 - (IBAction)takePhoto:(id)sender {
 	if (timer) {
@@ -255,6 +223,9 @@
 
 
 - (IBAction)close:(id)sender {
+	timerView.hidden = YES;
+	timerIcon.hidden = YES;
+	
 	[UIView animateWithDuration:0.2 animations:^(void) {
 		self.slideView.frame = CGRectMake(0,
 										  0,
@@ -266,6 +237,64 @@
 		[self setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
 		[self dismissModalViewControllerAnimated:YES];
 	}];
+}
+
+
+- (IBAction)timerUp:(id)sender {
+	if (timer) {
+		timerView.hidden = NO;
+		timerIcon.hidden = NO;
+	} else {
+		timerView.hidden = YES;
+		timerIcon.hidden = YES;
+	}
+}
+
+
+- (IBAction)timerDown:(id)sender {
+	timer = !timer;
+	timerButton.selected = timer;
+}
+
+
+- (IBAction)library:(id)sender {
+	UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+	imagePickerController.delegate = self;
+	imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+	[self presentModalViewController:imagePickerController animated:YES];
+}
+
+
+- (void)rotateInterfaceToOrientation:(UIDeviceOrientation)orientation animated:(BOOL)animated {
+	void (^changeBlock)(void) = ^{
+		CGFloat rotation = (orientation == UIInterfaceOrientationPortrait? 0:
+							orientation == UIInterfaceOrientationPortraitUpsideDown? M_PI:
+							orientation == UIInterfaceOrientationLandscapeLeft? -M_PI_2:
+							orientation == UIInterfaceOrientationLandscapeRight? M_PI_2: 0);
+		self.libraryButton.transform = CGAffineTransformMakeRotation(rotation);
+		self.timerButton.transform = CGAffineTransformMakeRotation(rotation);
+		self.flipButton.transform = CGAffineTransformMakeRotation(rotation);
+		self.flashButton.transform = CGAffineTransformMakeRotation(rotation);
+		
+		if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
+			self.flipButton.frame = CGRectMake(271, 20, 31, 60);
+			self.flashButton.frame = CGRectMake(20, 20, 31, 60);
+		} else {
+			self.flipButton.frame = CGRectMake(240, 20, 60, 31);
+			self.flashButton.frame = CGRectMake(20, 20, 60, 31);
+		}
+	};
+	
+	if (animated) {
+		[UIView animateWithDuration:0.3 animations:changeBlock];
+	} else {
+		changeBlock();
+	}
+}
+
+
+- (void)didRotateToInterfaceOrientation:(UIDeviceOrientation)orientation {
+	[self rotateInterfaceToOrientation:orientation animated:YES];
 }
 
 
@@ -302,12 +331,6 @@
 	self.thumbnailView = nil;
 }
 
-- (IBAction)library:(id)sender {
-	UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-	imagePickerController.delegate = self;
-	imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-	[self presentModalViewController:imagePickerController animated:YES];
-}
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
 	UIImage *image = (UIImage*)[info objectForKey:UIImagePickerControllerOriginalImage];
@@ -329,25 +352,11 @@
 	[self dismissModalViewControllerAnimated:YES];
 }
 
+
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
 	[self dismissModalViewControllerAnimated:YES];
 }
 
-- (IBAction)timerUp:(id)sender {
-	if (timer) {
-		timerView.hidden = NO;
-		timerIcon.hidden = NO;
-	} else {
-		timerView.hidden = YES;
-		timerIcon.hidden = YES;
-	}
-}
-
-
-- (IBAction)timerDown:(id)sender {
-	timer = !timer;
-	timerButton.selected = timer;
-}
 
 - (void)dealloc {
 	AudioServicesDisposeSystemSoundID(tickSound);
@@ -360,4 +369,5 @@
 	[flipButton release];
 	[super dealloc];
 }
+
 @end

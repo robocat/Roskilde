@@ -290,6 +290,10 @@
 		3EF92FCB138D864400AFFC2D /* xbg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EF92FC9138D864400AFFC2D /* xbg@2x.png */; };
 		3EF92FCF138D8DBB00AFFC2D /* BaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF92FCD138D8DB900AFFC2D /* BaseTableViewController.m */; };
 		3EF92FD4138D903A00AFFC2D /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF92FD2138D903900AFFC2D /* BaseViewController.m */; };
+		FF28D207138FAF61003136FA /* festival.json in Resources */ = {isa = PBXBuildFile; fileRef = FF28D206138FAF61003136FA /* festival.json */; };
+		FF28D20A138FAF9B003136FA /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FF28D209138FAF9B003136FA /* LocationManager.m */; };
+		FF28D215138FCA2B003136FA /* _Location.m in Sources */ = {isa = PBXBuildFile; fileRef = FF28D212138FCA2A003136FA /* _Location.m */; };
+		FF28D216138FCA2B003136FA /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = FF28D214138FCA2A003136FA /* Location.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -656,6 +660,13 @@
 		3EF92FCD138D8DB900AFFC2D /* BaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewController.m; sourceTree = "<group>"; };
 		3EF92FD1138D903800AFFC2D /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		3EF92FD2138D903900AFFC2D /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
+		FF28D206138FAF61003136FA /* festival.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = festival.json; sourceTree = "<group>"; };
+		FF28D208138FAF9B003136FA /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
+		FF28D209138FAF9B003136FA /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
+		FF28D211138FCA2A003136FA /* _Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Location.h; sourceTree = "<group>"; };
+		FF28D212138FCA2A003136FA /* _Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Location.m; sourceTree = "<group>"; };
+		FF28D213138FCA2A003136FA /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
+		FF28D214138FCA2A003136FA /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -795,6 +806,8 @@
 		3E5F0B301385B8B200555871 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				FF28D208138FAF9B003136FA /* LocationManager.h */,
+				FF28D209138FAF9B003136FA /* LocationManager.m */,
 				3EEF2A0B138AA05400A8E34A /* RFModelController.h */,
 				3EEF2A0C138AA05400A8E34A /* RFModelController.m */,
 				3E5F0B311385B8CF00555871 /* Roskilde.xcdatamodeld */,
@@ -1116,6 +1129,10 @@
 				3EEF2A1B138AA16600A8E34A /* _RFMusic.m */,
 				3EEF2A1C138AA16600A8E34A /* RFMusic.h */,
 				3EEF2A1D138AA16600A8E34A /* RFMusic.m */,
+				FF28D211138FCA2A003136FA /* _Location.h */,
+				FF28D212138FCA2A003136FA /* _Location.m */,
+				FF28D213138FCA2A003136FA /* Location.h */,
+				FF28D214138FCA2A003136FA /* Location.m */,
 			);
 			path = Roskilde;
 			sourceTree = "<group>";
@@ -1136,6 +1153,7 @@
 		3EF92E2E138D765500AFFC2D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FF28D206138FAF61003136FA /* festival.json */,
 				3EE0B9B6138FAB8800CF0531 /* Icons */,
 				3EF92E2F138D765500AFFC2D /* Images */,
 				3EF92FBA138D84A300AFFC2D /* Sounds */,
@@ -1634,6 +1652,7 @@
 				3EE0B9C2138FAB8800CF0531 /* Icon.png in Resources */,
 				3EE0B9C3138FAB8800CF0531 /* Icon@2x.png in Resources */,
 				3EE0B9C4138FAB8800CF0531 /* iTunesArtwork.png in Resources */,
+				FF28D207138FAF61003136FA /* festival.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1732,6 +1751,9 @@
 				3E613723138EDA8D0008833A /* RFConcertDetailViewController.m in Sources */,
 				3E613729138EF2120008833A /* RFCreateProfileViewController.m in Sources */,
 				3E61372E138EF5FC0008833A /* RFLoginViewController.m in Sources */,
+				FF28D20A138FAF9B003136FA /* LocationManager.m in Sources */,
+				FF28D215138FCA2B003136FA /* _Location.m in Sources */,
+				FF28D216138FCA2B003136FA /* Location.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1829,6 +1851,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ulrik Damm (X45AYMDB46)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1836,6 +1859,7 @@
 				INFOPLIST_FILE = "Roskilde/Roskilde-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9BC2465A-F842-4DB5-93CC-D1DA30310619";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1844,12 +1868,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ulrik Damm (X45AYMDB46)";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Roskilde/Roskilde-Prefix.pch";
 				INFOPLIST_FILE = "Roskilde/Roskilde-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9BC2465A-F842-4DB5-93CC-D1DA30310619";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};

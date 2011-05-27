@@ -15,12 +15,13 @@
 
 @protocol CamPreviewDelegate <NSObject>
 @optional
+
 - (void)CamPreview:(CamPreviewController*)camPreview didFailUploadingIndex:(int)index;
 - (void)CamPreview:(CamPreviewController*)camPreview didSucceedUploadingIndex:(int)index;
 
 @end
 
-@interface CamPreviewController : UIViewController <UITextViewDelegate, UIScrollViewDelegate> {
+@interface CamPreviewController : UIViewController <UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, UITableViewDataSource, UITableViewDelegate> {
 	NSUInteger selectedIndex;
 }
 
@@ -33,6 +34,7 @@
 @property (nonatomic, retain) IBOutlet RKCustomNavigationBar *navbar;
 @property (nonatomic, assign) id<CamPreviewDelegate> delegate;
 @property (nonatomic, retain) IBOutlet UIPageControl *pageControl;
+@property (nonatomic, retain) IBOutlet UIButton *locationButton;
 
 - (id)initWithImages:(NSArray*)initimages selectedIndex:(NSUInteger)index;
 
@@ -40,5 +42,6 @@
 - (IBAction)back:(id)sender;
 - (IBAction)performUpload:(id)sender;
 - (IBAction)back:(id)sender;
+- (IBAction)chooseLocation:(id)sender;
 
 @end

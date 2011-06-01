@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseTableViewController.h"
+#import <CoreData/CoreData.h>
 
 
-@interface RFArtistsTableViewController : BaseTableViewController {
-	
+@interface RFArtistsTableViewController : BaseTableViewController <NSFetchedResultsControllerDelegate> {
+	NSFetchedResultsController *	fetchedResultsController;
 }
+
+@property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 
 @end

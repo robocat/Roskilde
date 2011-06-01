@@ -31,7 +31,7 @@
 
 @implementation UIImage (Helper)
 
-CGFloat degreesToRadiens(CGFloat degrees){
+static inline CGFloat degreesToRadiens(CGFloat degrees){
 	return degrees * M_PI / 180.0f;
 }
 

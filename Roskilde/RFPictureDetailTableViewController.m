@@ -16,6 +16,7 @@
 #import "NSDictionaryHelper.h"
 #import "NSDateHelper.h"
 #import "ReplyTableViewCell.h"
+#import "FullscreenViewController.h"
 
 
 #define kStatsBarHieght		30.0
@@ -96,7 +97,9 @@
 	[self setWhiteTitle:[NSString stringWithFormat:@"%@'s Picture", username]];
 	
 	zoomingViewController = [[ZoomingViewController alloc] init];
-	zoomingViewController.view = zoomingView;
+	FullscreenViewController *fullscreenViewController = [[FullscreenViewController alloc] init];
+	fullscreenViewController.view = [[zoomingView subviews] objectAtIndex:0];
+//	zoomingViewController.view = zoomingView;
 	
 //	CGRect zoomingViewFrame = zoomingViewController.view.frame;
 //	CGRect ownBounds = self.view.bounds;
@@ -386,8 +389,8 @@
 		self.imageView.image = nil;
 	}
 	
-	self.imageView.contentMode = UIViewContentModeScaleAspectFit;
-	self.imageView.clipsToBounds = YES;
+	self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+//	self.imageView.clipsToBounds = YES;
 	
 	CGFloat scale = ([[UIScreen mainScreen] respondsToSelector:@selector (scale)] ? [[UIScreen mainScreen] scale] : 1);
 	

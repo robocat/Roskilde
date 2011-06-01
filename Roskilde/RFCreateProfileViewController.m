@@ -14,8 +14,7 @@
 @implementation RFCreateProfileViewController
 @synthesize loginButton;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
@@ -23,43 +22,31 @@
     return self;
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
 	[loginButton release];
     [super dealloc];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
 }
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
 	[super viewDidLoad];
-	// Do any additional setup after loading the view from its nib.
 
 	self.title = @"Create Profile";
 	
 	loginButton.layer.cornerRadius = 8;
 }
 
-- (void)viewDidUnload
-{
+- (void)viewDidUnload {
 	[self setLoginButton:nil];
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
@@ -67,6 +54,19 @@
 	RFLoginViewController *controller = [[RFLoginViewController alloc] initWithNibName:@"RFLoginViewController" bundle:nil];
 	[self.navigationController pushViewController:controller animated:YES];
 	[controller release];
+}
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	return 2;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+	UITableViewCell *cell = nil;
+	
+//	if ((cell = [tableView dequeueReusableCellWithIdentifier:@"TableCell"])) {
+//		<#statements#>
+//	}
 }
 
 @end

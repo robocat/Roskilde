@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3E3745061393CB2600E6DA3D /* AuthorTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E3745051393CB2600E6DA3D /* AuthorTableViewCell.m */; };
-		3E37450F1393DD1000E6DA3D /* ReplyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E37450E1393DD1000E6DA3D /* ReplyTableViewCell.m */; };
 		3E3BB7751393F1C600BD511B /* music.xml in Resources */ = {isa = PBXBuildFile; fileRef = 3E3BB7741393F1C600BD511B /* music.xml */; };
 		3E3BB84C1394001300BD511B /* acoustic.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E3BB78F1394001300BD511B /* acoustic.png */; };
 		3E3BB84D1394001300BD511B /* acoustic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E3BB7901394001300BD511B /* acoustic@2x.png */; };
@@ -251,11 +249,7 @@
 		3EE0BA0D138FD01300CF0531 /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EE0BA08138FD01300CF0531 /* UIImage+Alpha.m */; };
 		3EE0BA0E138FD01300CF0531 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EE0BA0A138FD01300CF0531 /* UIImage+Resize.m */; };
 		3EE0BA0F138FD01300CF0531 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EE0BA0C138FD01300CF0531 /* UIImage+RoundedCorner.m */; };
-		3EE0BA24138FFFCA00CF0531 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EE0BA23138FFFCA00CF0531 /* LocationManager.m */; };
-		3EE0BA29138FFFDD00CF0531 /* _Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EE0BA26138FFFDD00CF0531 /* _Location.m */; };
-		3EE0BA2A138FFFDD00CF0531 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EE0BA28138FFFDD00CF0531 /* Location.m */; };
 		3EE0BA2C139001D100CF0531 /* festival.json in Resources */ = {isa = PBXBuildFile; fileRef = 3EE0BA2B139001D100CF0531 /* festival.json */; };
-		3EE0BA301391744700CF0531 /* NSDictionaryHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EE0BA2F1391744700CF0531 /* NSDictionaryHelper.m */; };
 		3EEF29B6138A8FBD00A8E34A /* BaseTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF29B5138A8FBD00A8E34A /* BaseTabBarController.m */; };
 		3EEF29BB138A912400A8E34A /* RFScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF29B9138A912400A8E34A /* RFScheduleViewController.m */; };
 		3EEF29BC138A912400A8E34A /* RFScheduleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EEF29BA138A912400A8E34A /* RFScheduleViewController.xib */; };
@@ -313,6 +307,12 @@
 		3EF92FBC138D84A300AFFC2D /* tick.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 3EF92FBB138D84A300AFFC2D /* tick.aiff */; };
 		3EF92FCF138D8DBB00AFFC2D /* BaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF92FCD138D8DB900AFFC2D /* BaseTableViewController.m */; };
 		3EF92FD4138D903A00AFFC2D /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF92FD2138D903900AFFC2D /* BaseViewController.m */; };
+		FF3953FE13966B6D007BDF33 /* ReplyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E37450E1393DD1000E6DA3D /* ReplyTableViewCell.m */; };
+		FF3953FF13966B70007BDF33 /* AuthorTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E3745051393CB2600E6DA3D /* AuthorTableViewCell.m */; };
+		FF39540013966B8D007BDF33 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EE0BA23138FFFCA00CF0531 /* LocationManager.m */; };
+		FF39540113966F25007BDF33 /* NSDictionaryHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EE0BA2F1391744700CF0531 /* NSDictionaryHelper.m */; };
+		FF39540713967350007BDF33 /* FullscreenImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF39540613967350007BDF33 /* FullscreenImageView.m */; };
+		FF39540A1396792A007BDF33 /* FullscreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3954091396792A007BDF33 /* FullscreenViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -708,6 +708,10 @@
 		3EF92FCD138D8DB900AFFC2D /* BaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewController.m; sourceTree = "<group>"; };
 		3EF92FD1138D903800AFFC2D /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		3EF92FD2138D903900AFFC2D /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
+		FF39540513967350007BDF33 /* FullscreenImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullscreenImageView.h; sourceTree = "<group>"; };
+		FF39540613967350007BDF33 /* FullscreenImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FullscreenImageView.m; sourceTree = "<group>"; };
+		FF3954081396792A007BDF33 /* FullscreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullscreenViewController.h; sourceTree = "<group>"; };
+		FF3954091396792A007BDF33 /* FullscreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FullscreenViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1300,6 +1304,10 @@
 				3E3745051393CB2600E6DA3D /* AuthorTableViewCell.m */,
 				3E37450D1393DD1000E6DA3D /* ReplyTableViewCell.h */,
 				3E37450E1393DD1000E6DA3D /* ReplyTableViewCell.m */,
+				FF39540513967350007BDF33 /* FullscreenImageView.h */,
+				FF39540613967350007BDF33 /* FullscreenImageView.m */,
+				FF3954081396792A007BDF33 /* FullscreenViewController.h */,
+				FF3954091396792A007BDF33 /* FullscreenViewController.m */,
 			);
 			name = Pictures;
 			sourceTree = "<group>";
@@ -1810,16 +1818,20 @@
 				3EEF29F2138A955400A8E34A /* RKCustomNavigationBar.m in Sources */,
 				3EEF29F3138A955400A8E34A /* RKTableViewCell.m in Sources */,
 				3EEF29F4138A955400A8E34A /* NSArrayHelper.m in Sources */,
+				FF3953FF13966B70007BDF33 /* AuthorTableViewCell.m in Sources */,
 				3EEF29F5138A955400A8E34A /* NSDateHelper.m in Sources */,
 				3EEF29F6138A955400A8E34A /* NSStringHelper.m in Sources */,
 				3EEF29F7138A955400A8E34A /* UIImage-Extensions.m in Sources */,
 				3EEF29F8138A955400A8E34A /* UIImageHelper.m in Sources */,
+				FF3953FE13966B6D007BDF33 /* ReplyTableViewCell.m in Sources */,
 				3EEF29F9138A955400A8E34A /* VTPG_Common.m in Sources */,
 				3EEF2A0D138AA05400A8E34A /* RFModelController.m in Sources */,
+				FF39540113966F25007BDF33 /* NSDictionaryHelper.m in Sources */,
 				3EEF2A15138AA0D500A8E34A /* NSManagedObjectContext+UpdateEntity.m in Sources */,
 				3EEF2A16138AA0D500A8E34A /* RKCoreDataManager.m in Sources */,
 				3EEF2A17138AA0D500A8E34A /* RKSimpleCoreData.m in Sources */,
 				3EEF2A1E138AA16600A8E34A /* _RFMusic.m in Sources */,
+				FF39540013966B8D007BDF33 /* LocationManager.m in Sources */,
 				3EEF2A1F138AA16600A8E34A /* RFMusic.m in Sources */,
 				3E54C498138BE6B400C47A88 /* RFGlobal.m in Sources */,
 				3EF92E21138D737300AFFC2D /* EntryTableViewCell.m in Sources */,
@@ -1846,9 +1858,8 @@
 				3EE0BA0D138FD01300CF0531 /* UIImage+Alpha.m in Sources */,
 				3EE0BA0E138FD01300CF0531 /* UIImage+Resize.m in Sources */,
 				3EE0BA0F138FD01300CF0531 /* UIImage+RoundedCorner.m in Sources */,
-				FF28D20A138FAF9B003136FA /* LocationManager.m in Sources */,
-				FF28D215138FCA2B003136FA /* _Location.m in Sources */,
-				FF28D216138FCA2B003136FA /* Location.m in Sources */,
+				FF39540713967350007BDF33 /* FullscreenImageView.m in Sources */,
+				FF39540A1396792A007BDF33 /* FullscreenViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1946,6 +1957,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ulrik Damm (X45AYMDB46)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1953,6 +1965,7 @@
 				INFOPLIST_FILE = "Roskilde/Roskilde-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9BC2465A-F842-4DB5-93CC-D1DA30310619";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;

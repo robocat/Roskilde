@@ -9,17 +9,23 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 
+@class RFMusic;
 
 @interface RFConcertDetailViewController : BaseViewController {
     
+	RFMusic *_concert;
+	
 	UIButton *starButton;
 	UIButton *websiteButton;
 	UIButton *itunesButton;
 	UILabel *artistLabel;
 	UILabel *playtimeLabel;
+	UITextView *descriptionTextView;
 	UIButton *titleButton;
 	UIView *infoView;
 }
+
+@property (nonatomic, retain) RFMusic *concert;
 
 @property (nonatomic, retain) IBOutlet UIView *infoView;
 @property (nonatomic, retain) IBOutlet UIButton *titleButton;
@@ -28,6 +34,7 @@
 @property (nonatomic, retain) IBOutlet UIButton *itunesButton;
 @property (nonatomic, retain) IBOutlet UILabel *artistLabel;
 @property (nonatomic, retain) IBOutlet UILabel *playtimeLabel;
+@property (nonatomic, retain) IBOutlet UITextView *descriptionTextView;
 
 - (IBAction)toggleInfoView:(id)sender;
 

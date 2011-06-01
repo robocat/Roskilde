@@ -15,7 +15,7 @@
 #import "RFPictureDetailTableViewController.h"
 #import "NSDateHelper.h"
 #import "RFCreateProfileViewController.h"
-
+#import "NSDictionaryHelper.h"
 
 
 #define kImageDisplayWidth		280.0
@@ -142,27 +142,8 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//	NSDictionary *entry = [self.entries objectAtIndex:indexPath.section];
-//	int width	= [[entry objectForKey:@"width"] intValue];
-//	int height	= [[entry objectForKey:@"height"] intValue];
-//	CGFloat newHeight = [self entryHeightWithWidth:width height:height];
-	
-	return kImageDisplayHeight + 80.0;
+	return kImageDisplayHeight + 100.0;
 }
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-	return 20.0;
-}
-
-- (UIView*)tableView:(UITableView*)tableView viewForFooterInSection:(NSInteger)section
-{	
-	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
-	label.backgroundColor = [UIColor clearColor];
-	label.text = @"";
-	
-	return [label autorelease];
-}
-
 
 - (void)configureCell:(UITableViewCell *)cell_
           atIndexPath:(NSIndexPath*)indexPath {
@@ -172,8 +153,8 @@
 	NSDictionary *entry = [self.entries objectAtIndex:indexPath.section];
 	
 	NSDictionary *author		= [entry objectForKey:@"created_by"];
-	cell.author					= [author objectForKey:@"fullname"];
-	cell.location				= [entry objectForKey:@"location"];
+	cell.author					= [author objectOrEmptyStringForKey:@"fullname"];
+	cell.location				= [entry objectOrEmptyStringForKey:@"location"];
 	cell.creationDate			= [NSDate localDateFromUTCFormattedDate:[NSDate dateWithDateTimeString:[entry objectForKey:@"created_at"]]];
 	cell.imageReplies			= [[entry objectForKey:@"image_replies_count"] intValue];
 	cell.views					= [[entry objectForKey:@"views_count"] intValue];;
@@ -285,6 +266,8 @@
 		
 		// JSONKit parse
 		id parsedData = [responseString objectFromJSONString];
+		
+		LOG_EXPR(parsedData);
 		
 		self.entries = nil;
 		//		[self.entries addObjectsFromArray:parsedData];

@@ -77,10 +77,8 @@
 - (void)addThumbnail:(UIImage*)thumbnail {
 	UIButton *imageView = [UIButton buttonWithType:UIButtonTypeRoundedRect];
 	imageView.frame = CGRectMake(-60, 5, 50, 50);
-	[imageView setImage:thumbnail forState:UIControlStateNormal];
-	[imageView setImage:thumbnail forState:UIControlStateHighlighted];
-	imageView.contentMode = UIViewContentModeScaleAspectFill;
-	[imageView addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
+	imageView.contentMode = UIViewContentModeCenter;
+	imageView.clipsToBounds = YES;
 	imageView.layer.shadowColor = [UIColor blackColor].CGColor;
 	imageView.layer.shadowOffset = CGSizeMake(0, 0);
 	imageView.layer.shadowRadius = 2.5;
@@ -90,6 +88,10 @@
 	CGPathAddRect(shadowPath, NULL, imageView.bounds);
 	imageView.layer.shadowPath = shadowPath;
 	CGPathRelease(shadowPath);
+	
+	[imageView setImage:thumbnail forState:UIControlStateNormal];
+	[imageView setImage:thumbnail forState:UIControlStateHighlighted];
+	[imageView addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
 	
 	[self addSubview:imageView];
 	[thumbnails addObject:imageView];

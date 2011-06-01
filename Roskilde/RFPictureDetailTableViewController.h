@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseRefreshTableViewController.h"
+#import "FLImageView.h"
 
 
 @class ZoomingViewController;
@@ -18,10 +19,12 @@
 	
 	ZoomingViewController *zoomingViewController;
 	UIView *zoomingView;
+	FLImageView *imageView;
 }
 
 @property (nonatomic, retain) NSDictionary *entry;
 @property (nonatomic, retain) NSArray *replies;
 @property (nonatomic, retain) IBOutlet UIView *zoomingView;
+@property (nonatomic, retain) IBOutlet FLImageView *imageView;
 
 @end

@@ -8,9 +8,12 @@
 
 #import "RFArtistsTableViewController.h"
 #import "RFConcertDetailViewController.h"
+#import "RFModelController.h"
 
 
 @implementation RFArtistsTableViewController
+
+@synthesize fetchedResultsController;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -23,6 +26,7 @@
 
 - (void)dealloc
 {
+	fetchedResultsController = nil;
     [super dealloc];
 }
 
@@ -47,6 +51,9 @@
 
 	// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
 	// self.navigationItem.rightBarButtonItem = self.editButtonItem;
+	
+	NSError *error = nil;
+	[[self fetchedResultsController] performFetch:&error];
 }
 
 - (void)viewDidUnload
@@ -84,16 +91,53 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return 1;
+    return [[fetchedResultsController sections] count];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return 1;
+    id <NSFetchedResultsSectionInfo> sectionInfo = nil;
+	NSArray * sections = [fetchedResultsController sections];
+	if ([sections count] > 0) {
+		sectionInfo = [sections objectAtIndex:section];
+		return [sectionInfo numberOfObjects];
+	}
+	else {
+		return 0;
+	}
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+	UIImageView * imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator.png"]];
+	UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 1.0f, 200.f, 20.0f)];
+	id <NSFetchedResultsSectionInfo> sectionInfo = [[fetchedResultsController sections] objectAtIndex:section];
+	label.backgroundColor = [UIColor clearColor];
+	label.text = [sectionInfo name];
+	label.textColor = [UIColor whiteColor];
+	label.font = [UIFont boldSystemFontOfSize:18];
+	[imageview addSubview:label];
+    [label release];
+	return [imageview autorelease];
+}
+
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+    return [fetchedResultsController sectionIndexTitles];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
+    return [fetchedResultsController sectionForSectionIndexTitle:title atIndex:index];
+}
+
+
+- (void)configureCell:(UITableViewCell *)cell 
+          atIndexPath:(NSIndexPath*)indexPath
+{
+	RFMusic *music = [fetchedResultsController objectAtIndexPath:indexPath];
+	cell.textLabel.text = music.artist;
+//	cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@, %@", [music.beginDate formattedDateStringForDisplay], [music.beginDate formattedTimeStringForDisplay], music.venue];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -107,10 +151,24 @@
     
     // Configure the cell...
 	
-	cell.textLabel.text = @"hello";
+	[self configureCell:cell atIndexPath:indexPath];
     
     return cell;
 }
+
+
+//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+//	cell.textLabel.textColor = [UIColor colorWithWhite:0.90 alpha:1.000];
+//	
+//	if (indexPath.row % 2)
+//	{
+//        cell.backgroundColor = [UIColor colorWithRed:0.166 green:0.163 blue:0.163 alpha:1.000];
+//	}
+//	else {
+//		cell.backgroundColor = [UIColor colorWithWhite:0.101 alpha:1.000];
+//	}
+//}
+
 
 /*
 // Override to support conditional editing of the table view.
@@ -159,8 +217,104 @@
 	RFConcertDetailViewController *detailViewController = [[RFConcertDetailViewController alloc] initWithNibName:@"RFConcertDetailViewController" bundle:nil];
 	// ...
 	// Pass the selected object to the new view controller.
+	detailViewController.concert = [fetchedResultsController objectAtIndexPath:indexPath];
 	[self.navigationController pushViewController:detailViewController animated:YES];
 	[detailViewController release];
 }
+
+
+#pragma mark -
+#pragma mark Fetched results controller
+
+- (NSFetchedResultsController*)fetchedResultsController 
+{
+	if (fetchedResultsController) return fetchedResultsController;
+	
+	NSManagedObjectContext *managedObjectContext = [[[RFModelController defaultModelController] coreDataManager] managedObjectContext];
+	
+	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Music" 
+											  inManagedObjectContext:managedObjectContext];
+	[fetchRequest setEntity:entity];
+	
+	[fetchRequest setFetchBatchSize:20];
+	
+	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"artist"
+																   ascending:YES];
+	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+	
+	[fetchRequest setSortDescriptors:sortDescriptors];
+	
+	NSFetchedResultsController *frc = nil;
+	frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest 
+											  managedObjectContext:managedObjectContext
+												sectionNameKeyPath:@"artistInitial"
+														 cacheName:nil];
+	[frc setDelegate:self];
+	[self setFetchedResultsController:frc];
+	[frc release], frc = nil;
+	
+	[fetchRequest release], fetchRequest = nil;
+	[sortDescriptor release], sortDescriptor = nil;
+	[sortDescriptors release], sortDescriptors = nil;
+	
+	return fetchedResultsController;
+}    
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController*)controller 
+{
+	[[self tableView] beginUpdates];
+}
+
+- (void)controller:(NSFetchedResultsController*)controller 
+  didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo 
+           atIndex:(NSUInteger)sectionIndex 
+     forChangeType:(NSFetchedResultsChangeType)type 
+{
+	switch(type) {
+		case NSFetchedResultsChangeInsert:
+			[[self tableView] insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] 
+							withRowAnimation:UITableViewRowAnimationFade];
+			break;
+		case NSFetchedResultsChangeDelete:
+			[[self tableView] deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex]
+							withRowAnimation:UITableViewRowAnimationFade];
+			break;
+	}
+}
+
+- (void)controller:(NSFetchedResultsController*)controller 
+   didChangeObject:(id)anObject 
+       atIndexPath:(NSIndexPath*)indexPath 
+     forChangeType:(NSFetchedResultsChangeType)type 
+      newIndexPath:(NSIndexPath*)newIndexPath 
+{
+	switch(type) {
+		case NSFetchedResultsChangeInsert:
+			[[self tableView] insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+									withRowAnimation:UITableViewRowAnimationFade];
+			break;
+		case NSFetchedResultsChangeDelete:
+			[[self tableView] deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+									withRowAnimation:UITableViewRowAnimationFade];
+			break;
+		case NSFetchedResultsChangeUpdate:
+			[self configureCell:[[self tableView] cellForRowAtIndexPath:indexPath]
+					atIndexPath:indexPath];
+			break;
+		case NSFetchedResultsChangeMove:
+			[[self tableView] deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+									withRowAnimation:UITableViewRowAnimationFade];
+			[[self tableView] insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+									withRowAnimation:UITableViewRowAnimationFade];
+			break;
+	}  
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController*)controller 
+{
+	[[self tableView] endUpdates];
+} 
+
 
 @end

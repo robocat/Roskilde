@@ -286,7 +286,7 @@
 	[formRequest setPostValue:@"ww"					forKey:@"password"];
 	[formRequest setPostValue:self.description.text	forKey:@"message"];
 	[formRequest setPostValue:self.location.text	forKey:@"location"];
-	[formRequest setPostValue:@"iPhone"				forKey:@"source"];
+	[formRequest setPostValue:@"Roskilde app"		forKey:@"via"];
 	
 	
 	// Prepare image

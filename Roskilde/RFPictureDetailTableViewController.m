@@ -12,6 +12,21 @@
 #import "ASIHTTPRequest.h"
 #import "ASIDownloadCache.h"
 #import "JSONKit.h"
+#import "AuthorTableViewCell.h"
+#import "NSDictionaryHelper.h"
+#import "NSDateHelper.h"
+#import "ReplyTableViewCell.h"
+
+
+#define kStatsBarHieght		30.0
+#define kAuthMinHieght		64.0
+
+#define kRowOffset			2
+
+
+@interface RFPictureDetailTableViewController ()
+- (void)setImageUrl:(NSString*)url size:(CGSize)size dlsize:(CGSize)dlsize;
+@end
 
 
 @implementation RFPictureDetailTableViewController
@@ -19,6 +34,7 @@
 @synthesize entry = _entry;
 @synthesize replies = _replies;
 @synthesize zoomingView;
+@synthesize imageView;
 
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -37,6 +53,7 @@
 	[zoomingViewController release];
 	zoomingViewController = nil;
 	
+	[imageView release];
     [super dealloc];
 }
 
@@ -78,7 +95,6 @@
 	
 	[self setWhiteTitle:[NSString stringWithFormat:@"%@'s Picture", username]];
 	
-	
 	zoomingViewController = [[ZoomingViewController alloc] init];
 	zoomingViewController.view = zoomingView;
 	
@@ -96,6 +112,7 @@
 
 - (void)viewDidUnload
 {
+	[self setImageView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -145,8 +162,12 @@
 	{
 		return 300.0;
 	}
+	else if (indexPath.row == 1)
+	{
+		return kStatsBarHieght + kAuthMinHieght;
+	}
 	else {
-		return 100.0;
+		return kAuthMinHieght;
 	}
 }
 
@@ -154,18 +175,43 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [self.replies count] + 1;
+    return [self.replies count] + kRowOffset;
+}
+
+
+- (void)configureAuthorCell:(UITableViewCell *)cell_
+          atIndexPath:(NSIndexPath*)indexPath {
+	
+	AuthorTableViewCell * cell	= (AuthorTableViewCell *)cell_;
+	
+	NSDictionary *author		= [self.entry objectForKey:@"created_by"];
+	cell.author					= [author objectOrEmptyStringForKey:@"fullname"];
+	
+	cell.location				= [self.entry objectOrEmptyStringForKey:@"location"];
+	cell.creationDate			= [NSDate localDateFromUTCFormattedDate:[NSDate dateWithDateTimeString:[self.entry objectForKey:@"created_at"]]];
+	cell.imageReplies			= [[self.entry objectForKey:@"image_replies_count"] intValue];
+	cell.views					= [[self.entry objectForKey:@"views_count"] intValue];
+	cell.replies				= [[self.entry objectForKey:@"comment_replies_count"] intValue];
+	cell.likes					= [[self.entry objectForKey:@"likers"] count];
+	cell.comment				= [self.entry objectOrEmptyStringForKey:@"comment"];
+	
+	[cell setAvatarUrl:[author objectForKey:@"avatar_url"] size:CGSizeMake(44.0, 44.0)];
 }
 
 
 - (void)configureCell:(UITableViewCell *)cell_
           atIndexPath:(NSIndexPath*)indexPath {
 	
-//	EntryTableViewCell * cell	= (EntryTableViewCell *)cell_;
+	ReplyTableViewCell * cell	= (ReplyTableViewCell *)cell_;
 	
-//	NSDictionary *reply = [self.replies objectAtIndex:indexPath.section];
+	NSDictionary *reply = [self.replies objectAtIndex:indexPath.row - kRowOffset];
 	
-	cell_.textLabel.text = @"hi";
+	NSDictionary *author		= [reply objectForKey:@"created_by"];
+	cell.author					= [author objectOrEmptyStringForKey:@"fullname"];
+	cell.creationDate			= [NSDate localDateFromUTCFormattedDate:[NSDate dateWithDateTimeString:[reply objectForKey:@"created_at"]]];
+	cell.comment				= [reply objectOrEmptyStringForKey:@"comment"];
+	
+	[cell setAvatarUrl:[author objectForKey:@"avatar_url"] size:CGSizeMake(44.0, 44.0)];
 }
 
 
@@ -173,10 +219,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	static NSString *FirstCellIdentifier = @"FirstCell";
+	static NSString *AuthorCellIdentifier = @"AuthorCell";
 	static NSString *CellIdentifier = @"Cell";
 
 	UITableViewCell *cell = nil;
-	
+
 	if (indexPath.row == 0)
 	{
 		cell = [tableView dequeueReusableCellWithIdentifier:FirstCellIdentifier];
@@ -185,18 +232,28 @@
 			[cell addSubview:self.zoomingView];
 		}
 	}
-	else
+	else if (indexPath.row == 1)
 	{
-		cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+		cell = (AuthorTableViewCell *)[tableView dequeueReusableCellWithIdentifier:AuthorCellIdentifier];
 		if (cell == nil) {
-			cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+			cell = (AuthorTableViewCell *)[[[AuthorTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:FirstCellIdentifier] autorelease];
 		}
 		
-//		[self configureCell:cell atIndexPath:indexPath];
+		[self configureAuthorCell:cell atIndexPath:indexPath];
+	}
+	else
+	{
+		cell = (ReplyTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+		if (cell == nil) {
+			cell = (ReplyTableViewCell *)[[[ReplyTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+		}
+		
+		[self configureCell:cell atIndexPath:indexPath];
 	}
 	
-	// Configure the cell...
-	
+	cell.accessoryType = UITableViewCellAccessoryNone;
+	cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
 	return cell;
 }
 
@@ -216,7 +273,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
+    }
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
@@ -263,7 +320,28 @@
 	[self stopLoading];
 }
 
+
+- (CGFloat) entryHeightWithWidth:(CGFloat)width height:(CGFloat)height {
+	float defaultWidth = self.imageView.bounds.size.width;
+	if (width == 0)
+		width = 640;
+	if (height == 0)
+		height = 480;
+	
+	return (defaultWidth / ((float)width / (float)height));
+}
+
 - (void)fetchReplies {
+	
+	int width	= [[self.entry objectForKey:@"width"] intValue];
+	int height	= [[self.entry objectForKey:@"height"] intValue];
+	CGFloat dlHeight = [self entryHeightWithWidth:width height:height];
+	
+	[self setImageUrl:[self.entry objectForKey:@"image_url"]
+				 size:CGSizeMake(self.imageView.bounds.size.width, self.imageView.bounds.size.height)
+			   dlsize:CGSizeMake(self.imageView.bounds.size.width, dlHeight)];
+
+	
 	NSString *urlString = [NSString stringWithFormat:@"%@/entries/%@/replies", kXdkAPIBaseUrl, [self.entry objectForKey:@"entry_id"]];
 	NSURL *url = [NSURL URLWithString:urlString];
 	__block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
@@ -278,8 +356,6 @@
 		
 		// JSONKit parse
 		id parsedData = [responseString objectFromJSONString];
-		
-		LOG_EXPR(parsedData);
 		
 		self.replies = nil;
 		//		[self.entries addObjectsFromArray:parsedData];
@@ -299,6 +375,28 @@
 
 - (void) showActions:(id)sender {
 	
+}
+
+
+- (void)setImageUrl:(NSString*)url
+			   size:(CGSize)size
+			 dlsize:(CGSize)dlsize {
+	
+	if (self.imageView) {
+		self.imageView.image = nil;
+	}
+	
+	self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+	self.imageView.clipsToBounds = YES;
+	
+	CGFloat scale = ([[UIScreen mainScreen] respondsToSelector:@selector (scale)] ? [[UIScreen mainScreen] scale] : 1);
+	
+	float maxsize = round(MAX(dlsize.width, dlsize.height));
+	
+	UIImage * placeholder = [UIImage imageNamed:@"xbg.png"];
+	NSString *urlString = [NSString stringWithFormat:@"%@=s%.f", url, maxsize * scale];
+	
+	[self.imageView loadImageAtURLString:urlString placeholderImage:placeholder];
 }
 
 @end

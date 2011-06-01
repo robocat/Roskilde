@@ -8,9 +8,19 @@
 
 #import "RFConcertDetailViewController.h"
 #import "RKCustomNavigationBar.h"
+#import "RFMusic.h"
+#import "NSDateHelper.h"
+
+
+@interface RFConcertDetailViewController ()
+- (CGSize) calculateHeightOfTextFromWidth:(NSString*)text font: (UIFont*)withFont width:(float)width linebreak:(UILineBreakMode)lineBreakMode;
+@end
+
 
 
 @implementation RFConcertDetailViewController
+
+@synthesize concert = _concert;
 @synthesize infoView;
 @synthesize titleButton;
 @synthesize starButton;
@@ -18,6 +28,7 @@
 @synthesize itunesButton;
 @synthesize artistLabel;
 @synthesize playtimeLabel;
+@synthesize descriptionTextView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -30,6 +41,8 @@
 
 - (void)dealloc
 {
+	self.concert = nil;
+	
 	[starButton release];
 	[websiteButton release];
 	[itunesButton release];
@@ -37,6 +50,8 @@
 	[artistLabel release];
 	[playtimeLabel release];
 	[infoView release];
+	
+	[descriptionTextView release];
     [super dealloc];
 }
 
@@ -62,6 +77,37 @@
 	CGRect frame = self.infoView.frame;
 //	self.infoView.frame = CGRectMake(-frame.size.width, 40.0, frame.size.width, frame.size.height);
 	self.infoView.frame = CGRectMake(0.0, 258.0, frame.size.width, frame.size.height);
+	
+	
+	self.title = self.concert.artist;
+	
+	// Artist label
+	NSString * artistString = [self.concert.artist uppercaseString];
+	
+	CGSize size = [self calculateHeightOfTextFromWidth:artistString
+												  font:[UIFont boldSystemFontOfSize:24]
+												 width:artistLabel.frame.size.width
+											 linebreak:UILineBreakModeTailTruncation];
+	
+	if (size.height > artistLabel.frame.size.height) {
+		size = [self calculateHeightOfTextFromWidth:artistString
+											   font:[UIFont boldSystemFontOfSize:16]
+											  width:artistLabel.frame.size.width
+										  linebreak:UILineBreakModeTailTruncation];
+		
+		if (size.height > artistLabel.frame.size.height) {
+			artistLabel.font = [UIFont boldSystemFontOfSize:12];
+		}
+		else {
+			artistLabel.font = [UIFont boldSystemFontOfSize:16];
+		}
+	}
+	
+	artistLabel.text = artistString;
+	
+	self.descriptionTextView.text = self.concert.descriptionText;
+	self.playtimeLabel.text = [self.concert.beginDate formattedDate];
+	
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -80,6 +126,7 @@
 	[self setArtistLabel:nil];
 	[self setPlaytimeLabel:nil];
 	[self setInfoView:nil];
+	[self setDescriptionTextView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -117,6 +164,13 @@
 		} completion:^(BOOL finished) {
 		}];
 	}
+}
+
+
+- (CGSize) calculateHeightOfTextFromWidth:(NSString*)text font: (UIFont*)withFont width:(float)width linebreak:(UILineBreakMode)lineBreakMode{
+	return [text sizeWithFont:withFont 
+			constrainedToSize:CGSizeMake(width, FLT_MAX) 
+				lineBreakMode:lineBreakMode];
 }
 
 @end

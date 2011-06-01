@@ -8,6 +8,11 @@
 
 #import "RoskildeAppDelegate.h"
 #import "LocationManager.h"
+#import "RFModelController.h"
+#import "TBXML.h"
+#import "NSDateHelper.h"
+
+
 
 @implementation RoskildeAppDelegate
 
@@ -52,6 +57,9 @@
 	[self performSelector:@selector(showSplash)];
 	
 	[LocationManager loadLocationData];
+	
+	[self performSelector:@selector(importMusicData) withObject:nil afterDelay:0.0];
+	
 	
     return YES;
 }
@@ -168,7 +176,7 @@
 
 
 - (void) showSplash {
-	splashView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 480.0f)];
+	splashView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 20.0f, 320.0f, 460.0f)];
 	splashView.image = [UIImage imageNamed:@"Default.png"];
 	[self.window addSubview:splashView];
 	[self.window bringSubviewToFront:splashView];
@@ -181,5 +189,67 @@
 	}];
 }
 
+
+- (void)importMusicData {
+//	dispatch_async(dispatch_get_global_queue(0, 0), ^(void) {
+		RFModelController *modelController = [RFModelController defaultModelController];
+		
+		if (![modelController hasMusic]) {
+//			[modelController deleteAllMusic];
+//			[modelController save];
+			
+			// Load and parse the books.xml file
+			TBXML *tbxml = [[TBXML tbxmlWithXMLFile:@"music.xml"] retain];
+			
+			// Obtain root element
+			TBXMLElement * root = tbxml.rootXMLElement;
+			
+			// if root element is valid
+			if (root) {
+				TBXMLElement * concert = [TBXML childElementNamed:@"Concert" parentElement:root];
+				
+				while (concert != nil) {
+					
+					RFMusic *music = [modelController newMusic]; // retained
+					
+					
+					NSString * name = [TBXML valueOfAttributeNamed:@"artist" forElement:concert];
+					
+					music.artist			= [name stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
+					music.artistId			= [TBXML valueOfAttributeNamed:@"id" forElement:concert];
+					music.artistInitial		= [TBXML valueOfAttributeNamed:@"artist_initial" forElement:concert];
+					music.beginDate			= [NSDate dateWithISO8601String:[TBXML valueOfAttributeNamed:@"begin_timestamp" forElement:concert]];
+					music.country			= [TBXML valueOfAttributeNamed:@"country" forElement:concert];
+					
+					
+					NSString * descriptionText = [TBXML valueOfAttributeNamed:@"description" forElement:concert];
+					
+					music.descriptionText	= [[descriptionText stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"] stringByReplacingOccurrencesOfString:@"&quot;" withString:@"&\""];
+					music.durationValue		= [[TBXML valueOfAttributeNamed:@"duration" forElement:concert] intValue];
+					music.endDate			= [NSDate dateWithISO8601String:[TBXML valueOfAttributeNamed:@"end_timestamp" forElement:concert]];
+					music.genre				= [TBXML valueOfAttributeNamed:@"genre" forElement:concert];
+					music.imageThumbUrl		= [TBXML valueOfAttributeNamed:@"thumb_url" forElement:concert];
+					music.imageUrl			= [TBXML valueOfAttributeNamed:@"image_url" forElement:concert];
+					music.itunes			= [TBXML valueOfAttributeNamed:@"itunes" forElement:concert];
+					music.link				= [TBXML valueOfAttributeNamed:@"link" forElement:concert];
+					music.scene				= [TBXML valueOfAttributeNamed:@"scene" forElement:concert];
+					music.title				= [TBXML valueOfAttributeNamed:@"title" forElement:concert];
+					music.web				= [TBXML valueOfAttributeNamed:@"web" forElement:concert];
+					// updatedDate
+					
+					[music release];
+					
+					// find the next sibling element named "author"
+					concert = [TBXML nextSiblingNamed:@"Concert" searchFromElement:concert];
+				}
+				
+				// release resources
+				[tbxml release];
+				
+				[modelController save];
+			}
+		}
+//	});
+}
 
 @end

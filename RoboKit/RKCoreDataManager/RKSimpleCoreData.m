@@ -28,7 +28,7 @@
 	
 	//If our entity doesn't exist return nil
 	if (!entity) {
-		NSLog(@"entity doesn't exist in entities:%@", [managedObjectModel entitiesByName]);
+//		NSLog(@"entity doesn't exist in entities:%@", [managedObjectModel entitiesByName]);
 		return nil;
 	}
 	

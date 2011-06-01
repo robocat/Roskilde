@@ -32,12 +32,14 @@
 - (void) save;
 
 
+- (BOOL) hasLocation;
 - (NSArray*)allLocationsNearCoordinate:(CLLocationCoordinate2D)coordinate;
 - (NSArray*)allLocations;
 - (Location*)newLocation;
 - (void)deleteLocation:(Location*)location;
 
 
+- (BOOL) hasMusic;
 - (NSArray *)musicSortedByDate;
 - (NSArray *)musicSortedByArtist;
 - (NSArray *)favoritesSortedByDate;

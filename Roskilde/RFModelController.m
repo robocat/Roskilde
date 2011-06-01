@@ -75,6 +75,13 @@ static RFModelController *defaultModelController = nil;
 }
 
 
+- (BOOL) hasLocation {
+	NSArray *items = [simpleCoreData objectsInEntityWithName:@"Location" predicate:nil sortedWithDescriptors:nil limit:1];
+	if ([items count])
+		return YES;
+	return NO;
+}
+
 - (NSArray*)allLocations {
 	return [simpleCoreData objectsInEntityWithName:@"Location" predicate:nil sortedWithDescriptors:[NSArray arrayWithObject:[[[NSSortDescriptor alloc] initWithKey:@"map" ascending:YES] autorelease]]];
 }
@@ -112,6 +119,15 @@ static RFModelController *defaultModelController = nil;
 	[[simpleCoreData managedObjectContext] deleteObject:location];
 	[self didChangeValueForKey:@"location"];
 }
+
+
+- (BOOL) hasMusic {
+	NSArray *items = [simpleCoreData objectsInEntityWithName:@"Music" predicate:nil sortedWithDescriptors:nil limit:1];
+	if ([items count])
+		return YES;
+	return NO;
+}
+
 
 
 - (NSArray *)musicSortedByDate {

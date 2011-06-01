@@ -12,6 +12,25 @@
 
 @interface RFRobocatViewController : BaseViewController {
     
+	UIButton *starButton;
+	UIButton *websiteButton;
+	UIButton *itunesButton;
+	UILabel *artistLabel;
+	UILabel *playtimeLabel;
+	UITextView *descriptionTextView;
+	UIButton *titleButton;
+	UIView *infoView;
 }
+
+@property (nonatomic, retain) IBOutlet UIView *infoView;
+@property (nonatomic, retain) IBOutlet UIButton *titleButton;
+@property (nonatomic, retain) IBOutlet UIButton *starButton;
+@property (nonatomic, retain) IBOutlet UIButton *websiteButton;
+@property (nonatomic, retain) IBOutlet UIButton *itunesButton;
+@property (nonatomic, retain) IBOutlet UILabel *artistLabel;
+@property (nonatomic, retain) IBOutlet UILabel *playtimeLabel;
+@property (nonatomic, retain) IBOutlet UITextView *descriptionTextView;
+
+- (IBAction)toggleInfoView:(id)sender;
 
 @end

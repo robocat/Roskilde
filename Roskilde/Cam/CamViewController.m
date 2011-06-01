@@ -10,6 +10,7 @@
 #import "CamDevice.h"
 #import <QuartzCore/QuartzCore.h>
 #import "UIImage+Resize.h"
+#import "UIImage-Extensions.h"
 
 #define BackCam 1
 #define FrontCam 0
@@ -58,6 +59,8 @@
 	
 	camOrientation = [[NSUserDefaults standardUserDefaults] integerForKey:@"com.robocat.Roskilde.selectedCameraType"];
 	
+	self.flashButton.hidden = camOrientation == FrontCam;
+	
 	timer = OFF;
 	timerView.hidden = YES;
 	timerIcon.hidden = YES;
@@ -84,8 +87,6 @@
 	self.flashLabel.text = @"auto";
 	self.flashLabel.textAlignment = UITextAlignmentCenter;
 	[self.flashButton addSubview:self.flashLabel];
-	
-	[self.flashButton setHidden:YES];
 }
 
 
@@ -190,7 +191,11 @@
 	[self.camdevice takePhotoWithCompletionHandler:^(UIImage *image) {
 		[flash removeFromSuperview];
 		
-		[self.thumbnailView addThumbnail:image];
+		UIImage *fixedImage = [image imageByScalingToSize:image.size];
+		
+		[UIImagePNGRepresentation(fixedImage) writeToFile:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingString:@"/lol.jpg"] atomically:YES];
+		
+		[self.thumbnailView addThumbnail:fixedImage];
 		
 		[takePhotoButton setImage:[UIImage imageNamed:@"camera.png"] forState:UIControlStateNormal];
 		takePhotoButton.userInteractionEnabled = YES;

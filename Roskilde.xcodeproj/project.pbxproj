@@ -1752,15 +1752,12 @@
 				3E613723138EDA8D0008833A /* RFConcertDetailViewController.m in Sources */,
 				3E613729138EF2120008833A /* RFCreateProfileViewController.m in Sources */,
 				3E61372E138EF5FC0008833A /* RFLoginViewController.m in Sources */,
-<<<<<<< HEAD
 				3EE0BA0D138FD01300CF0531 /* UIImage+Alpha.m in Sources */,
 				3EE0BA0E138FD01300CF0531 /* UIImage+Resize.m in Sources */,
 				3EE0BA0F138FD01300CF0531 /* UIImage+RoundedCorner.m in Sources */,
-=======
 				FF28D20A138FAF9B003136FA /* LocationManager.m in Sources */,
 				FF28D215138FCA2B003136FA /* _Location.m in Sources */,
 				FF28D216138FCA2B003136FA /* Location.m in Sources */,
->>>>>>> 112275388b67f9c74c9d57d28ccecbf294f1cdb8
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

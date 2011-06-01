@@ -140,9 +140,9 @@
 	}
 	
 	if ([connection isVideoOrientationSupported]) {
-		if ([UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeLeft || [UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeRight) {
+/*		if ([UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeLeft || [UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeRight) {*/
 			[connection setVideoOrientation:[UIDevice currentDevice].orientation];
-		}
+//		}
 	}
 	
 	[self.captureStillImageOutput captureStillImageAsynchronouslyFromConnection:connection completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
@@ -150,7 +150,7 @@
 			return;
 		}
 		
-		NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
+		NSData  *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
 		UIImage *image = [UIImage imageWithData:imageData];
 		
 		dispatch_async(dispatch_get_main_queue(), ^(void) {

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface RFLoginViewController : UIViewController {
+@interface RFLoginViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
     
 }
 

@@ -8,8 +8,18 @@
 
 #import "RFLoginViewController.h"
 
+@interface RFLoginViewController ()
+
+@property (nonatomic, retain) UITextField *usernameTextField;
+@property (nonatomic, retain) UITextField *passwordTextField;
+
+@end
+
 
 @implementation RFLoginViewController
+
+@synthesize usernameTextField;
+@synthesize passwordTextField;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -35,12 +45,22 @@
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
 	[super viewDidLoad];
-	// Do any additional setup after loading the view from its nib.
 	
 	self.title = @"Log In";
+	
+	[[NSNotificationCenter defaultCenter] addObserverForName:UIKeyboardWillHideNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *lol) {
+		[UIView animateWithDuration:.3 animations:^(void) {
+			self.view.frame = CGRectOffset(self.view.frame, 0, 220);
+		}];
+	}];
+	
+	[[NSNotificationCenter defaultCenter] addObserverForName:UIKeyboardWillShowNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *lol) {
+		[UIView animateWithDuration:.3 animations:^(void) {
+			self.view.frame = CGRectOffset(self.view.frame, 0, -220);
+		}];
+	}];
 }
 
 - (void)viewDidUnload
@@ -54,6 +74,47 @@
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	return 2;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+	UITableViewCell *cell = nil;
+	
+	if ((cell = [tableView dequeueReusableCellWithIdentifier:@"TableCell"]) == nil) {
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"TableCell"] autorelease];
+		
+		UITextField *input = [[[UITextField alloc] initWithFrame:CGRectMake(125, 10, cell.frame.size.width-135, cell.frame.size.height-20)] autorelease];
+		input.tag = 123;
+		[cell addSubview:input];
+		
+		if (indexPath.row == 1) {
+			input.secureTextEntry = YES;
+		}
+		
+		cell.selectionStyle = UITableViewCellSelectionStyleNone;
+	}
+	
+	if (indexPath.row == 0) {
+		cell.textLabel.text = @"Username";
+		self.usernameTextField = (UITextField*)[cell viewWithTag:123];
+	} else if (indexPath.row == 1) {
+		cell.textLabel.text = @"Password";
+		self.passwordTextField = (UITextField*)[cell viewWithTag:123];
+	}
+	
+	return cell;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	if (indexPath.row == 0) {
+		[self.usernameTextField becomeFirstResponder];
+	} else if (indexPath.row == 1) {
+		[self.passwordTextField becomeFirstResponder];
+	}
 }
 
 @end

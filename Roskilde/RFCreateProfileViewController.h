@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface RFCreateProfileViewController : UIViewController <UITableViewDataSource> {
+@interface RFCreateProfileViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
     
 	UIButton *loginButton;
 }

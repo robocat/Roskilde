@@ -7,8 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RFPictureDetailTableViewController.h"
 
-@interface FullscreenViewController : UIViewController
+@interface FullscreenViewController : UIViewController {
+	id <RFPictureDetailTableViewControllerDelegate> delegate;
+}
+
+@property (nonatomic, assign) id <RFPictureDetailTableViewControllerDelegate> delegate;
+
+
 
 - (void)fullscreen;
 

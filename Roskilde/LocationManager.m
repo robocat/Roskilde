@@ -19,7 +19,7 @@
 
 
 + (void)loadLocationData {
-	dispatch_async(dispatch_get_global_queue(0, 0), ^(void) {
+//	dispatch_async(dispatch_get_global_queue(0, 0), ^(void) {
 		RFModelController *model = [RFModelController defaultModelController];
 		
 		if (![model hasLocation]) {
@@ -56,7 +56,7 @@
 			
 			[model save];
 		}
-	});
+//	});
 }
 
 

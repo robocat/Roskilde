@@ -23,6 +23,7 @@
 
 @interface CamPreviewController : UIViewController <UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, UITableViewDataSource, UITableViewDelegate> {
 	NSUInteger selectedIndex;
+	NSString *replyTo;
 }
 
 @property (nonatomic, retain) IBOutlet UIView *uploadView;
@@ -35,6 +36,8 @@
 @property (nonatomic, assign) id<CamPreviewDelegate> delegate;
 @property (nonatomic, retain) IBOutlet UIPageControl *pageControl;
 @property (nonatomic, retain) IBOutlet UIButton *locationButton;
+@property (nonatomic, retain) NSString *replyTo;
+
 
 - (id)initWithImages:(NSArray*)initimages selectedIndex:(NSUInteger)index;
 

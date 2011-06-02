@@ -202,6 +202,24 @@
 		3E53C486138E403600A0E95C /* GradientBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E53C483138E403600A0E95C /* GradientBackgroundView.m */; };
 		3E53C487138E403600A0E95C /* ZoomingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E53C485138E403600A0E95C /* ZoomingViewController.m */; };
 		3E54C498138BE6B400C47A88 /* RFGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E54C497138BE6B400C47A88 /* RFGlobal.m */; };
+		3E5EA4D513968CB0000BD50D /* commentbox_liked.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E5EA4D113968CB0000BD50D /* commentbox_liked.png */; };
+		3E5EA4D613968CB0000BD50D /* commentbox_liked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E5EA4D213968CB0000BD50D /* commentbox_liked@2x.png */; };
+		3E5EA4D713968CB0000BD50D /* commentbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E5EA4D313968CB0000BD50D /* commentbox.png */; };
+		3E5EA4D813968CB0000BD50D /* commentbox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E5EA4D413968CB0000BD50D /* commentbox@2x.png */; };
+		3E5EA4FF13969C05000BD50D /* buttonbg@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E5EA4F313969C05000BD50D /* buttonbg@2x~iphone.png */; };
+		3E5EA50013969C05000BD50D /* buttonbg~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E5EA4F413969C05000BD50D /* buttonbg~iphone.png */; };
+		3E5EA50113969C05000BD50D /* textbg@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E5EA4F513969C05000BD50D /* textbg@2x~iphone.png */; };
+		3E5EA50213969C05000BD50D /* textbg~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E5EA4F613969C05000BD50D /* textbg~iphone.png */; };
+		3E5EA50313969C05000BD50D /* toolbarbg@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E5EA4F713969C05000BD50D /* toolbarbg@2x~iphone.png */; };
+		3E5EA50413969C05000BD50D /* toolbarbg~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E5EA4F813969C05000BD50D /* toolbarbg~iphone.png */; };
+		3E5EA50513969C05000BD50D /* UIExpandingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EA4FA13969C05000BD50D /* UIExpandingTextView.m */; };
+		3E5EA50613969C05000BD50D /* UIExpandingTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EA4FC13969C05000BD50D /* UIExpandingTextViewInternal.m */; };
+		3E5EA50713969C05000BD50D /* UIInputToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EA4FE13969C05000BD50D /* UIInputToolbar.m */; };
+		3E5EA51D1396A793000BD50D /* PullToRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EA51B1396A793000BD50D /* PullToRefreshView.m */; };
+		3E5EA5201396A7CA000BD50D /* BaseRefreshViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EA51F1396A7C9000BD50D /* BaseRefreshViewController.m */; };
+		3E5EA5431396FA82000BD50D /* SVSegmentedControl.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3E5EA53E1396FA82000BD50D /* SVSegmentedControl.bundle */; };
+		3E5EA5441396FA82000BD50D /* SVSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EA5401396FA82000BD50D /* SVSegmentedControl.m */; };
+		3E5EA5451396FA82000BD50D /* SVSegmentedThumb.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EA5421396FA82000BD50D /* SVSegmentedThumb.m */; };
 		3E5F0AEC1385B5F400555871 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E5F0AEB1385B5F400555871 /* UIKit.framework */; };
 		3E5F0AEE1385B5F400555871 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E5F0AED1385B5F400555871 /* Foundation.framework */; };
 		3E5F0AF01385B5F400555871 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E5F0AEF1385B5F400555871 /* CoreGraphics.framework */; };
@@ -530,6 +548,31 @@
 		3E53C485138E403600A0E95C /* ZoomingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZoomingViewController.m; sourceTree = "<group>"; };
 		3E54C496138BE6B400C47A88 /* RFGlobal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFGlobal.h; sourceTree = "<group>"; };
 		3E54C497138BE6B400C47A88 /* RFGlobal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFGlobal.m; sourceTree = "<group>"; };
+		3E5EA4D113968CB0000BD50D /* commentbox_liked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = commentbox_liked.png; sourceTree = "<group>"; };
+		3E5EA4D213968CB0000BD50D /* commentbox_liked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "commentbox_liked@2x.png"; sourceTree = "<group>"; };
+		3E5EA4D313968CB0000BD50D /* commentbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = commentbox.png; sourceTree = "<group>"; };
+		3E5EA4D413968CB0000BD50D /* commentbox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "commentbox@2x.png"; sourceTree = "<group>"; };
+		3E5EA4F313969C05000BD50D /* buttonbg@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttonbg@2x~iphone.png"; sourceTree = "<group>"; };
+		3E5EA4F413969C05000BD50D /* buttonbg~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttonbg~iphone.png"; sourceTree = "<group>"; };
+		3E5EA4F513969C05000BD50D /* textbg@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "textbg@2x~iphone.png"; sourceTree = "<group>"; };
+		3E5EA4F613969C05000BD50D /* textbg~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "textbg~iphone.png"; sourceTree = "<group>"; };
+		3E5EA4F713969C05000BD50D /* toolbarbg@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbarbg@2x~iphone.png"; sourceTree = "<group>"; };
+		3E5EA4F813969C05000BD50D /* toolbarbg~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbarbg~iphone.png"; sourceTree = "<group>"; };
+		3E5EA4F913969C05000BD50D /* UIExpandingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIExpandingTextView.h; sourceTree = "<group>"; };
+		3E5EA4FA13969C05000BD50D /* UIExpandingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIExpandingTextView.m; sourceTree = "<group>"; };
+		3E5EA4FB13969C05000BD50D /* UIExpandingTextViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIExpandingTextViewInternal.h; sourceTree = "<group>"; };
+		3E5EA4FC13969C05000BD50D /* UIExpandingTextViewInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIExpandingTextViewInternal.m; sourceTree = "<group>"; };
+		3E5EA4FD13969C05000BD50D /* UIInputToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIInputToolbar.h; sourceTree = "<group>"; };
+		3E5EA4FE13969C05000BD50D /* UIInputToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIInputToolbar.m; sourceTree = "<group>"; };
+		3E5EA51A1396A793000BD50D /* PullToRefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PullToRefreshView.h; sourceTree = "<group>"; };
+		3E5EA51B1396A793000BD50D /* PullToRefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PullToRefreshView.m; sourceTree = "<group>"; };
+		3E5EA51E1396A7C8000BD50D /* BaseRefreshViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseRefreshViewController.h; sourceTree = "<group>"; };
+		3E5EA51F1396A7C9000BD50D /* BaseRefreshViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseRefreshViewController.m; sourceTree = "<group>"; };
+		3E5EA53E1396FA82000BD50D /* SVSegmentedControl.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVSegmentedControl.bundle; sourceTree = "<group>"; };
+		3E5EA53F1396FA82000BD50D /* SVSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSegmentedControl.h; sourceTree = "<group>"; };
+		3E5EA5401396FA82000BD50D /* SVSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSegmentedControl.m; sourceTree = "<group>"; };
+		3E5EA5411396FA82000BD50D /* SVSegmentedThumb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSegmentedThumb.h; sourceTree = "<group>"; };
+		3E5EA5421396FA82000BD50D /* SVSegmentedThumb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSegmentedThumb.m; sourceTree = "<group>"; };
 		3E5F0AE71385B5F400555871 /* Roskilde.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Roskilde.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E5F0AEB1385B5F400555871 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3E5F0AED1385B5F400555871 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -755,6 +798,10 @@
 		3E3BB78E1394001300BD511B /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				3E5EA4D113968CB0000BD50D /* commentbox_liked.png */,
+				3E5EA4D213968CB0000BD50D /* commentbox_liked@2x.png */,
+				3E5EA4D313968CB0000BD50D /* commentbox.png */,
+				3E5EA4D413968CB0000BD50D /* commentbox@2x.png */,
 				3E3BB78F1394001300BD511B /* acoustic.png */,
 				3E3BB7901394001300BD511B /* acoustic@2x.png */,
 				3E3BB7911394001300BD511B /* african.png */,
@@ -955,6 +1002,37 @@
 			path = Camera;
 			sourceTree = "<group>";
 		};
+		3E5EA4F213969C05000BD50D /* UIInputToolbar */ = {
+			isa = PBXGroup;
+			children = (
+				3E5EA4F313969C05000BD50D /* buttonbg@2x~iphone.png */,
+				3E5EA4F413969C05000BD50D /* buttonbg~iphone.png */,
+				3E5EA4F513969C05000BD50D /* textbg@2x~iphone.png */,
+				3E5EA4F613969C05000BD50D /* textbg~iphone.png */,
+				3E5EA4F713969C05000BD50D /* toolbarbg@2x~iphone.png */,
+				3E5EA4F813969C05000BD50D /* toolbarbg~iphone.png */,
+				3E5EA4F913969C05000BD50D /* UIExpandingTextView.h */,
+				3E5EA4FA13969C05000BD50D /* UIExpandingTextView.m */,
+				3E5EA4FB13969C05000BD50D /* UIExpandingTextViewInternal.h */,
+				3E5EA4FC13969C05000BD50D /* UIExpandingTextViewInternal.m */,
+				3E5EA4FD13969C05000BD50D /* UIInputToolbar.h */,
+				3E5EA4FE13969C05000BD50D /* UIInputToolbar.m */,
+			);
+			path = UIInputToolbar;
+			sourceTree = "<group>";
+		};
+		3E5EA53D1396FA7F000BD50D /* SVSegmentedControl */ = {
+			isa = PBXGroup;
+			children = (
+				3E5EA53E1396FA82000BD50D /* SVSegmentedControl.bundle */,
+				3E5EA53F1396FA82000BD50D /* SVSegmentedControl.h */,
+				3E5EA5401396FA82000BD50D /* SVSegmentedControl.m */,
+				3E5EA5411396FA82000BD50D /* SVSegmentedThumb.h */,
+				3E5EA5421396FA82000BD50D /* SVSegmentedThumb.m */,
+			);
+			path = SVSegmentedControl;
+			sourceTree = "<group>";
+		};
 		3E5F0ADC1385B5F400555871 = {
 			isa = PBXGroup;
 			children = (
@@ -1068,6 +1146,8 @@
 		3E5F0B3A1385BC9200555871 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				3E5EA53D1396FA7F000BD50D /* SVSegmentedControl */,
+				3E5EA4F213969C05000BD50D /* UIInputToolbar */,
 				3EE0BA06138FD01300CF0531 /* UIImageHelper */,
 				3EF92F84138D7E2F00AFFC2D /* DDKCustomTabbar */,
 				3E5F0B421385BCCD00555871 /* ASIHTTPRequest */,
@@ -1140,6 +1220,8 @@
 		3E5F0B5F1385BCCD00555871 /* PullToRefresh */ = {
 			isa = PBXGroup;
 			children = (
+				3E5EA51A1396A793000BD50D /* PullToRefreshView.h */,
+				3E5EA51B1396A793000BD50D /* PullToRefreshView.m */,
 				3E5F0B601385BCCD00555871 /* arrow.png */,
 				3E5F0B611385BCCD00555871 /* PullRefreshTableViewController.h */,
 				3E5F0B621385BCCD00555871 /* PullRefreshTableViewController.m */,
@@ -1238,6 +1320,8 @@
 				3EF92E24138D73B100AFFC2D /* BaseRefreshTableViewController.m */,
 				3EEF29B4138A8FBD00A8E34A /* BaseTabBarController.h */,
 				3EEF29B5138A8FBD00A8E34A /* BaseTabBarController.m */,
+				3E5EA51E1396A7C8000BD50D /* BaseRefreshViewController.h */,
+				3E5EA51F1396A7C9000BD50D /* BaseRefreshViewController.m */,
 			);
 			name = "Custom Controls";
 			sourceTree = "<group>";
@@ -1756,6 +1840,17 @@
 				3E3BB9051394001300BD511B /* xlogo_big@2x.png in Resources */,
 				3E3BB9061394001300BD511B /* xlogo_small.png in Resources */,
 				3E3BB9071394001300BD511B /* xlogo_small@2x.png in Resources */,
+				3E5EA4D513968CB0000BD50D /* commentbox_liked.png in Resources */,
+				3E5EA4D613968CB0000BD50D /* commentbox_liked@2x.png in Resources */,
+				3E5EA4D713968CB0000BD50D /* commentbox.png in Resources */,
+				3E5EA4D813968CB0000BD50D /* commentbox@2x.png in Resources */,
+				3E5EA4FF13969C05000BD50D /* buttonbg@2x~iphone.png in Resources */,
+				3E5EA50013969C05000BD50D /* buttonbg~iphone.png in Resources */,
+				3E5EA50113969C05000BD50D /* textbg@2x~iphone.png in Resources */,
+				3E5EA50213969C05000BD50D /* textbg~iphone.png in Resources */,
+				3E5EA50313969C05000BD50D /* toolbarbg@2x~iphone.png in Resources */,
+				3E5EA50413969C05000BD50D /* toolbarbg~iphone.png in Resources */,
+				3E5EA5431396FA82000BD50D /* SVSegmentedControl.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1860,6 +1955,13 @@
 				3EE0BA0F138FD01300CF0531 /* UIImage+RoundedCorner.m in Sources */,
 				FF39540713967350007BDF33 /* FullscreenImageView.m in Sources */,
 				FF39540A1396792A007BDF33 /* FullscreenViewController.m in Sources */,
+				3E5EA50513969C05000BD50D /* UIExpandingTextView.m in Sources */,
+				3E5EA50613969C05000BD50D /* UIExpandingTextViewInternal.m in Sources */,
+				3E5EA50713969C05000BD50D /* UIInputToolbar.m in Sources */,
+				3E5EA51D1396A793000BD50D /* PullToRefreshView.m in Sources */,
+				3E5EA5201396A7CA000BD50D /* BaseRefreshViewController.m in Sources */,
+				3E5EA5441396FA82000BD50D /* SVSegmentedControl.m in Sources */,
+				3E5EA5451396FA82000BD50D /* SVSegmentedThumb.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1957,7 +2059,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ulrik Damm (X45AYMDB46)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Willi Wu (P5EC6B73UQ)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1965,7 +2067,7 @@
 				INFOPLIST_FILE = "Roskilde/Roskilde-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9BC2465A-F842-4DB5-93CC-D1DA30310619";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9218BB29-FF6C-49F3-ACD6-2AAD591F7E2F";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;

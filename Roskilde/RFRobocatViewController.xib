@@ -114,14 +114,14 @@
 								<bool key="IBUIMultipleTouchEnabled">YES</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<bool key="IBUIEditable">NO</bool>
-								<string key="IBUIText">We're a bunch of nice guys based out of Copenhagen, Denmark.</string>
+								<string key="IBUIText">We're a bunch of nice guys based out of Copenhagen, Denmark. We dream up and build unique applications. We love music and we love Roskilde Festival so for the second year we’ve created this free app. Enjoy your festival and take lots of Pictures!</string>
 								<object class="NSColor" key="IBUITextColor" id="537652565">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MQA</bytes>
 								</object>
 								<object class="NSFont" key="IBUIFont">
 									<string key="NSName">Helvetica</string>
-									<double key="NSSize">12</double>
+									<double key="NSSize">13</double>
 									<int key="NSfFlags">16</int>
 								</object>
 								<object class="IBUITextInputTraits" key="IBUITextInputTraits">

@@ -9,10 +9,12 @@
 #import "RFArtistsTableViewController.h"
 #import "RFConcertDetailViewController.h"
 #import "RFModelController.h"
+#import "SVSegmentedControl.h"
 
 
 @implementation RFArtistsTableViewController
 
+@synthesize filtersView;
 @synthesize fetchedResultsController;
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -27,6 +29,7 @@
 - (void)dealloc
 {
 	fetchedResultsController = nil;
+	[filtersView release];
     [super dealloc];
 }
 
@@ -52,12 +55,34 @@
 	// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
 	// self.navigationItem.rightBarButtonItem = self.editButtonItem;
 	
+	// Filters
+	SVSegmentedControl *filters = [[SVSegmentedControl alloc] initWithSectionTitles:[NSArray arrayWithObjects:@"Artists", @"Date", @"Genre", @"Starred", nil]];
+	filters.selectedSegmentChangedHandler = ^(id sender) {
+		SVSegmentedControl *filters = (SVSegmentedControl *)sender;
+		NSLog(@"segmentedControl %i did select index %i (captured via block)", filters.tag, filters.selectedIndex);
+	};
+	
+	filters.crossFadeLabelsOnDrag = YES;
+	filters.font = [UIFont boldSystemFontOfSize:14];
+	filters.segmentPadding = 5;
+	filters.height = 30;
+	
+	filters.thumb.tintColor = [UIColor colorWithRed:0.572 green:0.552 blue:0.529 alpha:1.000];
+	
+	[self.view addSubview:filters];
+	[filters release];
+	
+	filters.center = CGPointMake(160, 22);
+
+	
+	
 	NSError *error = nil;
 	[[self fetchedResultsController] performFetch:&error];
 }
 
 - (void)viewDidUnload
 {
+	[self setFiltersView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

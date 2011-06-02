@@ -10,6 +10,7 @@
 #import "ASIFormDataRequest.h"
 #import <QuartzCore/QuartzCore.h>
 #import "LocationManager.h"
+#import "JSONKit.h"
 
 
 @interface CamPreviewController ()
@@ -52,6 +53,8 @@
 @synthesize scrollviews;
 @synthesize nearLocations;
 @synthesize tableView;
+@synthesize replyTo;
+
 
 - (void)viewDidUnload {
 	self.uploadView = nil;
@@ -281,21 +284,41 @@
 	[waitView addSubview:waitLabel];
 	[self.uploadView addSubview:waitView];
 	
-	__block ASIFormDataRequest *formRequest = [ASIFormDataRequest requestWithURL:url];
-	[formRequest setPostValue:@"Willi"				forKey:@"username"];
-	[formRequest setPostValue:@"ww"					forKey:@"password"];
-	[formRequest setPostValue:self.description.text	forKey:@"message"];
-	[formRequest setPostValue:self.location.text	forKey:@"location"];
-	[formRequest setPostValue:@"Roskilde app"		forKey:@"via"];
 	
+	// Prepare data
+	
+	NSString * comment = (self.description.text) ? self.description.text : @"";
+	NSString * loc = (self.location.text) ? self.location.text : @"";
+	
+	NSMutableDictionary *data = [NSMutableDictionary dictionaryWithCapacity:6];
+	[data setObject:@"Willi" forKey:@"username"];
+	[data setObject:@"ww" forKey:@"password"];
+	[data setObject:comment forKey:@"comment"];
+	[data setObject:@"roskilde-festival" forKey:@"tags"];
+	[data setObject:loc forKey:@"location"];
+	[data setObject:@"Roskilde app" forKey:@"via"];
+	
+	if (!self.replyTo) {
+		self.replyTo = @"";
+	}
+	[data setObject:self.replyTo forKey:@"reply_to"];
+	
+	NSString *json = [data JSONString];
 	
 	// Prepare image
-	NSString *filename = [NSString stringWithFormat:@"%@-iphone.jpg", @"willi"];
+	NSString *filename = [NSString stringWithFormat:@"%@-roskildeapp.jpg", @"willi"];
 	UIImage *currentImage = [self.images objectAtIndex:self.pageControl.currentPage];
 	NSData *imageData = UIImageJPEGRepresentation(currentImage, (currentImage.size.width > 640? 0.3: 1.0));
+	
+	__block ASIFormDataRequest *formRequest = [ASIFormDataRequest requestWithURL:url];
+	[formRequest setPostValue:json forKey:@"data"];
 	[formRequest setPostValue:[NSNumber numberWithFloat:currentImage.size.width] forKey:@"width"];
 	[formRequest setPostValue:[NSNumber numberWithFloat:currentImage.size.height] forKey:@"height"];
 	[formRequest setData:imageData withFileName:filename andContentType:@"image/jpeg" forKey:@"media"];
+	
+	// Basic Auth
+	NSString *auth = [NSString stringWithFormat:@"Basic %@",[ASIHTTPRequest base64forData:[[NSString stringWithFormat:@"%@:%@", @"Willi", @"ww"] dataUsingEncoding:NSUTF8StringEncoding]]];
+	[formRequest addRequestHeader:@"Authorization" value:auth];
 	
 	[formRequest setCompletionBlock:^{
 		// Use when fetching text data
@@ -464,6 +487,7 @@
 	[pageControl release];
 	[pageControl release];
 	[locationButton release];
+	self.replyTo = nil;
 	[super dealloc];
 }
 

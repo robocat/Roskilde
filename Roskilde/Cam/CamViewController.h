@@ -18,6 +18,8 @@
 	SystemSoundID tickSound;
 	UIImageView *timerIcon;
 	UIButton *flipButton;
+	
+	NSString * replyTo;
 }
 
 @property (nonatomic, retain) IBOutlet UILabel *timerView;
@@ -30,6 +32,8 @@
 @property (nonatomic, retain) IBOutlet UIButton *timerButton;
 @property (nonatomic, retain) IBOutlet UIButton *flipButton;
 @property (nonatomic, retain) IBOutlet UIButton *flashButton;
+@property (nonatomic, retain) NSString *replyTo;
+
 
 - (IBAction)changeFlash:(id)sender;
 - (IBAction)takePhoto:(id)sender;

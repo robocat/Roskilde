@@ -68,6 +68,15 @@
 }
 
 
+//- (void) willMoveToSuperview:(UIView *)newSuperview {
+//	[super willMoveToSuperview:newSuperview];
+//	
+//	if(!newSuperview) {
+//		[self.imageView cancelCurrentImageLoad];
+//	}
+//}
+
+
 - (CGSize)infoSize:(NSInteger)value
 {
 	UIFont * infoFont	= [UIFont systemFontOfSize:kInfoFontSize];
@@ -95,6 +104,9 @@
 	if (![self.location isEqualToString:@""]) {
 		[self.author drawInRect:CGRectMake(50.0, y, 200.0, 20.0)
 					   withFont:timeFont];
+		
+		UIImage *loc = [UIImage imageNamed:@"tinylocation.png"];
+		[loc drawAtPoint:CGPointMake(50.0, y+15.0)];
 	}
 	else {
 		[self.author drawInRect:CGRectMake(50.0, y+6.0, 200.0, 20.0)
@@ -102,10 +114,7 @@
 	}
 	
 	[[UIColor colorWithWhite:0.710 alpha:1.000] set];
-	
-	UIImage *loc = [UIImage imageNamed:@"tinylocation.png"];
-	[loc drawAtPoint:CGPointMake(50.0, y+15.0)];
-	
+		
 	[self.location drawInRect:CGRectMake(60.0, y+12.0, 200.0, 20.0)
 				withFont:infoFont];
 	

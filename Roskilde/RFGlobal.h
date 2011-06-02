@@ -9,10 +9,13 @@
 #import <Foundation/Foundation.h>
 
 #define kConcertsFeed		@"http://roskildefeed.mads379.cloudbees.net/feed/xml"
-#define kXdkAPIKey		@""
-#define kXdkAPIBaseUrl	@"http://staging.x.dk/1"
-//#define kXdkAPIBaseUrl	@"http://beta.x.dk/1"
+#define kXdkAPIKey			@""
+#define kXdkAPIBaseUrl		@"http://20110602.xdkapp.appspot.com/api/roskilde"
 
+
+
+#define kUserDefaultsUsername		@"kUserDefaultsUsername"
+#define kUserDefaultsPassword		@"kUserDefaultsPassword"
 
 
 @interface RFGlobal : NSObject {

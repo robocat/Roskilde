@@ -56,9 +56,7 @@
 	
 	[self performSelector:@selector(showSplash)];
 	
-	[LocationManager loadLocationData];
-	
-	[self performSelector:@selector(importMusicData) withObject:nil afterDelay:0.0];
+//	[self performSelector:@selector(importMusicData) withObject:nil afterDelay:0.0];
 	
 	
     return YES;
@@ -250,6 +248,8 @@
 			}
 		}
 //	});
+	
+	[LocationManager loadLocationData];
 }
 
 @end

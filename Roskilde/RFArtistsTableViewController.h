@@ -13,8 +13,10 @@
 
 @interface RFArtistsTableViewController : BaseTableViewController <NSFetchedResultsControllerDelegate> {
 	NSFetchedResultsController *	fetchedResultsController;
+	UIView *filtersView;
 }
 
+@property (nonatomic, retain) IBOutlet UIView *filtersView;
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 
 @end

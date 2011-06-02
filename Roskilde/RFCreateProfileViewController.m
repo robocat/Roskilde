@@ -21,6 +21,7 @@
 
 @implementation RFCreateProfileViewController
 
+@synthesize tableView;
 @synthesize loginButton;
 @synthesize usernameTextField;
 @synthesize passwordTextField;
@@ -37,6 +38,8 @@
 
 - (void)dealloc {
 	[loginButton release];
+	[tableView release];
+	[tableView release];
     [super dealloc];
 }
 
@@ -78,6 +81,9 @@
 
 - (void)viewDidUnload {
 	[self setLoginButton:nil];
+	[tableView release];
+	tableView = nil;
+	[self setTableView:nil];
     [super viewDidUnload];
 }
 
@@ -92,38 +98,43 @@
 }
 
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView_ numberOfRowsInSection:(NSInteger)section {
 	return 3;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView_ cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	UITableViewCell *cell = nil;
 	
-	if ((cell = [tableView dequeueReusableCellWithIdentifier:@"TableCell"]) == nil) {
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"TableCell"] autorelease];
-		
-		UITextField *input = [[[UITextField alloc] initWithFrame:CGRectMake(125, 10, cell.frame.size.width-135, cell.frame.size.height-20)] autorelease];
-		input.tag = 123;
-		[cell addSubview:input];
-		
-		if (indexPath.row == 1) {
-			input.secureTextEntry = YES;
-		} else if (indexPath.row == 2) {
-			input.keyboardType = UIKeyboardTypeEmailAddress;
-		}
-		
+	if ((cell = [self.tableView dequeueReusableCellWithIdentifier:@"TableCell"]) == nil) {
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"TableCell"] autorelease];		
 		cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	}
 	
+	UITextField *input = [[[UITextField alloc] initWithFrame:CGRectMake(125, 10, cell.frame.size.width-135, cell.frame.size.height-20)] autorelease];
+	input.delegate = self;
+	input.tag = indexPath.row;
+	input.clearButtonMode = UITextFieldViewModeWhileEditing;
+	input.enablesReturnKeyAutomatically = YES;
+	input.autocorrectionType = UITextAutocorrectionTypeNo;
+	input.autocapitalizationType = UITextAutocapitalizationTypeNone;
+	[cell addSubview:input];
+	
 	if (indexPath.row == 0) {
 		cell.textLabel.text = @"Username";
-		self.usernameTextField = (UITextField*)[cell viewWithTag:123];
-	} else if (indexPath.row == 1) {
+		self.usernameTextField = (UITextField*)[cell viewWithTag:0];
+		input.returnKeyType = UIReturnKeyNext;
+	}
+	else if (indexPath.row == 1) {
 		cell.textLabel.text = @"Password";
-		self.passwordTextField = (UITextField*)[cell viewWithTag:123];
-	} else {
+		self.passwordTextField = (UITextField*)[cell viewWithTag:1];
+		input.secureTextEntry = YES;
+		input.returnKeyType = UIReturnKeyNext;
+	}
+	else {
 		cell.textLabel.text = @"Email";
-		self.emailTextField = (UITextField*)[cell viewWithTag:123];
+		self.emailTextField = (UITextField*)[cell viewWithTag:2];
+		input.keyboardType = UIKeyboardTypeEmailAddress;
+		input.returnKeyType = UIReturnKeyGo;
 	}
 	
 	return cell;
@@ -139,5 +150,35 @@
 		[self.emailTextField becomeFirstResponder];
 	}
 }
+
+-(void)textFieldDidEndEditing:(UITextField *)textField  {
+}
+
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+	[textField resignFirstResponder];
+	
+	if (textField.tag == 0)
+	{
+		UITableViewCell* cell = [self tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+		[[[cell subviews] objectAtIndex:0] becomeFirstResponder];
+		
+		NSLog(@"Username: %@", textField.text);
+	}
+	else if (textField.tag == 1)
+	{
+		UITableViewCell* cell = [self tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+		[[[cell subviews] objectAtIndex:0] becomeFirstResponder];
+		
+		NSLog(@"Password: %@", textField.text);
+	}
+	else
+	{
+		NSLog(@"Email: %@", textField.text);
+	}
+	
+	return NO;
+}
+
 
 @end

@@ -234,7 +234,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {	
-	RFPictureDetailTableViewController *detailViewController = [[RFPictureDetailTableViewController alloc] initWithNibName:@"RFPictureDetailTableViewController" bundle:nil];
+	RFPictureDetailTableViewController *detailViewController = [[RFPictureDetailTableViewController alloc] init];
 	detailViewController.entry = [self.entries objectAtIndex:indexPath.section];
 	detailViewController.hidesBottomBarWhenPushed = YES;
 	[self.navigationController pushViewController:detailViewController animated:YES];
@@ -266,8 +266,6 @@
 		
 		// JSONKit parse
 		id parsedData = [responseString objectFromJSONString];
-		
-		LOG_EXPR(parsedData);
 		
 		self.entries = nil;
 		//		[self.entries addObjectsFromArray:parsedData];

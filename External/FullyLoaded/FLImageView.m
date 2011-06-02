@@ -81,6 +81,12 @@
 	}
 }
 
+//- (void)cancelCurrentImageLoad
+//{
+//    [[FullyLoaded sharedFullyLoaded] ];
+//}
+
+
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self
 													name:FLImageLoadedNotification

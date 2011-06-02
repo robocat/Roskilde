@@ -17,12 +17,23 @@
 #import "NSDateHelper.h"
 #import "ReplyTableViewCell.h"
 #import "FullscreenViewController.h"
+#import "CamViewController.h"
+#import "CamDevice.h"
+#import "ASIFormDataRequest.h"
+
 
 
 #define kStatsBarHieght		30.0
 #define kAuthMinHieght		64.0
 
 #define kRowOffset			2
+
+#define kStatusBarHeight 20
+#define kDefaultToolbarHeight 40
+#define kKeyboardHeightPortrait 216
+#define kKeyboardHeightLandscape 140
+
+#define kToolbarY			376.0
 
 
 @interface RFPictureDetailTableViewController ()
@@ -36,25 +47,35 @@
 @synthesize replies = _replies;
 @synthesize zoomingView;
 @synthesize imageView;
+@synthesize toolbar;
+@synthesize inputToolbar;
+@synthesize cameraButton;
+@synthesize inputButton;
+@synthesize likeButton;
 
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+//- (id)initWithStyle:(UITableViewStyle)style
+//{
+//    self = [super initWithStyle:style];
+//    if (self) {
+//        // Custom initialization
+//    }
+//    return self;
+//}
 
 - (void)dealloc
 {
 	self.entry = nil;
 	self.replies = nil;
-	[zoomingViewController release];
-	zoomingViewController = nil;
 	
 	[imageView release];
+	
+	self.inputToolbar = nil;
+	self.toolbar = nil;
+    self.cameraButton = nil;
+    self.inputButton = nil;
+    self.likeButton = nil;
+	
     [super dealloc];
 }
 
@@ -68,10 +89,27 @@
 
 #pragma mark - View lifecycle
 
-- (void)awakeFromNib {
-	[super awakeFromNib];
+//- (void)awakeFromNib {
+//	[super awakeFromNib];
+//	
+//	//	self.entries = [[NSMutableArray alloc] init];
+//}
+
+- (void)loadView {
+	[super loadView];
+
+	self.zoomingView = [[[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320, 240)] autorelease];
+	self.zoomingView.clipsToBounds = YES;
 	
-	//	self.entries = [[NSMutableArray alloc] init];
+	self.imageView = [[[FLImageView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320, 240)] autorelease];
+	self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+	self.imageView.userInteractionEnabled = YES;
+	[self.zoomingView addSubview:self.imageView];
+	
+	FullscreenViewController *fullscreenViewController = [[FullscreenViewController alloc] init];
+//	fullscreenViewController.view = [[self.zoomingView subviews] objectAtIndex:0];
+	fullscreenViewController.view = self.imageView;
+	fullscreenViewController.delegate = self;
 }
 
 - (void)viewDidLoad
@@ -96,21 +134,48 @@
 	
 	[self setWhiteTitle:[NSString stringWithFormat:@"%@'s Picture", username]];
 	
-	zoomingViewController = [[ZoomingViewController alloc] init];
-	FullscreenViewController *fullscreenViewController = [[FullscreenViewController alloc] init];
-	fullscreenViewController.view = [[zoomingView subviews] objectAtIndex:0];
-//	zoomingViewController.view = zoomingView;
-	
-//	CGRect zoomingViewFrame = zoomingViewController.view.frame;
-//	CGRect ownBounds = self.view.bounds;
-//	zoomingViewController.view.frame = CGRectMake(ownBounds.origin.x + 0.5 * (ownBounds.size.width - zoomingViewFrame.size.width),
-//												  ownBounds.origin.y + 0.5 * (ownBounds.size.height - zoomingViewFrame.size.height),
-//												  zoomingViewFrame.size.width,
-//												  zoomingViewFrame.size.height);
 	
 	
+	self.tableView.frame = CGRectMake(0.0, 0.0, 320, kToolbarY);
+	
+	
+	keyboardIsVisible = NO;
+
+	/* Create toolbar */
+	self.inputToolbar = [[[UIInputToolbar alloc] initWithFrame:CGRectMake(0, kToolbarY, self.view.frame.size.width, kDefaultToolbarHeight)] autorelease];
+	[self.view addSubview:self.inputToolbar];
+	self.inputToolbar.delegate = self;
+	
+	
+	// Toolbar
+	self.toolbar = [[[UIView alloc] initWithFrame:CGRectMake(0.0, kToolbarY, 320.0, 44.0)] autorelease];
+//	self.toolbar.userInteractionEnabled = NO;
+	[self.view addSubview:self.toolbar];
+	
+	UIImageView *bg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"commentbox.png"]];
+	[self.toolbar addSubview:bg];
+	[bg release];
+	
+	self.cameraButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	self.cameraButton.frame = CGRectMake(0.0, 0.0, 44.0, 44.0);
+	[self.cameraButton addTarget:self action:@selector(cameraButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+	[self.toolbar addSubview:self.cameraButton];
+	
+	self.inputButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	self.inputButton.frame = CGRectMake(44.0, 0.0, 200.0, 44.0);
+	[self.inputButton addTarget:self action:@selector(replyButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+	[self.toolbar addSubview:self.inputButton];
+	
+	self.likeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	self.likeButton.frame = CGRectMake(244.0, 0.0, 76.0, 44.0);
+	[self.likeButton addTarget:self action:@selector(likeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+	[self.toolbar addSubview:self.likeButton];
+
+//	UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+//																		 action:@selector(dismissKeyboard)];
+//    [self.tableView addGestureRecognizer:tap];
+
 	[self performSelector:@selector(refresh) withObject:nil afterDelay:0.0];
-	
 }
 
 - (void)viewDidUnload
@@ -121,23 +186,33 @@
     // e.g. self.myOutlet = nil;
 	
 	self.zoomingView = nil;
+	
+	self.inputToolbar = nil;
+	self.toolbar = nil;
+	self.cameraButton = nil;
+    self.inputButton = nil;
+    self.likeButton = nil;
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated 
 {
-    [super viewWillAppear:animated];
+	[super viewWillAppear:animated];
+	/* Listen for keyboard */
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated 
+{
+	[super viewWillDisappear:animated];
+	/* No longer listen for keyboard */
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-	
-	[zoomingViewController dismissFullscreenView];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -163,7 +238,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 	if (indexPath.row == 0)
 	{
-		return 300.0;
+		return 240.0;
 	}
 	else if (indexPath.row == 1)
 	{
@@ -179,6 +254,21 @@
 {
     // Return the number of rows in the section.
     return [self.replies count] + kRowOffset;
+}
+
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 50.0)];
+	label.backgroundColor = [UIColor clearColor];
+	label.text = @"";
+	
+	return [label autorelease];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+	return 50.0;
 }
 
 
@@ -239,7 +329,7 @@
 	{
 		cell = (AuthorTableViewCell *)[tableView dequeueReusableCellWithIdentifier:AuthorCellIdentifier];
 		if (cell == nil) {
-			cell = (AuthorTableViewCell *)[[[AuthorTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:FirstCellIdentifier] autorelease];
+			cell = (AuthorTableViewCell *)[[[AuthorTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:AuthorCellIdentifier] autorelease];
 		}
 		
 		[self configureAuthorCell:cell atIndexPath:indexPath];
@@ -314,13 +404,21 @@
 }
 
 
+
+#pragma mark - PullToRefreshAppDelegate Methods
+
+- (void)refreshRequestedForTableView:(UITableView *)tableView {
+	[self performSelector:@selector(fetchReplies) withObject:nil afterDelay:0.0];
+}
+
 - (void)refresh {
     [self performSelector:@selector(fetchReplies) withObject:nil afterDelay:0.0];
 }
 
 - (void)refreshDone {
 	[self.tableView reloadData];
-	[self stopLoading];
+//	[self stopLoading];
+	[_pullToRefreshView stopLoading];
 }
 
 
@@ -400,6 +498,145 @@
 	NSString *urlString = [NSString stringWithFormat:@"%@=s%.f", url, maxsize * scale];
 	
 	[self.imageView loadImageAtURLString:urlString placeholderImage:placeholder];
+}
+
+
+- (void)cameraButtonPressed:(id)sender {
+	if ([CamDevice hasCamera]) {
+		CamViewController *camViewController = [[CamViewController alloc] initWithNibName:@"CamViewController" bundle:nil];
+		camViewController.replyTo = [self.entry objectForKey:@"entry_key"];
+		UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:camViewController];
+		
+		[navigationController setNavigationBarHidden:YES];
+		
+		[self presentModalViewController:navigationController animated:NO];
+		[navigationController release];
+		[camViewController release];
+	} else {
+		[[[[UIAlertView alloc] initWithTitle:@"No camera detected" message:@"This device doesn't have a camera" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
+	}
+}
+
+- (void)replyButtonPressed:(id)sender {
+	[self.inputToolbar.textView.internalTextView becomeFirstResponder];
+}
+
+- (void)likeButtonPressed:(id)sender {
+	
+}
+
+
+//-(void)dismissKeyboard {
+//    if([self.inputToolbar.textView.internalTextView isFirstResponder])
+//		[self.inputToolbar.textView.internalTextView resignFirstResponder];
+//}
+
+
+#pragma mark -
+#pragma mark Notifications
+
+- (void)keyboardWillShow:(NSNotification *)notification 
+{
+	[self.view bringSubviewToFront:self.inputToolbar];
+	
+    /* Move the toolbar to above the keyboard */
+	[UIView animateWithDuration:0.3 animations:^(void) {
+		CGRect frame = self.inputToolbar.frame;
+		if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
+			frame.origin.y = self.view.frame.size.height - frame.size.height - kKeyboardHeightPortrait;
+		}
+		else {
+			frame.origin.y = self.view.frame.size.width - frame.size.height - kKeyboardHeightLandscape - kStatusBarHeight;
+		}
+		self.inputToolbar.frame = frame;
+		
+		self.tableView.frame = CGRectMake(0.0, 0.0, 320, frame.origin.y);
+
+	} completion:^(BOOL finished) {
+		
+	}];
+	
+	
+    keyboardIsVisible = YES;
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification 
+{
+    /* Move the toolbar back to bottom of the screen */
+	[UIView animateWithDuration:0.3 animations:^(void) {
+		CGRect frame = self.inputToolbar.frame;
+		if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
+			frame.origin.y = self.view.frame.size.height - frame.size.height;
+		}
+		else {
+			frame.origin.y = self.view.frame.size.width - frame.size.height;
+		}
+		self.inputToolbar.frame = frame;
+		
+		self.tableView.frame = CGRectMake(0.0, 0.0, 320, kToolbarY);
+		
+		[UIView commitAnimations];
+		keyboardIsVisible = NO;
+	} completion:^(BOOL finished) {
+		[self.view bringSubviewToFront:self.toolbar];
+	}];
+}
+
+-(void)inputButtonPressed:(NSString *)inputText
+{
+    /* Called when toolbar button is pressed */
+//    NSLog(@"Pressed button with text: '%@'", inputText);
+	
+	if (![inputText isEqualToString:@""]) {
+		NSString *urlString = [NSString stringWithFormat:@"%@/entries/%@/replies", kXdkAPIBaseUrl, [self.entry objectForKey:@"entry_id"]];
+		NSURL *url = [NSURL URLWithString:urlString];
+		
+		// Prepare data
+		NSString *comment = (inputText) ? inputText : (NSString *)[NSNull null];
+		NSString *loc = (NSString *)[NSNull null];
+		
+		NSMutableDictionary *data = [NSMutableDictionary dictionaryWithCapacity:6];
+		[data setObject:@"Willi" forKey:@"username"];
+		[data setObject:@"ww" forKey:@"password"];
+		[data setObject:comment forKey:@"comment"];
+		[data setObject:loc forKey:@"location"];
+		[data setObject:@"Roskilde app" forKey:@"via"];
+		[data setObject:[self.entry objectForKey:@"entry_key"] forKey:@"reply_to"];
+		
+		NSString *json = [data JSONString];
+		
+		__block ASIFormDataRequest *formRequest = [ASIFormDataRequest requestWithURL:url];
+		[formRequest setPostValue:json forKey:@"data"];
+		
+		// Basic Auth
+		NSString *auth = [NSString stringWithFormat:@"Basic %@",[ASIHTTPRequest base64forData:[[NSString stringWithFormat:@"%@:%@", @"Willi", @"ww"] dataUsingEncoding:NSUTF8StringEncoding]]];
+		[formRequest addRequestHeader:@"Authorization" value:auth];
+		
+		[formRequest setCompletionBlock:^{
+			// Use when fetching text data
+			NSString *responseString = [formRequest responseString];
+			int statusCode = [formRequest responseStatusCode];
+			LOG_EXPR(statusCode);
+			LOG_EXPR(responseString);
+			
+			[self fetchReplies];
+		}];
+		
+		[formRequest setFailedBlock:^{
+			NSError *error = [formRequest error];
+			NSLog(@"error: %@", error);
+		}];
+		
+		[formRequest startAsynchronous];
+	}
+}
+
+
+- (void)dismissTextInput {
+	self.inputToolbar.textView.internalTextView.text = @"";
+	[self.inputToolbar.textView clearText];
+	[self.inputToolbar.textView resignFirstResponder];
+//	[self.inputToolbar.textView.internalTextView resignFirstResponder];
 }
 
 @end

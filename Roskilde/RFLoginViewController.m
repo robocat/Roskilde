@@ -85,25 +85,30 @@
 	
 	if ((cell = [tableView dequeueReusableCellWithIdentifier:@"TableCell"]) == nil) {
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"TableCell"] autorelease];
-		
-		UITextField *input = [[[UITextField alloc] initWithFrame:CGRectMake(125, 10, cell.frame.size.width-135, cell.frame.size.height-20)] autorelease];
-		input.tag = 123;
-		[cell addSubview:input];
-		
-		if (indexPath.row == 1) {
-			input.secureTextEntry = YES;
-		}
-		
 		cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	}
 	
+	UITextField *input = [[[UITextField alloc] initWithFrame:CGRectMake(125, 10, cell.frame.size.width-135, cell.frame.size.height-20)] autorelease];
+	input.delegate = self;
+	input.tag = indexPath.row;
+	input.clearButtonMode = UITextFieldViewModeWhileEditing;
+	input.enablesReturnKeyAutomatically = YES;
+	input.autocorrectionType = UITextAutocorrectionTypeNo;
+	input.autocapitalizationType = UITextAutocapitalizationTypeNone;
+	[cell addSubview:input];
+	
 	if (indexPath.row == 0) {
 		cell.textLabel.text = @"Username";
-		self.usernameTextField = (UITextField*)[cell viewWithTag:123];
-	} else if (indexPath.row == 1) {
-		cell.textLabel.text = @"Password";
-		self.passwordTextField = (UITextField*)[cell viewWithTag:123];
+		self.usernameTextField = (UITextField*)[cell viewWithTag:0];
+		input.returnKeyType = UIReturnKeyNext;
 	}
+	else {
+		cell.textLabel.text = @"Password";
+		self.passwordTextField = (UITextField*)[cell viewWithTag:1];
+		input.secureTextEntry = YES;
+		input.returnKeyType = UIReturnKeyNext;
+	}
+
 	
 	return cell;
 }
@@ -116,5 +121,27 @@
 		[self.passwordTextField becomeFirstResponder];
 	}
 }
+
+
+-(void)textFieldDidEndEditing:(UITextField *)textField  {
+}
+
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+	[textField resignFirstResponder];
+	
+	if (textField.tag == 0)
+	{
+		
+		NSLog(@"Username: %@", textField.text);
+	}
+	else
+	{
+		NSLog(@"Password: %@", textField.text);
+	}
+	
+	return NO;
+}
+
 
 @end

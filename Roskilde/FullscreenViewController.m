@@ -26,6 +26,7 @@
 @synthesize isFullscreen;
 @synthesize oldFrame;
 @synthesize bView;
+@synthesize delegate;
 
 - (id)init {
 	if ((self = [super init])) {
@@ -120,6 +121,7 @@
 
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+	[self.delegate dismissTextInput];
 	[self fullscreen];
 }
 

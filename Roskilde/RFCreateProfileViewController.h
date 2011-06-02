@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 
 
-@interface RFCreateProfileViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
+@interface RFCreateProfileViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate> {
     
 	UIButton *loginButton;
+	UITableView *tableView;
 }
 
+@property (nonatomic, retain) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) IBOutlet UIButton *loginButton;
 
 - (IBAction) loginButtonPressed:(id)sender;

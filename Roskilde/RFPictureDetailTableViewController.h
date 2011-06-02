@@ -7,24 +7,49 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BaseRefreshTableViewController.h"
+#import "BaseRefreshViewController.h"
 #import "FLImageView.h"
+#import "UIInputToolbar.h"
 
 
-@class ZoomingViewController;
 
-@interface RFPictureDetailTableViewController : BaseRefreshTableViewController {
+@protocol RFPictureDetailTableViewControllerDelegate
+- (void)dismissTextInput;
+@end
+
+@interface RFPictureDetailTableViewController : BaseRefreshViewController <UIInputToolbarDelegate, RFPictureDetailTableViewControllerDelegate> {
     NSDictionary * _entry;
 	NSArray * _replies;
 	
-	ZoomingViewController *zoomingViewController;
 	UIView *zoomingView;
 	FLImageView *imageView;
+	
+	UIView *toolbar;
+	UIInputToolbar *inputToolbar;
+	
+	UIButton *cameraButton;
+	UIButton *inputButton;
+	UIButton *likeButton;
+	
+@private
+    BOOL keyboardIsVisible;
+
 }
 
 @property (nonatomic, retain) NSDictionary *entry;
 @property (nonatomic, retain) NSArray *replies;
 @property (nonatomic, retain) IBOutlet UIView *zoomingView;
 @property (nonatomic, retain) IBOutlet FLImageView *imageView;
+@property (nonatomic, retain) IBOutlet UIView *toolbar;
+@property (nonatomic, retain) UIInputToolbar *inputToolbar;
+
+@property (nonatomic, retain) IBOutlet UIButton *cameraButton;
+@property (nonatomic, retain) IBOutlet UIButton *inputButton;
+@property (nonatomic, retain) IBOutlet UIButton *likeButton;
+
+
+- (void)cameraButtonPressed:(id)sender;
+- (void)replyButtonPressed:(id)sender;
+- (void)likeButtonPressed:(id)sender;
 
 @end

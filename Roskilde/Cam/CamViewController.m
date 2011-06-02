@@ -43,6 +43,8 @@
 @synthesize flipButton;
 @synthesize flashButton;
 @synthesize flashLabel;
+@synthesize replyTo;
+
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
@@ -305,6 +307,7 @@
 
 - (void)ThumbnailViewThumbnailPressed:(NSUInteger)index {
 	CamPreviewController *previewController = [[CamPreviewController alloc] initWithImages:thumbnailView.allThumbnails selectedIndex:index];
+	previewController.replyTo = self.replyTo;
 	previewController.delegate = self;
 	[self.navigationController pushViewController:previewController animated:YES];
 	[previewController release];
@@ -351,6 +354,7 @@
 	}
 	
 	CamPreviewController *previewController = [[CamPreviewController alloc] initWithImages:[NSArray arrayWithObject:image] selectedIndex:0];
+	previewController.replyTo = self.replyTo;
 	[self.navigationController pushViewController:previewController animated:YES];
 	[previewController release];
 	
@@ -372,6 +376,9 @@
 	[libraryButton release];
 	[timerButton release];
 	[flipButton release];
+	
+	self.replyTo = nil;
+	
 	[super dealloc];
 }
 

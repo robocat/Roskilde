@@ -39,7 +39,7 @@
 			
 			
 			for (NSDictionary *dict in objects) {
-				Location *location = [model newLocation];
+				RFLocation *location = [model newLocation];
 				[location setLatValue:[[dict valueForKey:@"lat"] floatValue]];
 				[location setLonValue:[[dict valueForKey:@"lon"] floatValue]];
 				location.area = [dict valueForKey:@"area"];
@@ -60,7 +60,7 @@
 }
 
 
-+ (NSArray*)locationObjectsForPosition:(CLLocationCoordinate2D)coordinate nearest:(Location**)nearest {
++ (NSArray*)locationObjectsForPosition:(CLLocationCoordinate2D)coordinate nearest:(RFLocation**)nearest {
 	NSArray *nearLocations = [[RFModelController defaultModelController] allLocationsNearCoordinate:coordinate];
 	
 	if ([nearLocations count] == 1) {
@@ -72,9 +72,10 @@
 	}
 	
 	float nearestDistance = 0.01;
-	Location *nearestLocation = nil;
+	RFLocation *nearestLocation = nil;
 	
-	for (Location *location in nearLocations) {
+	NSLog(@"nearLocations: %@", nearLocations);
+	for (RFLocation *location in nearLocations) {
 		float distance = sqrtf(powf(location.latValue - coordinate.latitude, 2) + powf(location.lonValue - coordinate.longitude, 2));
 		if (distance < nearestDistance) {
 			nearestDistance = distance;

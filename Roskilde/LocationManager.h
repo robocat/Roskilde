@@ -7,12 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Location.h"
+#import "RFLocation.h"
 #import <CoreLocation/CoreLocation.h>
 
 @interface LocationManager : NSObject
 
 + (void)loadLocationData;
-+ (NSArray*)locationObjectsForPosition:(CLLocationCoordinate2D)coordinate nearest:(Location**)nearest;
++ (NSArray*)locationObjectsForPosition:(CLLocationCoordinate2D)coordinate nearest:(RFLocation**)nearest;
 
 @end

@@ -37,5 +37,6 @@
 @property (nonatomic, retain) IBOutlet UITextView *descriptionTextView;
 
 - (IBAction)toggleInfoView:(id)sender;
+- (IBAction)favorite:(id)sender;
 
 @end

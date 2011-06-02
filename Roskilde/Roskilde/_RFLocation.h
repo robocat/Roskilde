@@ -1,5 +1,5 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
-// Make changes to Location.h instead.
+// Make changes to RFLocation.h instead.
 
 #import <CoreData/CoreData.h>
 
@@ -12,14 +12,14 @@
 
 
 
-@interface LocationID : NSManagedObjectID {}
+@interface RFLocationID : NSManagedObjectID {}
 @end
 
-@interface _Location : NSManagedObject {}
+@interface _RFLocation : NSManagedObject {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
-- (LocationID*)objectID;
+- (RFLocationID*)objectID;
 
 
 
@@ -71,11 +71,11 @@
 
 @end
 
-@interface _Location (CoreDataGeneratedAccessors)
+@interface _RFLocation (CoreDataGeneratedAccessors)
 
 @end
 
-@interface _Location (CoreDataGeneratedPrimitiveAccessors)
+@interface _RFLocation (CoreDataGeneratedPrimitiveAccessors)
 
 
 - (NSString*)primitiveName;

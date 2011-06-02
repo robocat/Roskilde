@@ -140,9 +140,9 @@
 	}
 	
 	if ([connection isVideoOrientationSupported]) {
-/*		if ([UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeLeft || [UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeRight) {*/
+		if (!([UIDevice currentDevice].orientation == UIDeviceOrientationFaceUp || [UIDevice currentDevice].orientation == UIDeviceOrientationFaceDown)) {
 			[connection setVideoOrientation:[UIDevice currentDevice].orientation];
-//		}
+		}
 	}
 	
 	[self.captureStillImageOutput captureStillImageAsynchronouslyFromConnection:connection completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {

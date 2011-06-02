@@ -325,6 +325,10 @@
 		3EF92FBC138D84A300AFFC2D /* tick.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 3EF92FBB138D84A300AFFC2D /* tick.aiff */; };
 		3EF92FCF138D8DBB00AFFC2D /* BaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF92FCD138D8DB900AFFC2D /* BaseTableViewController.m */; };
 		3EF92FD4138D903A00AFFC2D /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF92FD2138D903900AFFC2D /* BaseViewController.m */; };
+		FF116A861397D058003D4CF1 /* gigstar_container@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF116A851397D058003D4CF1 /* gigstar_container@2x.png */; };
+		FF116A891397D060003D4CF1 /* gigstar_container.png in Resources */ = {isa = PBXBuildFile; fileRef = FF116A881397D060003D4CF1 /* gigstar_container.png */; };
+		FF3240FC139816CB00BFA13D /* _RFLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3240F9139816CB00BFA13D /* _RFLocation.m */; };
+		FF3240FD139816CB00BFA13D /* RFLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3240FB139816CB00BFA13D /* RFLocation.m */; };
 		FF3953FE13966B6D007BDF33 /* ReplyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E37450E1393DD1000E6DA3D /* ReplyTableViewCell.m */; };
 		FF3953FF13966B70007BDF33 /* AuthorTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E3745051393CB2600E6DA3D /* AuthorTableViewCell.m */; };
 		FF39540013966B8D007BDF33 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EE0BA23138FFFCA00CF0531 /* LocationManager.m */; };
@@ -650,10 +654,6 @@
 		3EE0BA0C138FD01300CF0531 /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		3EE0BA22138FFFCA00CF0531 /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
 		3EE0BA23138FFFCA00CF0531 /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
-		3EE0BA25138FFFDD00CF0531 /* _Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Location.h; sourceTree = "<group>"; };
-		3EE0BA26138FFFDD00CF0531 /* _Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Location.m; sourceTree = "<group>"; };
-		3EE0BA27138FFFDD00CF0531 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
-		3EE0BA28138FFFDD00CF0531 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
 		3EE0BA2B139001D100CF0531 /* festival.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = festival.json; sourceTree = "<group>"; };
 		3EE0BA2E1391744700CF0531 /* NSDictionaryHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDictionaryHelper.h; sourceTree = "<group>"; };
 		3EE0BA2F1391744700CF0531 /* NSDictionaryHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDictionaryHelper.m; sourceTree = "<group>"; };
@@ -751,6 +751,12 @@
 		3EF92FCD138D8DB900AFFC2D /* BaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewController.m; sourceTree = "<group>"; };
 		3EF92FD1138D903800AFFC2D /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		3EF92FD2138D903900AFFC2D /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
+		FF116A851397D058003D4CF1 /* gigstar_container@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gigstar_container@2x.png"; sourceTree = "<group>"; };
+		FF116A881397D060003D4CF1 /* gigstar_container.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gigstar_container.png; sourceTree = "<group>"; };
+		FF3240F8139816CB00BFA13D /* _RFLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _RFLocation.h; sourceTree = "<group>"; };
+		FF3240F9139816CB00BFA13D /* _RFLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _RFLocation.m; sourceTree = "<group>"; };
+		FF3240FA139816CB00BFA13D /* RFLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFLocation.h; sourceTree = "<group>"; };
+		FF3240FB139816CB00BFA13D /* RFLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFLocation.m; sourceTree = "<group>"; };
 		FF39540513967350007BDF33 /* FullscreenImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullscreenImageView.h; sourceTree = "<group>"; };
 		FF39540613967350007BDF33 /* FullscreenImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FullscreenImageView.m; sourceTree = "<group>"; };
 		FF3954081396792A007BDF33 /* FullscreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullscreenViewController.h; sourceTree = "<group>"; };
@@ -798,6 +804,8 @@
 		3E3BB78E1394001300BD511B /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				FF116A881397D060003D4CF1 /* gigstar_container.png */,
+				FF116A851397D058003D4CF1 /* gigstar_container@2x.png */,
 				3E5EA4D113968CB0000BD50D /* commentbox_liked.png */,
 				3E5EA4D213968CB0000BD50D /* commentbox_liked@2x.png */,
 				3E5EA4D313968CB0000BD50D /* commentbox.png */,
@@ -1498,10 +1506,10 @@
 		3EEF2A04138A9E1F00A8E34A /* Roskilde */ = {
 			isa = PBXGroup;
 			children = (
-				3EE0BA25138FFFDD00CF0531 /* _Location.h */,
-				3EE0BA26138FFFDD00CF0531 /* _Location.m */,
-				3EE0BA27138FFFDD00CF0531 /* Location.h */,
-				3EE0BA28138FFFDD00CF0531 /* Location.m */,
+				FF3240F8139816CB00BFA13D /* _RFLocation.h */,
+				FF3240F9139816CB00BFA13D /* _RFLocation.m */,
+				FF3240FA139816CB00BFA13D /* RFLocation.h */,
+				FF3240FB139816CB00BFA13D /* RFLocation.m */,
 				3EEF2A1A138AA16600A8E34A /* _RFMusic.h */,
 				3EEF2A1B138AA16600A8E34A /* _RFMusic.m */,
 				3EEF2A1C138AA16600A8E34A /* RFMusic.h */,
@@ -1851,6 +1859,8 @@
 				3E5EA50313969C05000BD50D /* toolbarbg@2x~iphone.png in Resources */,
 				3E5EA50413969C05000BD50D /* toolbarbg~iphone.png in Resources */,
 				3E5EA5431396FA82000BD50D /* SVSegmentedControl.bundle in Resources */,
+				FF116A861397D058003D4CF1 /* gigstar_container@2x.png in Resources */,
+				FF116A891397D060003D4CF1 /* gigstar_container.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1962,6 +1972,8 @@
 				3E5EA5201396A7CA000BD50D /* BaseRefreshViewController.m in Sources */,
 				3E5EA5441396FA82000BD50D /* SVSegmentedControl.m in Sources */,
 				3E5EA5451396FA82000BD50D /* SVSegmentedThumb.m in Sources */,
+				FF3240FC139816CB00BFA13D /* _RFLocation.m in Sources */,
+				FF3240FD139816CB00BFA13D /* RFLocation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2059,7 +2071,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Willi Wu (P5EC6B73UQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ulrik Damm (X45AYMDB46)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2067,7 +2079,7 @@
 				INFOPLIST_FILE = "Roskilde/Roskilde-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9218BB29-FF6C-49F3-ACD6-2AAD591F7E2F";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9BC2465A-F842-4DB5-93CC-D1DA30310619";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;

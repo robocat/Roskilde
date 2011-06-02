@@ -45,8 +45,8 @@
         _tableView = [aTableView retain];
         delegate = aDelegate;
         
-        textPull = [[NSString alloc] initWithString:@"Pull down to refresh..."];
-        textRelease = [[NSString alloc] initWithString:@"Release to refresh..."];
+        textPull = [[NSString alloc] initWithString:@"Pull down to refresh"];
+        textRelease = [[NSString alloc] initWithString:@"Release to refresh"];
         textLoading = [[NSString alloc] initWithString:@""];
         
         self.backgroundColor = [UIColor clearColor];

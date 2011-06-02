@@ -13,10 +13,17 @@
     
 	UIButton *loginButton;
 	UITableView *tableView;
+	
+	NSString *username;
+	NSString *password;
+	NSString *email;
 }
 
 @property (nonatomic, retain) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) IBOutlet UIButton *loginButton;
+@property (nonatomic, retain) NSString *username;
+@property (nonatomic, retain) NSString *password;
+@property (nonatomic, retain) NSString *email;
 
 - (IBAction) loginButtonPressed:(id)sender;
 

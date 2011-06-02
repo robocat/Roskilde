@@ -9,12 +9,15 @@
 #import "RFCreateProfileViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "RFLoginViewController.h"
+#import "ASIFormDataRequest.h"
 
 @interface RFCreateProfileViewController ()
 
 @property (nonatomic, retain) UITextField *usernameTextField;
 @property (nonatomic, retain) UITextField *passwordTextField;
 @property (nonatomic, retain) UITextField *emailTextField;
+
+-(void)joinButtonPressed:(id)sender;
 
 @end
 
@@ -26,6 +29,9 @@
 @synthesize usernameTextField;
 @synthesize passwordTextField;
 @synthesize emailTextField;
+@synthesize username;
+@synthesize password;
+@synthesize email;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -40,6 +46,11 @@
 	[loginButton release];
 	[tableView release];
 	[tableView release];
+	
+	self.username = nil;
+    self.password = nil;
+    self.email = nil;
+	
     [super dealloc];
 }
 
@@ -67,8 +78,6 @@
 			self.view.frame = CGRectOffset(self.view.frame, 0, -150);
 		}];
 	}];
-	
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:nil];
 }
 
 
@@ -134,7 +143,7 @@
 		cell.textLabel.text = @"Email";
 		self.emailTextField = (UITextField*)[cell viewWithTag:2];
 		input.keyboardType = UIKeyboardTypeEmailAddress;
-		input.returnKeyType = UIReturnKeyGo;
+		input.returnKeyType = UIReturnKeyJoin;
 	}
 	
 	return cell;
@@ -151,7 +160,60 @@
 	}
 }
 
+
+- (void)checkInputs {
+	if (self.username && self.password) {
+		self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Join" style:UIBarButtonItemStylePlain target:self action:nil];
+	}
+	else {
+		self.navigationItem.rightBarButtonItem = nil;
+	}
+}
+
+
 -(void)textFieldDidEndEditing:(UITextField *)textField  {
+	if (textField.tag == 0)
+	{
+		self.username = textField.text;
+	}
+	else if (textField.tag == 1)
+	{
+		self.password = textField.text;
+	}
+	else
+	{
+		self.email = textField.text;
+	}
+	
+	[self checkInputs];
+}
+
+- (BOOL)isValidForRegex:(NSString *)regEx string:(NSString *)string {
+	NSPredicate *regExPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regEx];
+	return [regExPredicate evaluateWithObject:string];
+}
+
+- (BOOL)isValidated {
+	
+	NSString *emailRegEx =
+    @"(?:[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[a-z0-9!#$%\\&'*+/=?\\^_`{|}"
+    @"~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\"
+    @"x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-"
+    @"z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5"
+    @"]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-"
+    @"9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21"
+    @"-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
+	
+	NSString *usernameRegEx = @"[a-zA-Z0-9_-]{3,}";
+		
+	if ([self isValidForRegex:usernameRegEx string:self.username]
+		&& [self isValidForRegex:emailRegEx string:self.email]) {
+		return YES;
+	}
+	
+	[[[[UIAlertView alloc] initWithTitle:@"Profile info missing" message:@"Please correct the info and try again" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
+	
+	return NO;
 }
 
 
@@ -174,10 +236,55 @@
 	}
 	else
 	{
+		[self joinButtonPressed:nil];
 		NSLog(@"Email: %@", textField.text);
 	}
 	
 	return NO;
+}
+
+
+-(void)joinButtonPressed:(id)sender
+{
+	if (self.username && self.password && self.email && [self isValidated]) {
+		NSString *urlString = [NSString stringWithFormat:@"%@/user/auth/%@?password=%@&email=%@", kXdkAPIBaseUrl, self.username, self.password, self.email];
+		NSURL *url = [NSURL URLWithString:urlString];
+		
+		__block ASIFormDataRequest *formRequest = [ASIFormDataRequest requestWithURL:url];
+		formRequest.requestMethod = @"POST";
+		
+		// Basic Auth
+		NSString *auth = [NSString stringWithFormat:@"Basic %@",[ASIHTTPRequest base64forData:[[NSString stringWithFormat:@"%@:%@", [RFGlobal username], [RFGlobal password]] dataUsingEncoding:NSUTF8StringEncoding]]];
+		[formRequest addRequestHeader:@"Authorization" value:auth];
+		
+		[formRequest setCompletionBlock:^{
+			// Use when fetching text data
+//			NSString *responseString = [formRequest responseString];
+			int statusCode = [formRequest responseStatusCode];
+//			LOG_EXPR(statusCode);
+//			LOG_EXPR(responseString);
+			
+			// Save profile
+			
+			if (statusCode == 200 || statusCode == 201) {
+				[RFGlobal saveUsername:self.username password:self.password];
+				[self.parentViewController dismissModalViewControllerAnimated:YES];
+			}
+			else {
+				[[[[UIAlertView alloc] initWithTitle:@"Create User Failed" message:@"Please correct the info and try again" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
+			}
+		}];
+		
+		[formRequest setFailedBlock:^{
+			NSError *error = [formRequest error];
+			NSLog(@"error: %@", error);
+			
+			// Show alert
+			[[[[UIAlertView alloc] initWithTitle:@"Create User Failed" message:@"Please correct the info and try again" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
+		}];
+		
+		[formRequest startAsynchronous];
+	}
 }
 
 

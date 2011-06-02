@@ -55,6 +55,13 @@
 	// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
 	// self.navigationItem.rightBarButtonItem = self.editButtonItem;
 	
+	CGRect frame = self.tableView.bounds;
+	frame.origin.y = -frame.size.height;
+	UIView* grayView = [[UIView alloc] initWithFrame:frame];
+	grayView.backgroundColor = [UIColor colorWithRed:0.169 green:0.163 blue:0.163 alpha:1.000];
+	[self.tableView addSubview:grayView];
+	[grayView release];
+	
 	// Filters
 	SVSegmentedControl *filters = [[SVSegmentedControl alloc] initWithSectionTitles:[NSArray arrayWithObjects:@"Artists", @"Date", @"Genre", @"Starred", nil]];
 	filters.selectedSegmentChangedHandler = ^(id sender) {

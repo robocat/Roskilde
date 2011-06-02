@@ -10,7 +10,7 @@
 
 #define kConcertsFeed		@"http://roskildefeed.mads379.cloudbees.net/feed/xml"
 #define kXdkAPIKey			@""
-#define kXdkAPIBaseUrl		@"http://20110602.xdkapp.appspot.com/api/roskilde"
+#define kXdkAPIBaseUrl		@"https://xdkapp.appspot.com/api/roskilde"
 
 
 
@@ -21,5 +21,9 @@
 @interface RFGlobal : NSObject {
     
 }
+
++ (NSString *)username;
++ (NSString *)password;
++ (void)saveUsername:(NSString *)username password:(NSString *)password;
 
 @end

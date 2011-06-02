@@ -7,11 +7,15 @@
 //
 
 #import "RFLoginViewController.h"
+#import "ASIHTTPRequest.h"
+
 
 @interface RFLoginViewController ()
 
 @property (nonatomic, retain) UITextField *usernameTextField;
 @property (nonatomic, retain) UITextField *passwordTextField;
+
+-(void)loginButtonPressed:(id)sender;
 
 @end
 
@@ -20,6 +24,8 @@
 
 @synthesize usernameTextField;
 @synthesize passwordTextField;
+@synthesize username;
+@synthesize password;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -32,6 +38,9 @@
 
 - (void)dealloc
 {
+	self.username = nil;
+    self.password = nil;
+	
     [super dealloc];
 }
 
@@ -106,7 +115,7 @@
 		cell.textLabel.text = @"Password";
 		self.passwordTextField = (UITextField*)[cell viewWithTag:1];
 		input.secureTextEntry = YES;
-		input.returnKeyType = UIReturnKeyNext;
+		input.returnKeyType = UIReturnKeyGo;
 	}
 
 	
@@ -124,6 +133,14 @@
 
 
 -(void)textFieldDidEndEditing:(UITextField *)textField  {
+	if (textField.tag == 0)
+	{
+		self.username = textField.text;
+	}
+	else
+	{
+		self.password = textField.text;
+	}
 }
 
 
@@ -133,14 +150,57 @@
 	if (textField.tag == 0)
 	{
 		
-		NSLog(@"Username: %@", textField.text);
+//		NSLog(@"Username: %@", textField.text);
 	}
 	else
 	{
-		NSLog(@"Password: %@", textField.text);
+		[self loginButtonPressed:nil];
+//		NSLog(@"Password: %@", textField.text);
 	}
 	
 	return NO;
+}
+
+-(void)loginButtonPressed:(id)sender
+{
+	if (self.username && self.password) {
+		NSString *urlString = [NSString stringWithFormat:@"%@/user/auth/%@?password=%@", kXdkAPIBaseUrl, self.username, self.password];
+		NSURL *url = [NSURL URLWithString:urlString];
+
+		__block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+
+		// Basic Auth
+		NSString *auth = [NSString stringWithFormat:@"Basic %@",[ASIHTTPRequest base64forData:[[NSString stringWithFormat:@"%@:%@", self.username, self.password] dataUsingEncoding:NSUTF8StringEncoding]]];
+		[request addRequestHeader:@"Authorization" value:auth];
+
+		[request setCompletionBlock:^{
+			// Use when fetching text data
+//			NSString *responseString = [request responseString];
+			int statusCode = [request responseStatusCode];
+	//		LOG_EXPR(statusCode);
+	//		LOG_EXPR(responseString);
+			
+			// Save profile
+			
+			if (statusCode == 200 || statusCode == 201) {
+				[RFGlobal saveUsername:self.username password:self.password];
+				[self.parentViewController dismissModalViewControllerAnimated:YES];
+			}
+			else {
+				[[[[UIAlertView alloc] initWithTitle:@"Login Failed" message:@"Login info incorrect" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
+			}
+		}];
+
+		[request setFailedBlock:^{
+			NSError *error = [request error];
+			NSLog(@"error: %@", error);
+			
+			// Show alert
+			[[[[UIAlertView alloc] initWithTitle:@"Login Failed" message:@"Login info incorrect" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
+		}];
+			
+		[request startAsynchronous];
+	}
 }
 
 

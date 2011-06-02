@@ -11,4 +11,33 @@
 
 @implementation RFGlobal
 
+
++ (NSString *)username
+{
+	NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultsUsername];
+	
+	if ([username isKindOfClass:[NSString class]])
+		 return username;
+	
+	return nil;
+}
+
++ (NSString *)password
+{
+	NSString *password = [[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultsPassword];
+	
+	if ([password isKindOfClass:[NSString class]])
+		return password;
+	
+	return nil;
+}
+
++ (void)saveUsername:(NSString *)username password:(NSString *)password
+{
+	NSUserDefaults *userDefauls = [NSUserDefaults standardUserDefaults];
+	[userDefauls setObject:username forKey:kUserDefaultsUsername];
+	[userDefauls setObject:password forKey:kUserDefaultsPassword];
+	[userDefauls synchronize];
+}
+
 @end

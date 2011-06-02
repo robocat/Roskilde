@@ -69,11 +69,18 @@
 	
 	self.title = NSLocalizedString(@"Pictures", @"");
 	
+//	self.tableView.backgroundView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"xbg.png"]] autorelease];
 	
-	// Create cancel button and assign it
-	UIBarButtonItem *createButton = [[UIBarButtonItem alloc] initWithTitle:@"Profile" style:UIBarButtonItemStyleBordered target:self action:@selector(createProfile)];
-	self.navigationItem.leftBarButtonItem = createButton;
-	[createButton release];
+	if ([RFGlobal username]) {
+		UIBarButtonItem *createButton = [[UIBarButtonItem alloc] initWithTitle:@"Profile" style:UIBarButtonItemStyleBordered target:self action:@selector(profileButtonPressed:)];
+		self.navigationItem.leftBarButtonItem = createButton;
+		[createButton release];
+	}
+	else {
+		UIBarButtonItem *createButton = [[UIBarButtonItem alloc] initWithTitle:@"Create Profile" style:UIBarButtonItemStyleBordered target:self action:@selector(createProfile)];
+		self.navigationItem.leftBarButtonItem = createButton;
+		[createButton release];
+	}
 
 	
 	[self performSelector:@selector(refresh) withObject:nil afterDelay:0.0];
@@ -121,12 +128,12 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {	
-    return [self.entries count];
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+	return [self.entries count];
 }
 
 
@@ -150,7 +157,7 @@
 	
 	EntryTableViewCell * cell	= (EntryTableViewCell *)cell_;
 	
-	NSDictionary *entry = [self.entries objectAtIndex:indexPath.section];
+	NSDictionary *entry = [self.entries objectAtIndex:indexPath.row];
 	
 	NSDictionary *author		= [entry objectForKey:@"created_by"];
 	cell.author					= [author objectOrEmptyStringForKey:@"fullname"];
@@ -235,12 +242,20 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {	
 	RFPictureDetailTableViewController *detailViewController = [[RFPictureDetailTableViewController alloc] init];
-	detailViewController.entry = [self.entries objectAtIndex:indexPath.section];
+	detailViewController.entry = [self.entries objectAtIndex:indexPath.row];
 	detailViewController.hidesBottomBarWhenPushed = YES;
 	[self.navigationController pushViewController:detailViewController animated:YES];
 	[detailViewController release];
 }
 
+
+
+#pragma mark - Load More
+
+
+
+
+#pragma mark - Fetch data
 
 - (void)refresh {
     [self performSelector:@selector(fetchLiveFeed) withObject:nil afterDelay:0.0];
@@ -252,7 +267,7 @@
 }
 
 - (void)fetchLiveFeed {
-	NSString *urlString = [NSString stringWithFormat:@"%@/entries/", kXdkAPIBaseUrl];
+	NSString *urlString = [NSString stringWithFormat:@"%@/entries/", kXdkAPIBaseUrl]; //?tags=roskilde-festival
 	NSURL *url = [NSURL URLWithString:urlString];
 	__block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
 	[request setDownloadCache:[ASIDownloadCache sharedCache]];
@@ -266,6 +281,8 @@
 		
 		// JSONKit parse
 		id parsedData = [responseString objectFromJSONString];
+		
+		LOG_EXPR(parsedData);
 		
 		self.entries = nil;
 		//		[self.entries addObjectsFromArray:parsedData];
@@ -304,6 +321,10 @@
 	[controller release];
 	[navigationController release];	
 
+}
+
+- (void)profileButtonPressed:(id)sender {
+	
 }
 
 @end

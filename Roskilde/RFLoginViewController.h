@@ -10,7 +10,11 @@
 
 
 @interface RFLoginViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate> {
-    
+	NSString *username;
+	NSString *password;
 }
+
+@property (nonatomic, retain) NSString *username;
+@property (nonatomic, retain) NSString *password;
 
 @end

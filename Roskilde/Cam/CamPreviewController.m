@@ -291,8 +291,8 @@
 	NSString * loc = (self.location.text) ? self.location.text : @"";
 	
 	NSMutableDictionary *data = [NSMutableDictionary dictionaryWithCapacity:6];
-	[data setObject:@"Willi" forKey:@"username"];
-	[data setObject:@"ww" forKey:@"password"];
+	[data setObject:[RFGlobal username] forKey:@"username"];
+	[data setObject:[RFGlobal password] forKey:@"password"];
 	[data setObject:comment forKey:@"comment"];
 	[data setObject:@"roskilde-festival" forKey:@"tags"];
 	[data setObject:loc forKey:@"location"];
@@ -306,7 +306,7 @@
 	NSString *json = [data JSONString];
 	
 	// Prepare image
-	NSString *filename = [NSString stringWithFormat:@"%@-roskildeapp.jpg", @"willi"];
+	NSString *filename = [NSString stringWithFormat:@"%@-roskildeapp.jpg", [RFGlobal username]];
 	UIImage *currentImage = [self.images objectAtIndex:self.pageControl.currentPage];
 	NSData *imageData = UIImageJPEGRepresentation(currentImage, (currentImage.size.width > 640? 0.3: 1.0));
 	
@@ -317,7 +317,7 @@
 	[formRequest setData:imageData withFileName:filename andContentType:@"image/jpeg" forKey:@"media"];
 	
 	// Basic Auth
-	NSString *auth = [NSString stringWithFormat:@"Basic %@",[ASIHTTPRequest base64forData:[[NSString stringWithFormat:@"%@:%@", @"Willi", @"ww"] dataUsingEncoding:NSUTF8StringEncoding]]];
+	NSString *auth = [NSString stringWithFormat:@"Basic %@",[ASIHTTPRequest base64forData:[[NSString stringWithFormat:@"%@:%@", [RFGlobal username], [RFGlobal password]] dataUsingEncoding:NSUTF8StringEncoding]]];
 	[formRequest addRequestHeader:@"Authorization" value:auth];
 	
 	[formRequest setCompletionBlock:^{

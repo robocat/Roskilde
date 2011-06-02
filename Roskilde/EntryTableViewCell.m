@@ -50,8 +50,6 @@
 		viewsIcon = [[UIImage imageNamed:@"viewcount_icon.png"] retain];
 		repliesIcon = [[UIImage imageNamed:@"comment_icon.png"] retain];
 		likesIcon = [[UIImage imageNamed:@"like_icon.png"] retain];
-		
-		
 	}
     return self;
 }

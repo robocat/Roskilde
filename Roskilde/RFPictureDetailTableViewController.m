@@ -596,8 +596,8 @@
 		NSString *loc = (NSString *)[NSNull null];
 		
 		NSMutableDictionary *data = [NSMutableDictionary dictionaryWithCapacity:6];
-		[data setObject:@"Willi" forKey:@"username"];
-		[data setObject:@"ww" forKey:@"password"];
+		[data setObject:[RFGlobal username] forKey:@"username"];
+		[data setObject:[RFGlobal password] forKey:@"password"];
 		[data setObject:comment forKey:@"comment"];
 		[data setObject:loc forKey:@"location"];
 		[data setObject:@"Roskilde app" forKey:@"via"];
@@ -609,7 +609,7 @@
 		[formRequest setPostValue:json forKey:@"data"];
 		
 		// Basic Auth
-		NSString *auth = [NSString stringWithFormat:@"Basic %@",[ASIHTTPRequest base64forData:[[NSString stringWithFormat:@"%@:%@", @"Willi", @"ww"] dataUsingEncoding:NSUTF8StringEncoding]]];
+		NSString *auth = [NSString stringWithFormat:@"Basic %@",[ASIHTTPRequest base64forData:[[NSString stringWithFormat:@"%@:%@", [RFGlobal username], [RFGlobal password]] dataUsingEncoding:NSUTF8StringEncoding]]];
 		[formRequest addRequestHeader:@"Authorization" value:auth];
 		
 		[formRequest setCompletionBlock:^{

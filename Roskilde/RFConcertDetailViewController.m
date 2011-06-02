@@ -10,6 +10,7 @@
 #import "RKCustomNavigationBar.h"
 #import "RFMusic.h"
 #import "NSDateHelper.h"
+#import "RFModelController.h"
 
 
 @interface RFConcertDetailViewController ()
@@ -164,6 +165,12 @@
 		} completion:^(BOOL finished) {
 		}];
 	}
+}
+
+- (IBAction)favorite:(id)sender {
+	self.concert.isFavoriteValue = !self.concert.isFavoriteValue;
+	
+	[[RFModelController defaultModelController] save];
 }
 
 

@@ -7,10 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
 
-
-@interface RFTimelineViewController : UIViewController {
-    
+@interface RFTimelineViewController : UIViewController <NSFetchedResultsControllerDelegate> {
+    NSFetchedResultsController *fetchedResultsController;
 }
+
+@property (nonatomic, retain) UINavigationController *navigationController;
+@property (nonatomic, retain) NSDate *currentDate;
+
+- (void)changeDate:(NSDate*)newDate;
 
 @end

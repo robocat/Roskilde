@@ -7,7 +7,7 @@
 //
 
 #import "RFMusic.h"
-#import "Location.h"
+#import "RFLocation.h"
 #import <CoreLocation/CoreLocation.h>
 
 
@@ -35,8 +35,8 @@
 - (BOOL) hasLocation;
 - (NSArray*)allLocationsNearCoordinate:(CLLocationCoordinate2D)coordinate;
 - (NSArray*)allLocations;
-- (Location*)newLocation;
-- (void)deleteLocation:(Location*)location;
+- (RFLocation*)newLocation;
+- (void)deleteLocation:(RFLocation*)location;
 
 
 - (BOOL) hasMusic;

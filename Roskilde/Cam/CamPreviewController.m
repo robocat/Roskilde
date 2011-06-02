@@ -160,10 +160,10 @@
 	
 	[self.scrollView scrollRectToVisible:CGRectMake(320*selectedIndex, 0, 320, self.scrollView.frame.size.height) animated:NO];
 	
-	Location *nearestLocation = nil;
+	RFLocation *nearestLocation = nil;
 	self.nearLocations = [LocationManager locationObjectsForPosition:CLLocationCoordinate2DMake(55.614628318584074, 12.078001721170397) nearest:&nearestLocation];
 	
-	for (Location *l in self.nearLocations) {
+	for (RFLocation *l in self.nearLocations) {
 		if ([l.type isEqualToString:@"stage"]) {
 			nearestLocation = l;
 			break;

@@ -12,7 +12,11 @@
 #import "TBXML.h"
 #import "NSDateHelper.h"
 
+@interface RoskildeAppDelegate ()
 
+- (void)importMusicData;
+
+@end
 
 @implementation RoskildeAppDelegate
 
@@ -57,7 +61,8 @@
 	[self performSelector:@selector(showSplash)];
 	
 //	[self performSelector:@selector(importMusicData) withObject:nil afterDelay:0.0];
-	
+	[self importMusicData];
+	[LocationManager loadLocationData];
 	
     return YES;
 }
@@ -192,9 +197,9 @@
 //	dispatch_async(dispatch_get_global_queue(0, 0), ^(void) {
 		RFModelController *modelController = [RFModelController defaultModelController];
 		
-		if (![modelController hasMusic]) {
-//			[modelController deleteAllMusic];
-//			[modelController save];
+//		if (![modelController hasMusic]) {
+			[modelController deleteAllMusic];
+			[modelController save];
 			
 			// Load and parse the books.xml file
 			TBXML *tbxml = [[TBXML tbxmlWithXMLFile:@"music.xml"] retain];
@@ -218,6 +223,7 @@
 					music.artistInitial		= [TBXML valueOfAttributeNamed:@"artist_initial" forElement:concert];
 					music.beginDate			= [NSDate dateWithISO8601String:[TBXML valueOfAttributeNamed:@"begin_timestamp" forElement:concert]];
 					music.country			= [TBXML valueOfAttributeNamed:@"country" forElement:concert];
+					music.isFavoriteValue	= NO;
 					
 					
 					NSString * descriptionText = [TBXML valueOfAttributeNamed:@"description" forElement:concert];
@@ -235,6 +241,7 @@
 					music.web				= [TBXML valueOfAttributeNamed:@"web" forElement:concert];
 					// updatedDate
 					
+					
 					[music release];
 					
 					// find the next sibling element named "author"
@@ -246,10 +253,8 @@
 				
 				[modelController save];
 			}
-		}
+//		}
 //	});
-	
-	[LocationManager loadLocationData];
 }
 
 @end

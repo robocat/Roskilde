@@ -37,6 +37,7 @@
 	
 	NSDate *theDate = [formatter dateFromString:dateString];
 	[formatter release];
+	
 	return theDate;
 }
 
@@ -49,7 +50,7 @@
 		dateString = [[dateString substringToIndex:(dateString.length-1)] stringByAppendingString:@"GMT"];
 	}
 	
-	return [[self class] dateWithString:dateString formatString:@"yyyy-MM-dd'T'HH:mm:ssZZZ"];
+	return [[self class] dateWithString:dateString formatString:@"yyyy-MM-dd'T'HH:mm:ss.SSSZZZ"];
 }
 
 + (NSDate*)dateWithDateString:(NSString*)dateString {

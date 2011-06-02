@@ -1,29 +1,29 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
-// Make changes to Location.m instead.
+// Make changes to RFLocation.m instead.
 
-#import "_Location.h"
+#import "_RFLocation.h"
 
-@implementation LocationID
+@implementation RFLocationID
 @end
 
-@implementation _Location
+@implementation _RFLocation
 
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_ {
 	NSParameterAssert(moc_);
-	return [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:moc_];
+	return [NSEntityDescription insertNewObjectForEntityForName:@"NewLocation" inManagedObjectContext:moc_];
 }
 
 + (NSString*)entityName {
-	return @"Location";
+	return @"NewLocation";
 }
 
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_ {
 	NSParameterAssert(moc_);
-	return [NSEntityDescription entityForName:@"Location" inManagedObjectContext:moc_];
+	return [NSEntityDescription entityForName:@"NewLocation" inManagedObjectContext:moc_];
 }
 
-- (LocationID*)objectID {
-	return (LocationID*)[super objectID];
+- (RFLocationID*)objectID {
+	return (RFLocationID*)[super objectID];
 }
 
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {

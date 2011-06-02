@@ -8,7 +8,14 @@
 
 #import "RFScheduleViewController.h"
 #import "NSDateHelper.h"
+#import "RFModelController.h"
+#import "RFTimelineViewController.h"
 
+@interface RFScheduleViewController ()
+
+@property (nonatomic, retain) RFTimelineViewController *timelineViewController;
+
+@end
 
 @implementation RFScheduleViewController
 
@@ -19,6 +26,7 @@
 @synthesize cosmopolButton;
 @synthesize odeonButton;
 @synthesize pavilionButton;
+@synthesize timelineViewController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -73,6 +81,10 @@
 	currentPageNumber = 0;
 	
 	[self performSelector:@selector(animateAllScenes) withObject:nil afterDelay:0.1];
+	
+	self.timelineViewController = [[RFTimelineViewController alloc] init];
+	self.timelineViewController.navigationController = self.navigationController;
+	self.timelineViewController.view = timelineScrollView;
 }
 
 - (void)viewDidUnload
@@ -155,33 +167,35 @@
 		
 		switch (page) {
 			case 0:
-				date = [NSDate dateWithDateTimeString:@"2011-06-26 12:00:00"];
+				date = [NSDate dateWithString:@"2011-06-26 11:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"];
 				break;
 			case 1:
-				date = [NSDate dateWithDateTimeString:@"2011-06-27 12:00:00"];
+				date = [NSDate dateWithString:@"2011-06-27 11:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"];
 				break;
 			case 2:
-				date = [NSDate dateWithDateTimeString:@"2011-06-28 12:00:00"];
+				date = [NSDate dateWithString:@"2011-06-28 11:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"];
 				break;
 			case 3:
-				date = [NSDate dateWithDateTimeString:@"2011-06-29 12:00:00"];
+				date = [NSDate dateWithString:@"2011-06-29 11:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"];
 				break;
 			case 4:
-				date = [NSDate dateWithDateTimeString:@"2011-06-30 12:00:00"];
+				date = [NSDate dateWithString:@"2011-06-30 11:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"];
 				break;
 			case 5:
-				date = [NSDate dateWithDateTimeString:@"2011-07-01 12:00:00"];
+				date = [NSDate dateWithString:@"2011-07-01 11:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"];
 				break;
 			case 6:
-				date = [NSDate dateWithDateTimeString:@"2011-07-02 12:00:00"];
+				date = [NSDate dateWithString:@"2011-07-02 11:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"];
 				break;
 			case 7:
-				date = [NSDate dateWithDateTimeString:@"2011-07-03 12:00:00"];
+				date = [NSDate dateWithString:@"2011-07-03 11:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"];
 				break;
 			default:
-                date = [NSDate dateWithDateTimeString:@"2011-07-01 12:00:00"];
+                date = [NSDate dateWithString:@"2011-07-01 11:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"];
 				break;
 		}
+		
+		[self.timelineViewController changeDate:date];
 		
 //		[self setupTimelineForDate:date scroll:YES];
 	}

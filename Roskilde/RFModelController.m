@@ -106,15 +106,15 @@ static RFModelController *defaultModelController = nil;
 }
 
 
-- (Location*)newLocation {
+- (RFLocation*)newLocation {
 	[self willChangeValueForKey:@"location"];
-	Location *location = (Location*)[simpleCoreData newObjectInEntityWithName:@"Location" values:nil];
-	[self didChangeValueForKey:@"music"];
+	RFLocation *location = (RFLocation*)[simpleCoreData newObjectInEntityWithName:@"NewLocation" values:nil];
+	[self didChangeValueForKey:@"location"];
 	return location;
 }
 
 
-- (void)deleteLocation:(Location*)location {
+- (void)deleteLocation:(RFLocation*)location {
 	[self willChangeValueForKey:@"location"];
 	[[simpleCoreData managedObjectContext] deleteObject:location];
 	[self didChangeValueForKey:@"location"];

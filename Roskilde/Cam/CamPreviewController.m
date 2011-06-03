@@ -12,6 +12,7 @@
 #import "LocationManager.h"
 #import "JSONKit.h"
 #import "RFCreateProfileViewController.h"
+#import "ATMHud.h"
 
 
 @interface CamPreviewController ()
@@ -294,10 +295,12 @@
 		return;
 	}
 	
+	[self removeKeyboard:self];
+	
 	NSString *urlString = [NSString stringWithFormat:@"%@/entries/", kXdkAPIBaseUrl];
 	NSURL *url = [NSURL URLWithString:urlString];
 	
-	UIView *waitView = [[UIView alloc] initWithFrame:self.uploadView.bounds];
+/*	UIView *waitView = [[UIView alloc] initWithFrame:self.uploadView.bounds];
 	waitView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
 	UILabel *waitLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 90, 320, 20)];
 	waitLabel.textAlignment = UITextAlignmentCenter;
@@ -307,7 +310,14 @@
 	waitLabel.shadowOffset = CGSizeMake(0, 1);
 	waitLabel.backgroundColor = [UIColor clearColor];
 	[waitView addSubview:waitLabel];
-	[self.uploadView addSubview:waitView];
+	[self.uploadView addSubview:waitView];*/
+	
+	
+	ATMHud *hud = [[ATMHud alloc] initWithDelegate:self];
+	[hud setCaption:@"Uploading photo..."];
+	[hud setProgress:0];
+	[[[UIApplication sharedApplication] keyWindow] addSubview:[hud view]];
+	[hud show];
 	
 	
 	// Prepare data
@@ -333,7 +343,7 @@
 	// Prepare image
 	NSString *filename = [NSString stringWithFormat:@"%@-roskildeapp.jpg", [RFGlobal username]];
 	UIImage *currentImage = [self.images objectAtIndex:self.pageControl.currentPage];
-	NSData *imageData = UIImageJPEGRepresentation(currentImage, (currentImage.size.width > 640? 0.3: 1.0));
+	NSData *imageData = UIImageJPEGRepresentation(currentImage, 1.0/*(currentImage.size.width > 640? 0.3: 1.0)*/);
 	
 	__block ASIFormDataRequest *formRequest = [ASIFormDataRequest requestWithURL:url];
 	[formRequest setPostValue:json forKey:@"data"];
@@ -345,6 +355,17 @@
 	NSString *auth = [NSString stringWithFormat:@"Basic %@",[ASIHTTPRequest base64forData:[[NSString stringWithFormat:@"%@:%@", [RFGlobal username], [RFGlobal password]] dataUsingEncoding:NSUTF8StringEncoding]]];
 	[formRequest addRequestHeader:@"Authorization" value:auth];
 	
+	[formRequest setHeadersReceivedBlock:^(NSDictionary *responseHeaders) {
+		NSLog(@"response: %@", responseHeaders);
+	}];
+	
+	__block CGFloat progress = 0;
+	
+	[formRequest setBytesSentBlock:^(unsigned long long size, unsigned long long total) {
+		NSLog(@"size:%lld total:%lld, fsize:%f ftotal:%f progress:%f", size, total, (CGFloat)size, (CGFloat)total, ((CGFloat)total)/((CGFloat)size));
+		[hud setProgress:(progress += ((CGFloat)size)/((CGFloat)total))];
+	}];
+	
 	[formRequest setCompletionBlock:^{
 		// Use when fetching text data
 		NSString *responseString = [formRequest responseString];
@@ -353,19 +374,25 @@
 		LOG_EXPR(responseString);
 		
 		if (statusCode == 200) {
-			waitLabel.text = @":D";
+//			waitLabel.text = @":D";
+			[hud setCaption:@"Done!"];
 		} else {
-			waitLabel.text = @":(";
+//			waitLabel.text = @":(";
+			[hud setCaption:@"A network error occured"];
 		}
 		
+		[hud setProgress:1.0];
+		
 		[UIView animateWithDuration:0.3 delay:1 options:0 animations:^(void) {
-			waitView.alpha = 0;
+			hud.view.alpha = 0;
 		} completion:^(BOOL finished) {
 			if (self.delegate && [self.delegate respondsToSelector:@selector(CamPreview:didSucceedUploadingIndex:)]) {
 				[self.delegate CamPreview:self didSucceedUploadingIndex:selectedIndex];
 			}
 			
-			[waitView removeFromSuperview];
+//			[waitView removeFromSuperview];
+			[hud.view removeFromSuperview];
+			[hud release];
 			[self back:self];
 		}];
 	}];
@@ -374,23 +401,27 @@
 		NSError *error = [formRequest error];
 		NSLog(@"error: %@", error);
 		
-		waitLabel.text = @":(";
+		[hud setCaption:@"A network error occured"];
+		
+//		waitLabel.text = @":(";
 		[UIView animateWithDuration:0.3 delay:1 options:0 animations:^(void) {
-			waitView.alpha = 0;
+			hud.view.alpha = 0;
 		} completion:^(BOOL finished) {
 			if (self.delegate && [self.delegate respondsToSelector:@selector(CamPreview:didFailUploadingIndex:)]) {
 				[self.delegate CamPreview:self didFailUploadingIndex:selectedIndex];
 			}
 			
-			[waitView removeFromSuperview];
+//			[waitView removeFromSuperview];
+			[hud.view removeFromSuperview];
+			[hud release];
 			[self back:self];
 		}];
 	}];
 	
 	[formRequest startAsynchronous];
 	
-	[waitView release];
-	[waitLabel release];
+//	[waitView release];
+//	[waitLabel release];
 }
 
 

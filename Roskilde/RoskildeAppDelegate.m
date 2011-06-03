@@ -11,6 +11,7 @@
 #import "RFModelController.h"
 #import "TBXML.h"
 #import "NSDateHelper.h"
+#import "RFCreateProfileViewController.h"
 
 
 #define PREF_FOLDER [NSHomeDirectory() stringByAppendingPathComponent:@"../../Library/Preferences/"]
@@ -39,6 +40,11 @@
 	// Add the tab bar controller's current view as a subview of the window
 	
 	application.applicationIconBadgeNumber = 0;
+	
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(createProfile) 
+												 name:kPromptCreateProfile object:nil];
+	
 	
 	// Custom tabbar icons
 	self.scheduleIcon = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"schedule_icon_active.png"]] autorelease];
@@ -117,6 +123,8 @@
 
 - (void)dealloc
 {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	
 	[_window release];
 	[_tabBarController release];
 	
@@ -264,6 +272,30 @@
 			}
 //		}
 //	});
+}
+
+
+- (void)createProfile {
+	RFCreateProfileViewController *controller = [[RFCreateProfileViewController alloc] initWithNibName:@"RFCreateProfileViewController" bundle:nil];
+	
+	// Create navigation controller and adjust tint color
+	UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
+	navigationController.navigationBar.barStyle = UIBarStyleBlack;
+	
+	// Create cancel button and assign it
+	UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(dismissModal)];
+	controller.navigationItem.leftBarButtonItem = cancelButton;
+	[cancelButton release];
+	
+	// Present controller and release it
+	[self.window.rootViewController presentModalViewController:navigationController animated:YES];
+	[controller release];
+	[navigationController release];
+	
+}
+
+- (void)dismissModal {
+	[self.window.rootViewController dismissModalViewControllerAnimated:YES];
 }
 
 @end

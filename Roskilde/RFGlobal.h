@@ -17,6 +17,10 @@
 #define kUserDefaultsUsername		@"kUserDefaultsUsername"
 #define kUserDefaultsPassword		@"kUserDefaultsPassword"
 
+#define kPromptCreateProfile		@"kPromptCreateProfile"
+#define kUserLoggedIn				@"kUserLoggedIn"
+
+
 
 @interface RFGlobal : NSObject {
     

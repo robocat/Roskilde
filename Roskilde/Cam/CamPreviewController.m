@@ -11,6 +11,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "LocationManager.h"
 #import "JSONKit.h"
+#import "RFCreateProfileViewController.h"
 
 
 @interface CamPreviewController ()
@@ -173,6 +174,18 @@
 	self.location.text = nearestLocation.name;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	
+	self.navigationController.navigationBarHidden = YES;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+	
+	self.navigationController.navigationBarHidden = YES;
+}
+
 
 - (IBAction)upload:(id)sender {
 	self.scrollView.scrollEnabled = NO;
@@ -267,8 +280,20 @@
 
 #pragma mark networking
 
+- (void)createProfile {
+	RFCreateProfileViewController *controller = [[RFCreateProfileViewController alloc] initWithNibName:@"RFCreateProfileViewController" bundle:nil];
+	self.navigationController.navigationBarHidden = NO;
+	[self.navigationController pushViewController:controller animated:YES];
+	[controller release];
+	
+}
 
 - (IBAction)performUpload:(id)sender {
+	if (![RFGlobal username]) {
+		[self createProfile];
+		return;
+	}
+	
 	NSString *urlString = [NSString stringWithFormat:@"%@/entries/", kXdkAPIBaseUrl];
 	NSURL *url = [NSURL URLWithString:urlString];
 	

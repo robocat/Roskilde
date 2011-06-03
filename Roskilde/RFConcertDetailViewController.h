@@ -23,6 +23,7 @@
 	UIImageView *genreImageView;
 	UIImageView *sceneImageView;
 	UITextView *descriptionTextView;
+	UIImageView *artistImage;
 	UIButton *titleButton;
 	UIView *infoView;
 }
@@ -39,8 +40,13 @@
 @property (nonatomic, retain) IBOutlet UIImageView *genreImageView;
 @property (nonatomic, retain) IBOutlet UIImageView *sceneImageView;
 @property (nonatomic, retain) IBOutlet UITextView *descriptionTextView;
+@property (nonatomic, retain) IBOutlet UIImageView *artistImage;
 
+- (IBAction)hideInfoView:(id)sender;
 - (IBAction)toggleInfoView:(id)sender;
 - (IBAction)favorite:(id)sender;
+- (IBAction)websitePressed:(id)sender;
+- (IBAction)itunesPressed:(id)sender;
+
 
 @end

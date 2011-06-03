@@ -31,6 +31,11 @@
 @property (nonatomic, retain) IBOutlet UILabel *playtimeLabel;
 @property (nonatomic, retain) IBOutlet UITextView *descriptionTextView;
 
+- (IBAction)hideInfoView:(id)sender;
 - (IBAction)toggleInfoView:(id)sender;
+
+- (IBAction)starButtonPressed:(id)sender;
+- (IBAction)websitePressed:(id)sender;
+- (IBAction)itunesButtonPressed:(id)sender;
 
 @end

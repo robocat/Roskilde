@@ -11,6 +11,7 @@
 #import "RFMusic.h"
 #import "NSDateHelper.h"
 #import "RFModelController.h"
+#import "SVWebViewController.h"
 
 
 @interface RFConcertDetailViewController ()
@@ -32,6 +33,7 @@
 @synthesize genreImageView;
 @synthesize sceneImageView;
 @synthesize descriptionTextView;
+@synthesize artistImage;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -57,6 +59,7 @@
 	[descriptionTextView release];
 	[genreImageView release];
 	[sceneImageView release];
+    [artistImage release];
     [super dealloc];
 }
 
@@ -86,17 +89,60 @@
 	
 	self.title = self.concert.artist;
 	
-	NSString *imageName = [NSString stringWithFormat:@"%@.png", self.concert.genre];
-	self.genreImageView.image = [UIImage imageNamed:imageName];
-	[self.genreImageView sizeToFit];
+	NSString *imgName = [NSString stringWithFormat:@"%@.jpg", self.concert.artistId];
+	self.artistImage.image = [UIImage imageNamed:imgName];
 	
-	CGRect sceneFrame = self.sceneImageView.frame;
-	sceneFrame.origin.x = self.genreImageView.frame.origin.x + self.genreImageView.frame.size.width + 5.0;
-	self.sceneImageView.frame = sceneFrame;
+//	CGRect sceneFrame = self.sceneImageView.frame;
+//	
+//	if (self.concert.genre) {
+//		NSString *imageName = [NSString stringWithFormat:@"%@.png", self.concert.genre];
+//		self.genreImageView.image = [UIImage imageNamed:imageName];
+//		[self.genreImageView sizeToFit];
+//		
+//		sceneFrame.origin.x = self.genreImageView.frame.origin.x + self.genreImageView.frame.size.width + 5.0;
+//	}
+//	else {
+//		CGRect sceneFrame = self.sceneImageView.frame;
+//		sceneFrame.origin.x = 5.0;
+//	}
+//	
+//	self.sceneImageView.frame = sceneFrame;
+//	
+//	CGRect playtimeFrame = self.playtimeLabel.frame;
+//	playtimeFrame.origin.x = sceneFrame.origin.x + sceneFrame.size.width + 5.0;
+//	self.playtimeLabel.frame = playtimeFrame;
 	
-	CGRect playtimeFrame = self.playtimeLabel.frame;
-	playtimeFrame.origin.x = sceneFrame.origin.x + sceneFrame.size.width + 5.0;
-	self.playtimeLabel.frame = playtimeFrame;
+	
+	// Genre
+	
+	NSString * genreString = nil;
+	if (![self.concert.genre isEqualToString:@""]) {
+		genreString = [NSString stringWithFormat:@"%@.png", self.concert.genre];
+	}
+	else {
+		genreString = @"nogenre.png";
+	}
+	
+	UIImage * genreImage = [UIImage imageNamed:genreString];
+	self.genreImageView.image = genreImage;
+	self.genreImageView.frame = CGRectMake(self.genreImageView.frame.origin.x,
+										   self.genreImageView.frame.origin.y,
+										   genreImage.size.width,
+										   genreImage.size.height);
+	// move venue and date
+	self.sceneImageView.frame = CGRectMake(self.genreImageView.frame.origin.x + self.genreImageView.frame.size.width + 6.0f,
+										   self.sceneImageView.frame.origin.y,
+										   self.sceneImageView.frame.size.width,
+										   self.sceneImageView.frame.size.height);
+	
+	// Date
+//	self.playtimeLabel.text = [NSString stringWithFormat:@"%@, %@", [artist.beginDate formattedTimeStringForDisplay], [artist.beginDate formattedDateStringForDisplay]];
+	self.playtimeLabel.frame = CGRectMake(self.sceneImageView.frame.origin.x + self.sceneImageView.frame.size.width + 6.0f,
+										  self.playtimeLabel.frame.origin.y,
+										  self.playtimeLabel.frame.size.width,
+										  self.playtimeLabel.frame.size.height);
+	
+	
 	
 	if (self.concert.isFavoriteValue) {
 		[self.starButton setImage:[UIImage imageNamed:@"button_starred.png"] forState:UIControlStateNormal];
@@ -152,6 +198,7 @@
 	[self setDescriptionTextView:nil];
 	[self setGenreImageView:nil];
 	[self setSceneImageView:nil];
+    [self setArtistImage:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -167,6 +214,16 @@
 - (void) showInfoView {
 	CGRect frame = self.infoView.frame;
 	frame.origin.y = 40.0;
+	
+	[UIView animateWithDuration:0.3 animations:^(void) {
+		self.infoView.frame = frame;
+	} completion:^(BOOL finished) {
+	}];
+}
+
+- (IBAction)hideInfoView:(id)sender {
+	CGRect frame = self.infoView.frame;
+	frame.origin.y = 258.0;
 	
 	[UIView animateWithDuration:0.3 animations:^(void) {
 		self.infoView.frame = frame;
@@ -202,6 +259,16 @@
 	}
 	
 	[[RFModelController defaultModelController] save];
+}
+
+- (IBAction)websitePressed:(id)sender {
+	SVWebViewController *webViewController = [[SVWebViewController alloc] initWithAddress:self.concert.web];
+	[self.navigationController pushViewController:webViewController animated:YES];
+	[webViewController release];
+}
+
+- (IBAction)itunesPressed:(id)sender {
+	
 }
 
 

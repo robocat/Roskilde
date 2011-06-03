@@ -41,11 +41,11 @@
 
 - (void)dealloc
 {
-	currentfetchedResultsController = nil;
-	artistsfetchedResultsController = nil;
-	datefetchedResultsController = nil;
-	genrefetchedResultsController = nil;
-	starredfetchedResultsController = nil;
+	self.currentfetchedResultsController = nil;
+	self.artistsfetchedResultsController = nil;
+	self.datefetchedResultsController = nil;
+	self.genrefetchedResultsController = nil;
+	self.starredfetchedResultsController = nil;
 	[filtersView release];
 	
     self.filters = nil;
@@ -122,7 +122,7 @@
 	
 	
 	NSError *error = nil;
-	currentfetchedResultsController = self.artistsfetchedResultsController;
+	self.currentfetchedResultsController = self.artistsfetchedResultsController;
 	[[self currentfetchedResultsController] performFetch:&error];
 }
 
@@ -171,7 +171,7 @@
 		return 1;
 	}
 
-	return [[currentfetchedResultsController sections] count];
+	return [[self.currentfetchedResultsController sections] count];
 }
 
 
@@ -179,11 +179,11 @@
     // Return the number of rows in the section.
 	
 	if (sortBy == SortByDate || sortBy == SortByStarred) {
-		return [[currentfetchedResultsController fetchedObjects] count];
+		return [[self.currentfetchedResultsController fetchedObjects] count];
 	}
 	
 	id <NSFetchedResultsSectionInfo> sectionInfo = nil;
-	NSArray * sections = [currentfetchedResultsController sections];
+	NSArray * sections = [self.currentfetchedResultsController sections];
 	if ([sections count] > 0) {
 		sectionInfo = [sections objectAtIndex:section];
 		return [sectionInfo numberOfObjects];
@@ -196,7 +196,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 	UIImageView * imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator.png"]];
 	UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 1.0f, 200.f, 20.0f)];
-	id <NSFetchedResultsSectionInfo> sectionInfo = [[currentfetchedResultsController sections] objectAtIndex:section];
+	id <NSFetchedResultsSectionInfo> sectionInfo = [[self.currentfetchedResultsController sections] objectAtIndex:section];
 	label.backgroundColor = [UIColor clearColor];
 	label.text = [sectionInfo name];
 	label.textColor = [UIColor whiteColor];
@@ -207,18 +207,18 @@
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
-    return [currentfetchedResultsController sectionIndexTitles];
+    return [self.currentfetchedResultsController sectionIndexTitles];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
-    return [currentfetchedResultsController sectionForSectionIndexTitle:title atIndex:index];
+    return [self.currentfetchedResultsController sectionForSectionIndexTitle:title atIndex:index];
 }
 
 
 - (void)configureCell:(UITableViewCell *)cell 
           atIndexPath:(NSIndexPath*)indexPath
 {
-	RFMusic *music = [currentfetchedResultsController objectAtIndexPath:indexPath];
+	RFMusic *music = [self.currentfetchedResultsController objectAtIndexPath:indexPath];
 	cell.textLabel.text = music.artist;
 //	cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@, %@", [music.beginDate formattedDateStringForDisplay], [music.beginDate formattedTimeStringForDisplay], music.venue];
 }
@@ -300,7 +300,7 @@
 	RFConcertDetailViewController *detailViewController = [[RFConcertDetailViewController alloc] initWithNibName:@"RFConcertDetailViewController" bundle:nil];
 	// ...
 	// Pass the selected object to the new view controller.
-	detailViewController.concert = [currentfetchedResultsController objectAtIndexPath:indexPath];
+	detailViewController.concert = [self.currentfetchedResultsController objectAtIndexPath:indexPath];
 	[self.navigationController pushViewController:detailViewController animated:YES];
 	[detailViewController release];
 }
@@ -514,7 +514,7 @@
 - (void)sortByArtist {
 	sortBy = SortByArtist;
 	
-	currentfetchedResultsController = self.artistsfetchedResultsController;
+	self.currentfetchedResultsController = self.artistsfetchedResultsController;
 	
 	NSError *error;
 	if (![[self currentfetchedResultsController] performFetch:&error]) {
@@ -527,7 +527,7 @@
 - (void)sortByDate {
 	sortBy = SortByDate;
 	
-	currentfetchedResultsController = self.datefetchedResultsController;
+	self.currentfetchedResultsController = self.datefetchedResultsController;
 	
 	NSError *error;
 	if (![[self currentfetchedResultsController] performFetch:&error]) {
@@ -540,7 +540,7 @@
 - (void)sortByGenre {
 	sortBy = SortByGenre;
 	
-	currentfetchedResultsController = self.genrefetchedResultsController;
+	self.currentfetchedResultsController = self.genrefetchedResultsController;
 	
 	NSError *error;
 	if (![[self currentfetchedResultsController] performFetch:&error]) {
@@ -553,7 +553,7 @@
 - (void)sortByStarred {
 	sortBy = SortByStarred;
 	
-	currentfetchedResultsController = self.starredfetchedResultsController;
+	self.currentfetchedResultsController = self.starredfetchedResultsController;
 	
 	NSError *error;
 	if (![[self currentfetchedResultsController] performFetch:&error]) {

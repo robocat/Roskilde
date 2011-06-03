@@ -26,11 +26,18 @@
 #define kDataLimit				20
 
 
+@interface RFPictureTableViewController ()
+- (void)userLoggedIn;
+@end
+
+
+
 @implementation RFPictureTableViewController
 
 @synthesize entries = _entries;
 @synthesize spinner;
-
+@synthesize showMyPictures;
+@synthesize xbg;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -43,9 +50,12 @@
 
 - (void)dealloc
 {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	
 	[_entries release];
 	self.entries = nil;
 	self.spinner = nil;
+	self.xbg = nil;
 	
     [super dealloc];
 }
@@ -63,6 +73,8 @@
 - (void)awakeFromNib {
 	[super awakeFromNib];
 	
+	showMyPictures = NO;
+	
 	//	self.entries = [[NSMutableArray alloc] init];
 }
 
@@ -70,7 +82,16 @@
 {
     [super viewDidLoad];
 	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLoggedIn) 
+												 name:kUserLoggedIn object:nil];
+	
 	self.title = NSLocalizedString(@"Pictures", @"");
+	
+	self.xbg = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"xbg.png"]] autorelease];
+	CGRect xFrame = self.xbg.frame;
+	xFrame.origin.y = -50;
+	self.xbg.frame = xFrame;
+	[self.view addSubview:self.xbg];
 	
 	self.entries = [[[NSMutableArray alloc] init] autorelease];
 	loadedCount = 0;
@@ -78,12 +99,10 @@
 //	self.tableView.backgroundView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"xbg.png"]] autorelease];
 	
 	if ([RFGlobal username]) {
-		UIBarButtonItem *createButton = [[UIBarButtonItem alloc] initWithTitle:@"Profile" style:UIBarButtonItemStyleBordered target:self action:@selector(profileButtonPressed:)];
-		self.navigationItem.leftBarButtonItem = createButton;
-		[createButton release];
+		[self userLoggedIn];
 	}
 	else {
-		UIBarButtonItem *createButton = [[UIBarButtonItem alloc] initWithTitle:@"Create Profile" style:UIBarButtonItemStyleBordered target:self action:@selector(createProfile)];
+		UIBarButtonItem *createButton = [[UIBarButtonItem alloc] initWithTitle:@"Join the fun" style:UIBarButtonItemStyleBordered target:self action:@selector(createProfile)];
 		self.navigationItem.leftBarButtonItem = createButton;
 		[createButton release];
 	}
@@ -97,6 +116,8 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+	
+	self.xbg = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -270,11 +291,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {	
-	RFPictureDetailTableViewController *detailViewController = [[RFPictureDetailTableViewController alloc] init];
-	detailViewController.entry = [self.entries objectAtIndex:indexPath.row];
-	detailViewController.hidesBottomBarWhenPushed = YES;
-	[self.navigationController pushViewController:detailViewController animated:YES];
-	[detailViewController release];
+	if (!isLoading)
+	{
+		RFPictureDetailTableViewController *detailViewController = [[RFPictureDetailTableViewController alloc] init];
+		detailViewController.entry = [self.entries objectAtIndex:indexPath.row];
+		detailViewController.hidesBottomBarWhenPushed = YES;
+		[self.navigationController pushViewController:detailViewController animated:YES];
+		[detailViewController release];
+	}
 }
 
 
@@ -299,6 +323,15 @@
 }
 
 - (void)refreshDone {
+	if (self.xbg) {
+		[UIView animateWithDuration:0.2 animations:^{
+			self.xbg.alpha = 0;
+		} completion:^(BOOL finished) {
+			[self.xbg removeFromSuperview];
+			self.xbg = nil;
+		}];
+	}
+	
 	[self.tableView reloadData];
 	[self stopLoading];
 	[self.spinner stopAnimating];
@@ -310,13 +343,22 @@
 	}
 	
 	int page = [self.entries count] / kDataLimit + 1;
-	NSString *urlString = [NSString stringWithFormat:@"%@/entries/?page=%d", kXdkAPIBaseUrl, page]; //?tags=roskilde-festival
+	
+	NSString *urlString = nil;
+	
+	if (showMyPictures) {
+		urlString = [NSString stringWithFormat:@"%@/entries/?page=%d&user=%@", kXdkAPIBaseUrl, page, [RFGlobal username]]; //?tags=roskilde-festival
+	}
+	else {
+		urlString = [NSString stringWithFormat:@"%@/entries/?page=%d", kXdkAPIBaseUrl, page]; //?tags=roskilde-festival
+	}
+	
 	NSURL *url = [NSURL URLWithString:urlString];
 	__block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-	[request setDownloadCache:[ASIDownloadCache sharedCache]];
-	[request setCachePolicy:ASIAskServerIfModifiedCachePolicy|ASIFallbackToCacheIfLoadFailsCachePolicy];
-	[request setCacheStoragePolicy:ASICachePermanentlyCacheStoragePolicy];
-	[request setSecondsToCache:3600];
+//	[request setDownloadCache:[ASIDownloadCache sharedCache]];
+//	[request setCachePolicy:ASIAskServerIfModifiedCachePolicy|ASIFallbackToCacheIfLoadFailsCachePolicy];
+//	[request setCacheStoragePolicy:ASICachePermanentlyCacheStoragePolicy];
+//	[request setSecondsToCache:3600];
 	
 	[request setCompletionBlock:^{
 		// Use when fetching text data
@@ -366,8 +408,28 @@
 
 }
 
-- (void)profileButtonPressed:(id)sender {
-	
+- (void)myPicturesButtonPressed:(id)sender {
+	UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:@"All Pictures" style:UIBarButtonItemStyleBordered target:self action:@selector(allPicturesButtonPressed:)];
+	self.navigationItem.leftBarButtonItem = button;
+	[button release];
+	loadedCount = 0;
+	showMyPictures = YES;
+	[self refresh];
+}
+
+- (void)allPicturesButtonPressed:(id)sender {
+	[self userLoggedIn];
+	loadedCount = 0;
+	showMyPictures = NO;
+	[self refresh];
+}
+
+- (void)userLoggedIn {
+	if ([RFGlobal username]) {
+		UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:@"My Pictures" style:UIBarButtonItemStyleBordered target:self action:@selector(myPicturesButtonPressed:)];
+		self.navigationItem.leftBarButtonItem = button;
+		[button release];
+	}
 }
 
 @end

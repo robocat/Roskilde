@@ -49,6 +49,7 @@
 	if ([CamDevice hasCamera]) {
 		CamViewController *camViewController = [[CamViewController alloc] initWithNibName:@"CamViewController" bundle:nil];
 		UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:camViewController];
+		navigationController.navigationBar.barStyle = UIBarStyleBlack;
 		
 		[navigationController setNavigationBarHidden:YES];
 		

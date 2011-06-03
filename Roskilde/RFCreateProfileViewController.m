@@ -252,11 +252,7 @@
 		
 		__block ASIFormDataRequest *formRequest = [ASIFormDataRequest requestWithURL:url];
 		formRequest.requestMethod = @"POST";
-		
-		// Basic Auth
-		NSString *auth = [NSString stringWithFormat:@"Basic %@",[ASIHTTPRequest base64forData:[[NSString stringWithFormat:@"%@:%@", [RFGlobal username], [RFGlobal password]] dataUsingEncoding:NSUTF8StringEncoding]]];
-		[formRequest addRequestHeader:@"Authorization" value:auth];
-		
+				
 		[formRequest setCompletionBlock:^{
 			// Use when fetching text data
 //			NSString *responseString = [formRequest responseString];
@@ -268,6 +264,7 @@
 			
 			if (statusCode == 200 || statusCode == 201) {
 				[RFGlobal saveUsername:self.username password:self.password];
+				[[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedIn object:nil];
 				[self.parentViewController dismissModalViewControllerAnimated:YES];
 			}
 			else {

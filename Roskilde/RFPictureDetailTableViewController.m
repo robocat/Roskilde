@@ -526,6 +526,11 @@
 }
 
 - (void)likeButtonPressed:(id)sender {
+	if (![RFGlobal username]) {
+		[[NSNotificationCenter defaultCenter] postNotificationName:kPromptCreateProfile object:nil];
+		return;
+	}
+	
 	NSString *urlString = [NSString stringWithFormat:@"%@/entries/%@/like", kXdkAPIBaseUrl, [self.entry objectForKey:@"entry_id"]];
 	NSURL *url = [NSURL URLWithString:urlString];
 	
@@ -576,6 +581,10 @@
 
 
 - (void)checkLike {
+	if (![RFGlobal username]) {
+		return;
+	}
+	
 	NSString *urlString = [NSString stringWithFormat:@"%@/entries/%@/like", kXdkAPIBaseUrl, [self.entry objectForKey:@"entry_id"]];
 	NSURL *url = [NSURL URLWithString:urlString];
 	
@@ -677,9 +686,9 @@
 //    NSLog(@"Pressed button with text: '%@'", inputText);
 	
 	if (![RFGlobal username]) {
-		// Do popup
+		[[NSNotificationCenter defaultCenter] postNotificationName:kPromptCreateProfile object:nil];
+		return;
 	}
-	
 	
 	if (![inputText isEqualToString:@""]) {
 		NSString *urlString = [NSString stringWithFormat:@"%@/entries/%@/replies", kXdkAPIBaseUrl, [self.entry objectForKey:@"entry_id"]];

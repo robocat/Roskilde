@@ -8,6 +8,9 @@
 
 #import "RFRobocatViewController.h"
 #import "RKCustomNavigationBar.h"
+#import "SVWebViewController.h"
+
+
 
 @implementation RFRobocatViewController
 
@@ -115,6 +118,16 @@
 	}];
 }
 
+- (IBAction)hideInfoView:(id)sender {
+	CGRect frame = self.infoView.frame;
+	frame.origin.y = 258.0;
+	
+	[UIView animateWithDuration:0.3 animations:^(void) {
+		self.infoView.frame = frame;
+	} completion:^(BOOL finished) {
+	}];
+}
+
 - (IBAction)toggleInfoView:(id)sender {
 	if (self.infoView.frame.origin.y == 40.0) {
 		[UIView animateWithDuration:0.3 animations:^(void) {
@@ -130,6 +143,25 @@
 		} completion:^(BOOL finished) {
 		}];
 	}
+}
+
+
+- (IBAction) starButtonPressed:(id)sender {
+	NSString *templateReviewURL = @"https://userpub.itunes.apple.com/WebObjects/MZUserPublishing.woa/wa/addUserReview?id=APP_ID&type=Purple+Software";
+	NSString *reviewURL = [templateReviewURL stringByReplacingOccurrencesOfString:@"APP_ID" withString:[NSString stringWithFormat:@"%d", 378065061]];
+	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:reviewURL]];
+}
+
+- (IBAction)websitePressed:(id)sender {
+	SVWebViewController *webViewController = [[SVWebViewController alloc] initWithAddress:@"http://www.robocatapps.com/"];
+	[self.navigationController pushViewController:webViewController animated:YES];
+	[webViewController release];
+}
+
+
+- (IBAction) itunesButtonPressed:(id)sender {
+	NSString *appsURL = @"http://itunes.com/apps/robocat";
+	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:appsURL]];
 }
 
 

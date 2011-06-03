@@ -22,6 +22,8 @@
 	FLImageView *imageView;
 	CGFloat		imageHeight;
 	
+	BOOL		hasImage;
+	
 	id target;
 	SEL action;
 	
@@ -39,6 +41,7 @@
 @property (nonatomic, retain) FLImageView *avatarView;
 @property (nonatomic, retain) FLImageView *imageView;
 @property (nonatomic, assign) CGFloat imageHeight;
+@property (nonatomic, assign, getter=isHasImage) BOOL hasImage;
 
 @property (assign) id target;
 @property (assign) SEL action;

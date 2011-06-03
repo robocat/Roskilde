@@ -22,6 +22,10 @@
 #import "ASIFormDataRequest.h"
 
 
+#define kImageDisplayWidth		120.0
+#define kImageDisplayHeight		90.0
+#define kImageDownloadWidth		320.0
+#define kImageDownloadHeight	240.0
 
 #define kStatsBarHieght		30.0
 #define kAuthMinHieght		64.0
@@ -124,7 +128,7 @@
 	
 	// Custom navbar
 	RKCustomNavigationBar *navBar = (RKCustomNavigationBar*)self.navigationController.navigationBar;
-	[navBar setBackgroundWith:[UIImage imageNamed:@"sortbg.png"]];
+	[navBar setBackgroundWith:[UIImage imageNamed:@"altnavbar.png"]];
 	
 	// Create action button and assign it
 	UIBarButtonItem *actionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showActions:)];
@@ -245,11 +249,33 @@
 	}
 	else if (indexPath.row == 1)
 	{
-		return kStatsBarHieght + kAuthMinHieght;
+		NSString *comment = [self.entry objectOrEmptyStringForKey:@"comment"];
+		CGSize commentSize = [comment sizeWithFont:[UIFont boldSystemFontOfSize:12]
+								 constrainedToSize:CGSizeMake(200.0f, FLT_MAX)
+									 lineBreakMode:UILineBreakModeTailTruncation];
+		
+		CGFloat height = commentSize.height + kAuthMinHieght;
+		
+		if (height > kAuthMinHieght + kStatsBarHieght)
+			return height;
+		else
+			return kAuthMinHieght + kStatsBarHieght;
 	}
-	else {
-		return kAuthMinHieght;
+	else if (indexPath.row > 1)
+	{
+		NSDictionary *reply = [self.replies objectAtIndex:(indexPath.row - kRowOffset)];
+		NSString *comment = [reply objectOrEmptyStringForKey:@"comment"];
+		CGSize commentSize = [comment sizeWithFont:[UIFont boldSystemFontOfSize:12]
+								 constrainedToSize:CGSizeMake(200.0f, FLT_MAX)
+									 lineBreakMode:UILineBreakModeTailTruncation];
+		
+		CGFloat height = commentSize.height + kAuthMinHieght;
+		
+		if (height > kAuthMinHieght)
+			return height;
 	}
+	
+	return kAuthMinHieght;
 }
 
 
@@ -295,6 +321,16 @@
 }
 
 
+- (CGFloat) entryHeightWithWidth:(CGFloat)width height:(CGFloat)height {
+	float defaultWidth = kImageDownloadWidth;
+	if (width == 0)
+		width = 640;
+	if (height == 0)
+		height = 480;
+	
+	return (defaultWidth / ((float)width / (float)height));
+}
+
 - (void)configureCell:(UITableViewCell *)cell_
           atIndexPath:(NSIndexPath*)indexPath {
 	
@@ -307,7 +343,22 @@
 	cell.creationDate			= [NSDate localDateFromUTCFormattedDate:[NSDate dateWithDateTimeString:[reply objectForKey:@"created_at"]]];
 	cell.comment				= [reply objectOrEmptyStringForKey:@"comment"];
 	
+//	NSString *imageUrl			= [reply objectOrEmptyStringForKey:@"image_url"];
+//	BOOL hasImage				= ![imageUrl isEqualToString:@""];
+	BOOL hasImage				= NO;
+	cell.hasImage				= hasImage;
+	
 	[cell setAvatarUrl:[author objectForKey:@"avatar_url"] size:CGSizeMake(44.0, 44.0)];
+	
+	if (hasImage) {
+		int width	= [[reply objectForKey:@"width"] intValue];
+		int height	= [[reply objectForKey:@"height"] intValue];
+		CGFloat dlHeight = [self entryHeightWithWidth:width height:height];
+		
+		[cell setImageUrl:[reply objectForKey:@"image_url"]
+					 size:CGSizeMake(kImageDisplayWidth, kImageDisplayHeight)
+				   dlsize:CGSizeMake(kImageDownloadWidth, dlHeight)];
+	}
 }
 
 
@@ -426,7 +477,7 @@
 }
 
 
-- (CGFloat) entryHeightWithWidth:(CGFloat)width height:(CGFloat)height {
+- (CGFloat) entryHeightWithWidth2:(CGFloat)width height:(CGFloat)height {
 	float defaultWidth = self.imageView.bounds.size.width;
 	if (width == 0)
 		width = 640;
@@ -440,7 +491,7 @@
 	
 	int width	= [[self.entry objectForKey:@"width"] intValue];
 	int height	= [[self.entry objectForKey:@"height"] intValue];
-	CGFloat dlHeight = [self entryHeightWithWidth:width height:height];
+	CGFloat dlHeight = [self entryHeightWithWidth2:width height:height];
 	
 	[self setImageUrl:[self.entry objectForKey:@"image_url"]
 				 size:CGSizeMake(self.imageView.bounds.size.width, self.imageView.bounds.size.height)

@@ -100,7 +100,7 @@
 	}
 	
 	// Custom navbar
-	[self.navbar setBackgroundWith:[UIImage imageNamed:@"sortbg.png"]];
+	[self.navbar setBackgroundWith:[UIImage imageNamed:@"altnavbar.png"]];
 	
 	self.uploadView.frame = CGRectMake(0, -220, self.view.frame.size.width, 200);
 	self.uploadView.layer.shadowColor = [UIColor blackColor].CGColor;

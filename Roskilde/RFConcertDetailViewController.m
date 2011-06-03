@@ -268,7 +268,10 @@
 }
 
 - (IBAction)itunesPressed:(id)sender {
-	
+	if (![self.concert.itunes isEqualToString:@""]) {
+//		NSString *appsURL = [NSString stringWithFormat:@"http://clkuk.tradedoubler.com/click?p=24375&a=1657461&g=11696696&url=%@", artist.itunes];
+		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.concert.itunes]];
+	}
 }
 
 

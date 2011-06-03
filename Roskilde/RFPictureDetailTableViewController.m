@@ -49,6 +49,7 @@
 @synthesize imageView;
 @synthesize toolbar;
 @synthesize inputToolbar;
+@synthesize toolbarImageView;
 @synthesize cameraButton;
 @synthesize inputButton;
 @synthesize likeButton;
@@ -76,6 +77,7 @@
     self.inputButton = nil;
     self.likeButton = nil;
 	
+	[toolbarImageView release];
     [super dealloc];
 }
 
@@ -152,9 +154,8 @@
 //	self.toolbar.userInteractionEnabled = NO;
 	[self.view addSubview:self.toolbar];
 	
-	UIImageView *bg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"commentbox.png"]];
-	[self.toolbar addSubview:bg];
-	[bg release];
+	self.toolbarImageView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"commentbox.png"]] autorelease];
+	[self.toolbar addSubview:self.toolbarImageView];
 	
 	self.cameraButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	self.cameraButton.frame = CGRectMake(0.0, 0.0, 44.0, 44.0);
@@ -181,6 +182,8 @@
 - (void)viewDidUnload
 {
 	[self setImageView:nil];
+	[self setLikeButton:nil];
+	[self setToolbarImageView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -413,6 +416,7 @@
 
 - (void)refresh {
     [self performSelector:@selector(fetchReplies) withObject:nil afterDelay:0.0];
+	[self performSelector:@selector(checkLike) withObject:nil afterDelay:0.0];
 }
 
 - (void)refreshDone {
@@ -522,8 +526,93 @@
 }
 
 - (void)likeButtonPressed:(id)sender {
+	NSString *urlString = [NSString stringWithFormat:@"%@/entries/%@/like", kXdkAPIBaseUrl, [self.entry objectForKey:@"entry_id"]];
+	NSURL *url = [NSURL URLWithString:urlString];
 	
+	__block ASIFormDataRequest *formRequest = [ASIFormDataRequest requestWithURL:url];
+	formRequest.requestMethod = @"POST";
+	
+	// Basic Auth
+	NSString *auth = [NSString stringWithFormat:@"Basic %@",[ASIHTTPRequest base64forData:[[NSString stringWithFormat:@"%@:%@", [RFGlobal username], [RFGlobal password]] dataUsingEncoding:NSUTF8StringEncoding]]];
+	[formRequest addRequestHeader:@"Authorization" value:auth];
+	
+	[formRequest setCompletionBlock:^{
+		// Use when fetching text data
+		//			NSString *responseString = [formRequest responseString];
+		int statusCode = [formRequest responseStatusCode];
+		//			LOG_EXPR(statusCode);
+		//			LOG_EXPR(responseString);
+		
+		if (statusCode == 200 || statusCode == 201) {
+			// Liked
+			
+			// Use when fetching text data
+			NSString *responseString = [formRequest responseString];
+			
+			// JSONKit parse
+			id parsedData = [responseString objectFromJSONString];
+			
+			self.toolbarImageView.image = nil;
+			
+			if ([[parsedData objectForKey:@"liked"] boolValue] == YES) {
+				self.toolbarImageView.image = [UIImage imageNamed:@"commentbox_liked.png"];
+			}
+			else {
+				self.toolbarImageView.image = [UIImage imageNamed:@"commentbox.png"];
+			}
+		}
+		else {
+		}
+	}];
+	
+	[formRequest setFailedBlock:^{
+		NSError *error = [formRequest error];
+		NSLog(@"error: %@", error);
+	}];
+	
+	[formRequest startAsynchronous];
 }
+
+
+
+- (void)checkLike {
+	NSString *urlString = [NSString stringWithFormat:@"%@/entries/%@/like", kXdkAPIBaseUrl, [self.entry objectForKey:@"entry_id"]];
+	NSURL *url = [NSURL URLWithString:urlString];
+	
+	__block ASIHTTPRequest *formRequest = [ASIHTTPRequest requestWithURL:url];
+	formRequest.requestMethod = @"GET";
+	
+	// Basic Auth
+	NSString *auth = [NSString stringWithFormat:@"Basic %@",[ASIHTTPRequest base64forData:[[NSString stringWithFormat:@"%@:%@", [RFGlobal username], [RFGlobal password]] dataUsingEncoding:NSUTF8StringEncoding]]];
+	[formRequest addRequestHeader:@"Authorization" value:auth];
+	
+	[formRequest setCompletionBlock:^{
+		// Use when fetching text data
+		//			NSString *responseString = [formRequest responseString];
+		int statusCode = [formRequest responseStatusCode];
+		//			LOG_EXPR(statusCode);
+		//			LOG_EXPR(responseString);
+		
+		self.toolbarImageView.image = nil;
+		
+		if (statusCode == 200 || statusCode == 201) {
+			// Liked
+			self.toolbarImageView.image = [UIImage imageNamed:@"commentbox_liked.png"];
+		}
+		else {
+			// No
+			self.toolbarImageView.image = [UIImage imageNamed:@"commentbox.png"];
+		}
+	}];
+	
+	[formRequest setFailedBlock:^{
+		NSError *error = [formRequest error];
+		NSLog(@"error: %@", error);
+	}];
+	
+	[formRequest startAsynchronous];
+}
+
 
 
 //-(void)dismissKeyboard {
@@ -586,6 +675,11 @@
 {
     /* Called when toolbar button is pressed */
 //    NSLog(@"Pressed button with text: '%@'", inputText);
+	
+	if (![RFGlobal username]) {
+		// Do popup
+	}
+	
 	
 	if (![inputText isEqualToString:@""]) {
 		NSString *urlString = [NSString stringWithFormat:@"%@/entries/%@/replies", kXdkAPIBaseUrl, [self.entry objectForKey:@"entry_id"]];

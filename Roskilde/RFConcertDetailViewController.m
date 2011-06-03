@@ -29,6 +29,8 @@
 @synthesize itunesButton;
 @synthesize artistLabel;
 @synthesize playtimeLabel;
+@synthesize genreImageView;
+@synthesize sceneImageView;
 @synthesize descriptionTextView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -53,6 +55,8 @@
 	[infoView release];
 	
 	[descriptionTextView release];
+	[genreImageView release];
+	[sceneImageView release];
     [super dealloc];
 }
 
@@ -82,6 +86,22 @@
 	
 	self.title = self.concert.artist;
 	
+	NSString *imageName = [NSString stringWithFormat:@"%@.png", self.concert.genre];
+	self.genreImageView.image = [UIImage imageNamed:imageName];
+	[self.genreImageView sizeToFit];
+	
+	CGRect sceneFrame = self.sceneImageView.frame;
+	sceneFrame.origin.x = self.genreImageView.frame.origin.x + self.genreImageView.frame.size.width + 5.0;
+	self.sceneImageView.frame = sceneFrame;
+	
+	CGRect playtimeFrame = self.playtimeLabel.frame;
+	playtimeFrame.origin.x = sceneFrame.origin.x + sceneFrame.size.width + 5.0;
+	self.playtimeLabel.frame = playtimeFrame;
+	
+	if (self.concert.isFavoriteValue) {
+		[self.starButton setImage:[UIImage imageNamed:@"button_starred.png"] forState:UIControlStateNormal];
+	}
+	
 	// Artist label
 	NSString * artistString = [self.concert.artist uppercaseString];
 	
@@ -108,6 +128,8 @@
 	
 	self.descriptionTextView.text = self.concert.descriptionText;
 	self.playtimeLabel.text = [self.concert.beginDate formattedDate];
+	self.websiteButton.hidden = ([self.concert.web isEqualToString:@""]);
+	self.itunesButton.hidden = ([self.concert.itunes isEqualToString:@""]);
 	
 }
 
@@ -128,6 +150,8 @@
 	[self setPlaytimeLabel:nil];
 	[self setInfoView:nil];
 	[self setDescriptionTextView:nil];
+	[self setGenreImageView:nil];
+	[self setSceneImageView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -169,6 +193,13 @@
 
 - (IBAction)favorite:(id)sender {
 	self.concert.isFavoriteValue = !self.concert.isFavoriteValue;
+	
+	if (self.concert.isFavoriteValue) {
+		[self.starButton setImage:[UIImage imageNamed:@"button_starred.png"] forState:UIControlStateNormal];
+	}
+	else {
+		[self.starButton setImage:[UIImage imageNamed:@"button_starit.png"] forState:UIControlStateNormal];
+	}
 	
 	[[RFModelController defaultModelController] save];
 }

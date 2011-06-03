@@ -12,8 +12,13 @@
 
 @interface RFPictureTableViewController : BaseRefreshTableViewController {
 	NSMutableArray *_entries;
+	
+	NSInteger loadedCount;
+	UIActivityIndicatorView *spinner;
 }
 
 @property (nonatomic, retain) NSMutableArray *entries;
+@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *spinner;
+
 
 @end

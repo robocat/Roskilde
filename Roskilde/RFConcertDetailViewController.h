@@ -20,6 +20,8 @@
 	UIButton *itunesButton;
 	UILabel *artistLabel;
 	UILabel *playtimeLabel;
+	UIImageView *genreImageView;
+	UIImageView *sceneImageView;
 	UITextView *descriptionTextView;
 	UIButton *titleButton;
 	UIView *infoView;
@@ -34,6 +36,8 @@
 @property (nonatomic, retain) IBOutlet UIButton *itunesButton;
 @property (nonatomic, retain) IBOutlet UILabel *artistLabel;
 @property (nonatomic, retain) IBOutlet UILabel *playtimeLabel;
+@property (nonatomic, retain) IBOutlet UIImageView *genreImageView;
+@property (nonatomic, retain) IBOutlet UIImageView *sceneImageView;
 @property (nonatomic, retain) IBOutlet UITextView *descriptionTextView;
 
 - (IBAction)toggleInfoView:(id)sender;

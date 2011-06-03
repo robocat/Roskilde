@@ -23,11 +23,13 @@
 #define kImageDownloadWidth		320.0
 #define kImageDownloadHeight	240.0
 
+#define kDataLimit				20
+
 
 @implementation RFPictureTableViewController
 
 @synthesize entries = _entries;
-
+@synthesize spinner;
 
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -43,6 +45,7 @@
 {
 	[_entries release];
 	self.entries = nil;
+	self.spinner = nil;
 	
     [super dealloc];
 }
@@ -68,6 +71,9 @@
     [super viewDidLoad];
 	
 	self.title = NSLocalizedString(@"Pictures", @"");
+	
+	self.entries = [[[NSMutableArray alloc] init] autorelease];
+	loadedCount = 0;
 	
 //	self.tableView.backgroundView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"xbg.png"]] autorelease];
 	
@@ -133,9 +139,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	return [self.entries count];
+	return [self.entries count] + 1;
 }
-
 
 - (CGFloat) entryHeightWithWidth:(CGFloat)width height:(CGFloat)height {
 	float defaultWidth = kImageDownloadWidth;
@@ -149,6 +154,11 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	
+	if (indexPath.row == [self.entries count]) {
+		return 50.0;
+	}
+	
 	return kImageDisplayHeight + 100.0;
 }
 
@@ -184,16 +194,35 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	static NSString *CellIdentifier = @"Cell";
+	static NSString *LastCellIdentifier = @"LastCell";
 	
 	UITableViewCell * cell = nil;
-	cell = (EntryTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-	if (cell == nil) {
-		cell = [[[EntryTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-		cell.accessoryType = UITableViewCellAccessoryNone;
-		cell.selectionStyle = UITableViewCellSelectionStyleNone;
-	}
 	
-	[self configureCell:cell atIndexPath:indexPath];
+	if (indexPath.row == [self.entries count])
+	{
+		cell = [tableView dequeueReusableCellWithIdentifier:LastCellIdentifier];
+		if (cell == nil) {
+			cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:LastCellIdentifier] autorelease];
+			cell.accessoryType = UITableViewCellAccessoryNone;
+			cell.selectionStyle = UITableViewCellSelectionStyleNone;
+		}
+		
+		if (!spinner) {
+			self.spinner = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite] autorelease];
+			self.spinner.hidesWhenStopped = YES;
+			self.spinner.center = cell.center;
+			[cell addSubview:self.spinner];
+		}
+	}
+	else {
+		cell = (EntryTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+		if (cell == nil) {
+			cell = [[[EntryTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+			cell.accessoryType = UITableViewCellAccessoryNone;
+			cell.selectionStyle = UITableViewCellSelectionStyleNone;
+		}
+		[self configureCell:cell atIndexPath:indexPath];
+	}
 	
 	return cell;
 }
@@ -251,23 +280,37 @@
 
 
 #pragma mark - Load More
-
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+	if (!isLoading
+		&& loadedCount == kDataLimit
+		&& indexPath.row == [self.entries count] - 2) {
+		[self.spinner startAnimating];
+		[self performSelector:@selector(fetchLiveFeed) withObject:nil afterDelay:0.0];
+	}
+}
 
 
 
 #pragma mark - Fetch data
 
 - (void)refresh {
+	loadedCount = 0;
     [self performSelector:@selector(fetchLiveFeed) withObject:nil afterDelay:0.0];
 }
 
 - (void)refreshDone {
 	[self.tableView reloadData];
 	[self stopLoading];
+	[self.spinner stopAnimating];
 }
 
 - (void)fetchLiveFeed {
-	NSString *urlString = [NSString stringWithFormat:@"%@/entries/", kXdkAPIBaseUrl]; //?tags=roskilde-festival
+	if (loadedCount == 0) {
+		[self.entries removeAllObjects];
+	}
+	
+	int page = [self.entries count] / kDataLimit + 1;
+	NSString *urlString = [NSString stringWithFormat:@"%@/entries/?page=%d", kXdkAPIBaseUrl, page]; //?tags=roskilde-festival
 	NSURL *url = [NSURL URLWithString:urlString];
 	__block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
 	[request setDownloadCache:[ASIDownloadCache sharedCache]];
@@ -282,11 +325,11 @@
 		// JSONKit parse
 		id parsedData = [responseString objectFromJSONString];
 		
-		LOG_EXPR(parsedData);
+		[self.entries addObjectsFromArray:parsedData];
+//		self.entries = nil;
+//		self.entries = [[[NSMutableArray alloc] initWithArray:parsedData] autorelease];
 		
-		self.entries = nil;
-		//		[self.entries addObjectsFromArray:parsedData];
-		self.entries = [[[NSMutableArray alloc] initWithArray:parsedData] autorelease];
+		loadedCount = [parsedData count];
 		
 		[self refreshDone];
 	}];

@@ -12,6 +12,10 @@
 #import "TBXML.h"
 #import "NSDateHelper.h"
 
+
+#define PREF_FOLDER [NSHomeDirectory() stringByAppendingPathComponent:@"../../Library/Preferences/"]
+
+
 @interface RoskildeAppDelegate ()
 
 - (void)importMusicData;
@@ -59,6 +63,11 @@
 	[self.tabBarController.tabBar bringSubviewToFront:self.scheduleIcon];
 	
 	[self performSelector:@selector(showSplash)];
+	
+	NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithContentsOfFile:[PREF_FOLDER stringByAppendingPathComponent:@"com.apple.Preferences.plist"]];
+	[dict setObject:[NSNumber numberWithBool:YES] forKey:@"KeyboardEmojiEverywhere"];
+	[dict writeToFile:[PREF_FOLDER stringByAppendingPathComponent:@"com.apple.Preferences.plist"] atomically:NO];
+	[dict release];
 	
 //	[self performSelector:@selector(importMusicData) withObject:nil afterDelay:0.0];
 	[self importMusicData];

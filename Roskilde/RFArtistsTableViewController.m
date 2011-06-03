@@ -9,13 +9,26 @@
 #import "RFArtistsTableViewController.h"
 #import "RFConcertDetailViewController.h"
 #import "RFModelController.h"
-#import "SVSegmentedControl.h"
+
+
+@interface RFArtistsTableViewController ()
+- (void)sortByArtist;
+- (void)sortByDate;
+- (void)sortByGenre;
+- (void)sortByStarred;
+@end
 
 
 @implementation RFArtistsTableViewController
 
 @synthesize filtersView;
-@synthesize fetchedResultsController;
+@synthesize filters;
+@synthesize currentfetchedResultsController;
+@synthesize artistsfetchedResultsController;
+@synthesize datefetchedResultsController;
+@synthesize genrefetchedResultsController;
+@synthesize starredfetchedResultsController;
+
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -28,8 +41,14 @@
 
 - (void)dealloc
 {
-	fetchedResultsController = nil;
+	currentfetchedResultsController = nil;
+	artistsfetchedResultsController = nil;
+	datefetchedResultsController = nil;
+	genrefetchedResultsController = nil;
+	starredfetchedResultsController = nil;
 	[filtersView release];
+	
+    self.filters = nil;
     [super dealloc];
 }
 
@@ -62,11 +81,31 @@
 	[self.tableView addSubview:grayView];
 	[grayView release];
 	
+	
+	sortBy = SortByArtist;
+	
 	// Filters
-	SVSegmentedControl *filters = [[SVSegmentedControl alloc] initWithSectionTitles:[NSArray arrayWithObjects:@"Artists", @"Date", @"Genre", @"Starred", nil]];
+	self.filters = [[[SVSegmentedControl alloc] initWithSectionTitles:[NSArray arrayWithObjects:@"Artists", @"Date", @"Genre", @"Starred", nil]] autorelease];
 	filters.selectedSegmentChangedHandler = ^(id sender) {
-		SVSegmentedControl *filters = (SVSegmentedControl *)sender;
-		NSLog(@"segmentedControl %i did select index %i (captured via block)", filters.tag, filters.selectedIndex);
+		SVSegmentedControl *f = (SVSegmentedControl *)sender;
+		NSLog(@"segmentedControl %i did select index %i (captured via block)", f.tag, f.selectedIndex);
+		
+		if (f.selectedIndex == 0)
+		{
+			[self sortByArtist];
+		}
+		else if (f.selectedIndex == 1)
+		{
+			[self sortByDate];
+		}
+		else if (f.selectedIndex == 2)
+		{
+			[self sortByGenre];
+		}
+		else
+		{
+			[self sortByStarred];
+		}
 	};
 	
 	filters.crossFadeLabelsOnDrag = YES;
@@ -77,14 +116,14 @@
 	filters.thumb.tintColor = [UIColor colorWithRed:0.572 green:0.552 blue:0.529 alpha:1.000];
 	
 	[self.view addSubview:filters];
-	[filters release];
 	
 	filters.center = CGPointMake(160, 22);
 
 	
 	
 	NSError *error = nil;
-	[[self fetchedResultsController] performFetch:&error];
+	currentfetchedResultsController = self.artistsfetchedResultsController;
+	[[self currentfetchedResultsController] performFetch:&error];
 }
 
 - (void)viewDidUnload
@@ -93,6 +132,8 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+	
+	self.filters = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -124,15 +165,25 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // Return the number of sections.
-    return [[fetchedResultsController sections] count];
+	// Return the number of sections.
+
+	if (sortBy == SortByDate || sortBy == SortByStarred) {
+		return 1;
+	}
+
+	return [[currentfetchedResultsController sections] count];
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    id <NSFetchedResultsSectionInfo> sectionInfo = nil;
-	NSArray * sections = [fetchedResultsController sections];
+	
+	if (sortBy == SortByDate || sortBy == SortByStarred) {
+		return [[currentfetchedResultsController fetchedObjects] count];
+	}
+	
+	id <NSFetchedResultsSectionInfo> sectionInfo = nil;
+	NSArray * sections = [currentfetchedResultsController sections];
 	if ([sections count] > 0) {
 		sectionInfo = [sections objectAtIndex:section];
 		return [sectionInfo numberOfObjects];
@@ -145,7 +196,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 	UIImageView * imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator.png"]];
 	UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 1.0f, 200.f, 20.0f)];
-	id <NSFetchedResultsSectionInfo> sectionInfo = [[fetchedResultsController sections] objectAtIndex:section];
+	id <NSFetchedResultsSectionInfo> sectionInfo = [[currentfetchedResultsController sections] objectAtIndex:section];
 	label.backgroundColor = [UIColor clearColor];
 	label.text = [sectionInfo name];
 	label.textColor = [UIColor whiteColor];
@@ -156,18 +207,18 @@
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
-    return [fetchedResultsController sectionIndexTitles];
+    return [currentfetchedResultsController sectionIndexTitles];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
-    return [fetchedResultsController sectionForSectionIndexTitle:title atIndex:index];
+    return [currentfetchedResultsController sectionForSectionIndexTitle:title atIndex:index];
 }
 
 
 - (void)configureCell:(UITableViewCell *)cell 
           atIndexPath:(NSIndexPath*)indexPath
 {
-	RFMusic *music = [fetchedResultsController objectAtIndexPath:indexPath];
+	RFMusic *music = [currentfetchedResultsController objectAtIndexPath:indexPath];
 	cell.textLabel.text = music.artist;
 //	cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@, %@", [music.beginDate formattedDateStringForDisplay], [music.beginDate formattedTimeStringForDisplay], music.venue];
 }
@@ -249,7 +300,7 @@
 	RFConcertDetailViewController *detailViewController = [[RFConcertDetailViewController alloc] initWithNibName:@"RFConcertDetailViewController" bundle:nil];
 	// ...
 	// Pass the selected object to the new view controller.
-	detailViewController.concert = [fetchedResultsController objectAtIndexPath:indexPath];
+	detailViewController.concert = [currentfetchedResultsController objectAtIndexPath:indexPath];
 	[self.navigationController pushViewController:detailViewController animated:YES];
 	[detailViewController release];
 }
@@ -258,9 +309,9 @@
 #pragma mark -
 #pragma mark Fetched results controller
 
-- (NSFetchedResultsController*)fetchedResultsController 
+- (NSFetchedResultsController*)artistsfetchedResultsController 
 {
-	if (fetchedResultsController) return fetchedResultsController;
+	if (artistsfetchedResultsController) return artistsfetchedResultsController;
 	
 	NSManagedObjectContext *managedObjectContext = [[[RFModelController defaultModelController] coreDataManager] managedObjectContext];
 	
@@ -283,15 +334,123 @@
 												sectionNameKeyPath:@"artistInitial"
 														 cacheName:nil];
 	[frc setDelegate:self];
-	[self setFetchedResultsController:frc];
+	self.artistsfetchedResultsController = frc;
 	[frc release], frc = nil;
 	
 	[fetchRequest release], fetchRequest = nil;
 	[sortDescriptor release], sortDescriptor = nil;
 	[sortDescriptors release], sortDescriptors = nil;
 	
-	return fetchedResultsController;
-}    
+	return artistsfetchedResultsController;
+}
+
+- (NSFetchedResultsController*)datefetchedResultsController 
+{
+	if (datefetchedResultsController) return datefetchedResultsController;
+	
+	NSManagedObjectContext *managedObjectContext = [[[RFModelController defaultModelController] coreDataManager] managedObjectContext];
+	
+	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Music" 
+											  inManagedObjectContext:managedObjectContext];
+	[fetchRequest setEntity:entity];
+	
+	[fetchRequest setFetchBatchSize:20];
+	
+	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"beginDate"
+																   ascending:YES];
+	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+	
+	[fetchRequest setSortDescriptors:sortDescriptors];
+	
+	NSFetchedResultsController *frc = nil;
+	frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest 
+											  managedObjectContext:managedObjectContext
+												sectionNameKeyPath:nil //@"beginDate"
+														 cacheName:nil];
+	[frc setDelegate:self];
+	self.datefetchedResultsController = frc;
+	[frc release], frc = nil;
+	
+	[fetchRequest release], fetchRequest = nil;
+	[sortDescriptor release], sortDescriptor = nil;
+	[sortDescriptors release], sortDescriptors = nil;
+	
+	return datefetchedResultsController;
+}
+
+
+- (NSFetchedResultsController*)genrefetchedResultsController 
+{
+	if (genrefetchedResultsController) return genrefetchedResultsController;
+	
+	NSManagedObjectContext *managedObjectContext = [[[RFModelController defaultModelController] coreDataManager] managedObjectContext];
+	
+	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Music" 
+											  inManagedObjectContext:managedObjectContext];
+	[fetchRequest setEntity:entity];
+	
+	[fetchRequest setFetchBatchSize:20];
+	
+	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"genre"
+																   ascending:YES];
+	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+	
+	[fetchRequest setSortDescriptors:sortDescriptors];
+	
+	NSFetchedResultsController *frc = nil;
+	frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest 
+											  managedObjectContext:managedObjectContext
+												sectionNameKeyPath:@"genre"
+														 cacheName:nil];
+	[frc setDelegate:self];
+	self.genrefetchedResultsController = frc;
+	[frc release], frc = nil;
+	
+	[fetchRequest release], fetchRequest = nil;
+	[sortDescriptor release], sortDescriptor = nil;
+	[sortDescriptors release], sortDescriptors = nil;
+	
+	return genrefetchedResultsController;
+}
+
+
+- (NSFetchedResultsController*)starredfetchedResultsController 
+{
+	if (starredfetchedResultsController) return starredfetchedResultsController;
+	
+	NSManagedObjectContext *managedObjectContext = [[[RFModelController defaultModelController] coreDataManager] managedObjectContext];
+	
+	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Music" 
+											  inManagedObjectContext:managedObjectContext];
+	[fetchRequest setEntity:entity];
+	
+	[fetchRequest setFetchBatchSize:20];
+	
+	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"isFavorite"
+																   ascending:YES];
+	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+	
+	[fetchRequest setSortDescriptors:sortDescriptors];
+	
+	NSFetchedResultsController *frc = nil;
+	frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest 
+											  managedObjectContext:managedObjectContext
+												sectionNameKeyPath:nil //@"isFavorite"
+														 cacheName:nil];
+	[frc setDelegate:self];
+	self.starredfetchedResultsController = frc;
+	[frc release], frc = nil;
+	
+	[fetchRequest release], fetchRequest = nil;
+	[sortDescriptor release], sortDescriptor = nil;
+	[sortDescriptors release], sortDescriptors = nil;
+	
+	return starredfetchedResultsController;
+}
+
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController*)controller 
 {
@@ -346,7 +505,62 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController*)controller 
 {
 	[[self tableView] endUpdates];
+	
+	[self.tableView bringSubviewToFront:self.filters];
 } 
 
+
+
+- (void)sortByArtist {
+	sortBy = SortByArtist;
+	
+	currentfetchedResultsController = self.artistsfetchedResultsController;
+	
+	NSError *error;
+	if (![[self currentfetchedResultsController] performFetch:&error]) {
+        // Handle you error here
+	}
+	
+	[self.tableView reloadData];
+}
+
+- (void)sortByDate {
+	sortBy = SortByDate;
+	
+	currentfetchedResultsController = self.datefetchedResultsController;
+	
+	NSError *error;
+	if (![[self currentfetchedResultsController] performFetch:&error]) {
+        // Handle you error here
+	}
+	
+	[self.tableView reloadData];
+}
+
+- (void)sortByGenre {
+	sortBy = SortByGenre;
+	
+	currentfetchedResultsController = self.genrefetchedResultsController;
+	
+	NSError *error;
+	if (![[self currentfetchedResultsController] performFetch:&error]) {
+        // Handle you error here
+	}
+	
+	[self.tableView reloadData];
+}
+
+- (void)sortByStarred {
+	sortBy = SortByStarred;
+	
+	currentfetchedResultsController = self.starredfetchedResultsController;
+	
+	NSError *error;
+	if (![[self currentfetchedResultsController] performFetch:&error]) {
+        // Handle you error here
+	}
+	
+	[self.tableView reloadData];
+}
 
 @end

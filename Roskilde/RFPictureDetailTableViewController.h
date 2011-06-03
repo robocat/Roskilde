@@ -26,6 +26,7 @@
 	
 	UIView *toolbar;
 	UIInputToolbar *inputToolbar;
+	UIImageView *toolbarImageView;
 	
 	UIButton *cameraButton;
 	UIButton *inputButton;
@@ -42,6 +43,7 @@
 @property (nonatomic, retain) IBOutlet FLImageView *imageView;
 @property (nonatomic, retain) IBOutlet UIView *toolbar;
 @property (nonatomic, retain) UIInputToolbar *inputToolbar;
+@property (nonatomic, retain) IBOutlet UIImageView *toolbarImageView;
 
 @property (nonatomic, retain) IBOutlet UIButton *cameraButton;
 @property (nonatomic, retain) IBOutlet UIButton *inputButton;

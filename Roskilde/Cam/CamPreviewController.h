@@ -21,7 +21,7 @@
 
 @end
 
-@interface CamPreviewController : UIViewController <UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, UITableViewDataSource, UITableViewDelegate> {
+@interface CamPreviewController : UIViewController <UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, MKReverseGeocoderDelegate> {
 	NSUInteger selectedIndex;
 	NSString *replyTo;
 }

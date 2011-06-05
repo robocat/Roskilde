@@ -67,6 +67,7 @@
 				}
 			}
 			
+			self.view.alpha = 0;
 			self.view.frame = self.oldFrame;
 		} completion:^(BOOL finished) {
 			self.bView.hidden = NO;
@@ -95,11 +96,12 @@
 		self.fullscreenView.backgroundColor = [UIColor blackColor];
 		self.fullscreenView.userInteractionEnabled = YES;
 		self.fullscreenView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+		self.fullscreenView.alpha = 0;
 		
 		[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
 		[[[UIApplication sharedApplication] keyWindow] addSubview:self.fullscreenView];
 		
-		self.view.hidden = YES;
+//		self.view.hidden = YES;
 		
 		[UIView animateWithDuration:.3 animations:^(void) {
 			if ([self.view isKindOfClass:[UIImageView class]]) {
@@ -110,6 +112,7 @@
 				}
 			}
 			
+			self.fullscreenView.alpha = 1;
 			self.fullscreenView.frame = CGRectMake(0, 0, 320, 480);
 		} completion:^(BOOL finished) {
 			self.fullscreenView = nil;

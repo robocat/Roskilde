@@ -569,6 +569,12 @@
 		FF39540113966F25007BDF33 /* NSDictionaryHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EE0BA2F1391744700CF0531 /* NSDictionaryHelper.m */; };
 		FF39540713967350007BDF33 /* FullscreenImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF39540613967350007BDF33 /* FullscreenImageView.m */; };
 		FF39540A1396792A007BDF33 /* FullscreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3954091396792A007BDF33 /* FullscreenViewController.m */; };
+		FFF55A841399796C005AC608 /* ATMHud.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF55A781399796C005AC608 /* ATMHud.m */; };
+		FFF55A851399796C005AC608 /* ATMHudQueueItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF55A7B1399796C005AC608 /* ATMHudQueueItem.m */; };
+		FFF55A861399796C005AC608 /* ATMHudView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF55A7D1399796C005AC608 /* ATMHudView.m */; };
+		FFF55A871399796C005AC608 /* ATMProgressLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF55A7F1399796C005AC608 /* ATMProgressLayer.m */; };
+		FFF55A881399796C005AC608 /* ATMSoundFX.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF55A811399796C005AC608 /* ATMSoundFX.m */; };
+		FFF55A891399796C005AC608 /* ATMTextLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF55A831399796C005AC608 /* ATMTextLayer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1302,6 +1308,19 @@
 		FF39540613967350007BDF33 /* FullscreenImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FullscreenImageView.m; sourceTree = "<group>"; };
 		FF3954081396792A007BDF33 /* FullscreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullscreenViewController.h; sourceTree = "<group>"; };
 		FF3954091396792A007BDF33 /* FullscreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FullscreenViewController.m; sourceTree = "<group>"; };
+		FFF55A771399796C005AC608 /* ATMHud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATMHud.h; sourceTree = "<group>"; };
+		FFF55A781399796C005AC608 /* ATMHud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATMHud.m; sourceTree = "<group>"; };
+		FFF55A791399796C005AC608 /* ATMHudDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATMHudDelegate.h; sourceTree = "<group>"; };
+		FFF55A7A1399796C005AC608 /* ATMHudQueueItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATMHudQueueItem.h; sourceTree = "<group>"; };
+		FFF55A7B1399796C005AC608 /* ATMHudQueueItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATMHudQueueItem.m; sourceTree = "<group>"; };
+		FFF55A7C1399796C005AC608 /* ATMHudView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATMHudView.h; sourceTree = "<group>"; };
+		FFF55A7D1399796C005AC608 /* ATMHudView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATMHudView.m; sourceTree = "<group>"; };
+		FFF55A7E1399796C005AC608 /* ATMProgressLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATMProgressLayer.h; sourceTree = "<group>"; };
+		FFF55A7F1399796C005AC608 /* ATMProgressLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATMProgressLayer.m; sourceTree = "<group>"; };
+		FFF55A801399796C005AC608 /* ATMSoundFX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATMSoundFX.h; sourceTree = "<group>"; };
+		FFF55A811399796C005AC608 /* ATMSoundFX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATMSoundFX.m; sourceTree = "<group>"; };
+		FFF55A821399796C005AC608 /* ATMTextLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATMTextLayer.h; sourceTree = "<group>"; };
+		FFF55A831399796C005AC608 /* ATMTextLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATMTextLayer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2247,7 +2266,7 @@
 		3E5F0B3A1385BC9200555871 /* External */ = {
 			isa = PBXGroup;
 			children = (
-				3E1076BC13997682005E9A09 /* ATMHud */,
+				FFF55A761399796C005AC608 /* ATMHud */,
 				3E1075DD139962E8005E9A09 /* ShareKit */,
 				3E1075B513994CEA005E9A09 /* SVWebViewController */,
 				3E5EA53D1396FA7F000BD50D /* SVSegmentedControl */,
@@ -2659,6 +2678,26 @@
 				3EF92FBB138D84A300AFFC2D /* tick.aiff */,
 			);
 			path = Sounds;
+			sourceTree = "<group>";
+		};
+		FFF55A761399796C005AC608 /* ATMHud */ = {
+			isa = PBXGroup;
+			children = (
+				FFF55A771399796C005AC608 /* ATMHud.h */,
+				FFF55A781399796C005AC608 /* ATMHud.m */,
+				FFF55A791399796C005AC608 /* ATMHudDelegate.h */,
+				FFF55A7A1399796C005AC608 /* ATMHudQueueItem.h */,
+				FFF55A7B1399796C005AC608 /* ATMHudQueueItem.m */,
+				FFF55A7C1399796C005AC608 /* ATMHudView.h */,
+				FFF55A7D1399796C005AC608 /* ATMHudView.m */,
+				FFF55A7E1399796C005AC608 /* ATMProgressLayer.h */,
+				FFF55A7F1399796C005AC608 /* ATMProgressLayer.m */,
+				FFF55A801399796C005AC608 /* ATMSoundFX.h */,
+				FFF55A811399796C005AC608 /* ATMSoundFX.m */,
+				FFF55A821399796C005AC608 /* ATMTextLayer.h */,
+				FFF55A831399796C005AC608 /* ATMTextLayer.m */,
+			);
+			path = ATMHud;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -3410,7 +3449,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Willi Wu (P5EC6B73UQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ulrik Damm (X45AYMDB46)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -3418,7 +3457,7 @@
 				INFOPLIST_FILE = "Roskilde/Roskilde-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9218BB29-FF6C-49F3-ACD6-2AAD591F7E2F";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9BC2465A-F842-4DB5-93CC-D1DA30310619";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;

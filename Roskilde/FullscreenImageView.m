@@ -38,12 +38,14 @@
 	
 	self.fullscreenView.image = self.image;
 	self.fullscreenView.clipsToBounds = self.clipsToBounds;
-	self.fullscreenView.contentMode = self.contentMode;
+	self.fullscreenView.contentMode = UIViewContentModeScaleAspectFit;
+	self.fullscreenView.alpha = 0;
 	
 	[[[UIApplication sharedApplication] keyWindow] addSubview:self.fullscreenView];
 	
 	[UIView animateWithDuration:1 animations:^(void) {
 		self.fullscreenView.frame = CGRectMake(0, 0, 320, 480);
+		self.fullscreenView.alpha = 1;
 	}];
 }
 

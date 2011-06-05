@@ -213,7 +213,7 @@
 	
 	float maxsize = round(MAX(dlsize.width, dlsize.height));
 	
-	UIImage * placeholder = [UIImage imageNamed:@"xbg.png"];
+	UIImage * placeholder = [UIImage imageNamed:@"loaderbg.png"];
 	NSString *urlString = [NSString stringWithFormat:@"%@=s%.f", url, maxsize * scale];
 	
 	[self.imageView loadImageAtURLString:urlString placeholderImage:placeholder];

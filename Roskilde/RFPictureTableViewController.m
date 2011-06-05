@@ -392,10 +392,17 @@
 	
 	NSURL *url = [NSURL URLWithString:urlString];
 	__block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-//	[request setDownloadCache:[ASIDownloadCache sharedCache]];
-//	[request setCachePolicy:ASIAskServerIfModifiedCachePolicy|ASIFallbackToCacheIfLoadFailsCachePolicy];
-//	[request setCacheStoragePolicy:ASICachePermanentlyCacheStoragePolicy];
-//	[request setSecondsToCache:3600];
+    
+    // Disabling secure certificate validation
+    [request setValidatesSecureCertificate:NO];
+    
+    // Set timeout to 30 secs
+    [request setTimeOutSeconds:30];
+    
+	[request setDownloadCache:[ASIDownloadCache sharedCache]];
+	[request setCachePolicy:ASIAskServerIfModifiedCachePolicy|ASIFallbackToCacheIfLoadFailsCachePolicy];
+	[request setCacheStoragePolicy:ASICachePermanentlyCacheStoragePolicy];
+	[request setSecondsToCache:3600];
 	
 	[request setCompletionBlock:^{
 		// Use when fetching text data

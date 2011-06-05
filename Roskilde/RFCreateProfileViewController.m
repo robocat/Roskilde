@@ -251,6 +251,10 @@
 		NSURL *url = [NSURL URLWithString:urlString];
 		
 		__block ASIFormDataRequest *formRequest = [ASIFormDataRequest requestWithURL:url];
+        
+        // Disabling secure certificate validation
+        [formRequest setValidatesSecureCertificate:NO];
+
 		formRequest.requestMethod = @"POST";
 				
 		[formRequest setCompletionBlock:^{

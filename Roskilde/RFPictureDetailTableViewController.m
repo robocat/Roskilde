@@ -501,6 +501,10 @@
 	NSString *urlString = [NSString stringWithFormat:@"%@/entries/%@/replies", kXdkAPIBaseUrl, [self.entry objectForKey:@"entry_id"]];
 	NSURL *url = [NSURL URLWithString:urlString];
 	__block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    
+    // Disabling secure certificate validation
+    [request setValidatesSecureCertificate:NO];
+    
 	[request setDownloadCache:[ASIDownloadCache sharedCache]];
 	[request setCachePolicy:ASIAskServerIfModifiedCachePolicy|ASIFallbackToCacheIfLoadFailsCachePolicy];
 	[request setCacheStoragePolicy:ASICachePermanentlyCacheStoragePolicy];
@@ -586,6 +590,10 @@
 	NSURL *url = [NSURL URLWithString:urlString];
 	
 	__block ASIFormDataRequest *formRequest = [ASIFormDataRequest requestWithURL:url];
+    
+    // Disabling secure certificate validation
+    [formRequest setValidatesSecureCertificate:NO];
+    
 	formRequest.requestMethod = @"POST";
 	
 	// Basic Auth
@@ -640,6 +648,13 @@
 	NSURL *url = [NSURL URLWithString:urlString];
 	
 	__block ASIHTTPRequest *formRequest = [ASIHTTPRequest requestWithURL:url];
+    
+    // Disabling secure certificate validation
+    [formRequest setValidatesSecureCertificate:NO];
+    
+    // Set timeout to 30 secs
+    [formRequest setTimeOutSeconds:30];
+    
 	formRequest.requestMethod = @"GET";
 	
 	// Basic Auth
@@ -760,6 +775,10 @@
 		NSString *json = [data JSONString];
 		
 		__block ASIFormDataRequest *formRequest = [ASIFormDataRequest requestWithURL:url];
+        
+        // Disabling secure certificate validation
+        [formRequest setValidatesSecureCertificate:NO];
+        
 		[formRequest setPostValue:json forKey:@"data"];
 		
 		// Basic Auth

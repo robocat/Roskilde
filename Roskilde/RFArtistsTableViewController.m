@@ -222,11 +222,6 @@
 - (void)configureCell:(UITableViewCell *)cell 
           atIndexPath:(NSIndexPath*)indexPath
 {
-    RFMusic *m = [[self.currentfetchedResultsController fetchedObjects] objectAtIndex:indexPath.row];
-    
-    LOG_EXPR(m.artist);
-    LOG_EXPR(sortBy);
-    
 	RFMusic *music = [self.currentfetchedResultsController objectAtIndexPath:indexPath];
 	cell.textLabel.text = music.artist;
     

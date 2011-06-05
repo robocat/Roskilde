@@ -346,6 +346,13 @@
 	NSData *imageData = UIImageJPEGRepresentation(currentImage, 1.0/*(currentImage.size.width > 640? 0.3: 1.0)*/);
 	
 	__block ASIFormDataRequest *formRequest = [ASIFormDataRequest requestWithURL:url];
+    
+    // Disabling secure certificate validation
+    [formRequest setValidatesSecureCertificate:NO];
+    
+    // Set timeout to 30 secs
+    [formRequest setTimeOutSeconds:30];
+    
 	[formRequest setPostValue:json forKey:@"data"];
 	[formRequest setPostValue:[NSNumber numberWithFloat:currentImage.size.width] forKey:@"width"];
 	[formRequest setPostValue:[NSNumber numberWithFloat:currentImage.size.height] forKey:@"height"];
@@ -362,7 +369,7 @@
 	__block CGFloat progress = 0;
 	
 	[formRequest setBytesSentBlock:^(unsigned long long size, unsigned long long total) {
-		NSLog(@"size:%lld total:%lld, fsize:%f ftotal:%f progress:%f", size, total, (CGFloat)size, (CGFloat)total, ((CGFloat)total)/((CGFloat)size));
+//		NSLog(@"size:%lld total:%lld, fsize:%f ftotal:%f progress:%f", size, total, (CGFloat)size, (CGFloat)total, ((CGFloat)total)/((CGFloat)size));
 		[hud setProgress:(progress += ((CGFloat)size)/((CGFloat)total))];
 	}];
 	
@@ -402,6 +409,8 @@
 		NSLog(@"error: %@", error);
 		
 		[hud setCaption:@"A network error occured"];
+        
+        [[[[UIAlertView alloc] initWithTitle:@"Upload Failed" message:@"A network error occured" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
 		
 //		waitLabel.text = @":(";
 		[UIView animateWithDuration:0.3 delay:1 options:0 animations:^(void) {
@@ -414,7 +423,7 @@
 //			[waitView removeFromSuperview];
 			[hud.view removeFromSuperview];
 			[hud release];
-			[self back:self];
+//			[self back:self];
 		}];
 	}];
 	

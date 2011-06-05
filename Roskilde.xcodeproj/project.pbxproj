@@ -487,6 +487,8 @@
 		3E61372E138EF5FC0008833A /* RFLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E61372C138EF5FC0008833A /* RFLoginViewController.m */; };
 		3E61372F138EF5FC0008833A /* RFLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E61372D138EF5FC0008833A /* RFLoginViewController.xib */; };
 		3E8E01D0139ABC3E004FF697 /* NSDate+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E8E01CF139ABC3E004FF697 /* NSDate+Helper.m */; };
+		3E96DE41139C18680001C6E3 /* loaderbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E96DE3F139C18680001C6E3 /* loaderbg.png */; };
+		3E96DE42139C18680001C6E3 /* loaderbg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E96DE40139C18680001C6E3 /* loaderbg@2x.png */; };
 		3EE0B9BE138FAB8800CF0531 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EE0B9B7138FAB8800CF0531 /* Icon-72.png */; };
 		3EE0B9BF138FAB8800CF0531 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EE0B9B8138FAB8800CF0531 /* Icon-Small-50.png */; };
 		3EE0B9C0138FAB8800CF0531 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EE0B9B9138FAB8800CF0531 /* Icon-Small.png */; };
@@ -1169,6 +1171,8 @@
 		3E61372D138EF5FC0008833A /* RFLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RFLoginViewController.xib; sourceTree = "<group>"; };
 		3E8E01CE139ABC3E004FF697 /* NSDate+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Helper.h"; sourceTree = "<group>"; };
 		3E8E01CF139ABC3E004FF697 /* NSDate+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Helper.m"; sourceTree = "<group>"; };
+		3E96DE3F139C18680001C6E3 /* loaderbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loaderbg.png; sourceTree = "<group>"; };
+		3E96DE40139C18680001C6E3 /* loaderbg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loaderbg@2x.png"; sourceTree = "<group>"; };
 		3EE0B9B7138FAB8800CF0531 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		3EE0B9B8138FAB8800CF0531 /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
 		3EE0B9B9138FAB8800CF0531 /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
@@ -1347,6 +1351,8 @@
 		3E1072E2139943C9005E9A09 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				3E96DE3F139C18680001C6E3 /* loaderbg.png */,
+				3E96DE40139C18680001C6E3 /* loaderbg@2x.png */,
 				3E1076D613997C71005E9A09 /* altnavbar.png */,
 				3E1076D713997C71005E9A09 /* altnavbar@2x.png */,
 				3E1072E3139943C9005E9A09 /* acoustic.png */,
@@ -2163,6 +2169,8 @@
 		3E5F0AF11385B5F400555871 /* Roskilde */ = {
 			isa = PBXGroup;
 			children = (
+				3E54C496138BE6B400C47A88 /* RFGlobal.h */,
+				3E54C497138BE6B400C47A88 /* RFGlobal.m */,
 				3EEF29AE138A8F7100A8E34A /* App Delegate */,
 				3E5F0B301385B8B200555871 /* Model */,
 				3EEF29B7138A90F800A8E34A /* Schedule */,
@@ -2175,8 +2183,6 @@
 				3EE0BA20138FFFB000CF0531 /* Location */,
 				3EEF29B0138A8F8800A8E34A /* Custom Controls */,
 				3E5F0AF21385B5F500555871 /* Supporting Files */,
-				3E54C496138BE6B400C47A88 /* RFGlobal.h */,
-				3E54C497138BE6B400C47A88 /* RFGlobal.m */,
 			);
 			path = Roskilde;
 			sourceTree = "<group>";
@@ -3124,6 +3130,8 @@
 				3E10769E139962E9005E9A09 /* FBConnect.bundle in Resources */,
 				3E1076D813997C71005E9A09 /* altnavbar.png in Resources */,
 				3E1076D913997C71005E9A09 /* altnavbar@2x.png in Resources */,
+				3E96DE41139C18680001C6E3 /* loaderbg.png in Resources */,
+				3E96DE42139C18680001C6E3 /* loaderbg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3410,7 +3418,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ulrik Damm (X45AYMDB46)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Willi Wu (P5EC6B73UQ)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -3418,7 +3426,7 @@
 				INFOPLIST_FILE = "Roskilde/Roskilde-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9BC2465A-F842-4DB5-93CC-D1DA30310619";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "37F5C34E-0231-489B-AF1F-9079808869C3";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;

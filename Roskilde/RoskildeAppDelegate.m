@@ -215,9 +215,9 @@
 //	dispatch_async(dispatch_get_global_queue(0, 0), ^(void) {
 		RFModelController *modelController = [RFModelController defaultModelController];
 		
-//		if (![modelController hasMusic]) {
-			[modelController deleteAllMusic];
-			[modelController save];
+		if (![modelController hasMusic]) {
+//			[modelController deleteAllMusic];
+//			[modelController save];
 			
 			// Load and parse the books.xml file
 			TBXML *tbxml = [[TBXML tbxmlWithXMLFile:@"music.xml"] retain];
@@ -292,7 +292,7 @@
 				
 				[modelController save];
 			}
-//		}
+		}
 //	});
 }
 

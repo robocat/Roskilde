@@ -169,6 +169,9 @@
 
 		__block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
 
+        // Disabling secure certificate validation
+        [request setValidatesSecureCertificate:NO];
+        
 		// Basic Auth
 		NSString *auth = [NSString stringWithFormat:@"Basic %@",[ASIHTTPRequest base64forData:[[NSString stringWithFormat:@"%@:%@", self.username, self.password] dataUsingEncoding:NSUTF8StringEncoding]]];
 		[request addRequestHeader:@"Authorization" value:auth];

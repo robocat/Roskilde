@@ -22,10 +22,10 @@
 //	dispatch_async(dispatch_get_global_queue(0, 0), ^(void) {
 		RFModelController *model = [RFModelController defaultModelController];
 		
-		if (![model hasLocation]) {
-			//		for (Location *location in [model allLocations]) {
-			//			[model deleteLocation:location];
-			//		}
+//		if (![model hasLocation]) {
+			for (RFLocation *location in [model allLocations]) {
+				[model deleteLocation:location];
+			}
 
 			NSError *error = nil;
 			NSString *json = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"festival" ofType:@"json"] encoding:NSUTF8StringEncoding error:&error];
@@ -51,11 +51,11 @@
 					location.name = [NSString stringWithFormat:@"Camp area %@", location.name];
 				}
 				
-//				[location release];
+				[location release];
 			}
 			
 			[model save];
-		}
+//		}
 //	});
 }
 

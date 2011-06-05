@@ -83,7 +83,7 @@ static RFModelController *defaultModelController = nil;
 }
 
 - (NSArray*)allLocations {
-	return [simpleCoreData objectsInEntityWithName:@"Location" predicate:nil sortedWithDescriptors:[NSArray arrayWithObject:[[[NSSortDescriptor alloc] initWithKey:@"map" ascending:YES] autorelease]]];
+	return [simpleCoreData objectsInEntityWithName:@"NewLocation" predicate:nil sortedWithDescriptors:[NSArray arrayWithObject:[[[NSSortDescriptor alloc] initWithKey:@"map" ascending:YES] autorelease]]];
 }
 
 
@@ -102,7 +102,7 @@ static RFModelController *defaultModelController = nil;
 						 coordinate.longitude - 0.001,
 						 coordinate.longitude + 0.001];
 	
-	return [simpleCoreData objectsInEntityWithName:@"Location" predicate:pred sortedWithDescriptors:[NSArray arrayWithObject:[[[NSSortDescriptor alloc] initWithKey:@"map" ascending:YES] autorelease]]];
+	return [simpleCoreData objectsInEntityWithName:@"NewLocation" predicate:pred sortedWithDescriptors:[NSArray arrayWithObject:[[[NSSortDescriptor alloc] initWithKey:@"map" ascending:YES] autorelease]]];
 }
 
 

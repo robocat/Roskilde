@@ -13,6 +13,7 @@
 #import "JSONKit.h"
 #import "RFCreateProfileViewController.h"
 #import "ATMHud.h"
+#import "RFModelController.h"
 
 
 @interface CamPreviewController ()
@@ -23,6 +24,7 @@
 @property (nonatomic, retain) UITapGestureRecognizer *hideUploadviewGesture;
 @property (nonatomic, retain) UITapGestureRecognizer *showUploadGesture;
 @property (nonatomic, retain) CLLocationManager *locationManager;
+@property (nonatomic, retain) CLLocation *currentLocation;
 @property (nonatomic, retain) MKReverseGeocoder *reverseGeocoder;
 @property (nonatomic, retain) NSArray *nearLocations;
 @property (nonatomic, retain) UITableView *tableView;
@@ -47,7 +49,6 @@
 @synthesize location;
 @synthesize scrollView;
 @synthesize locationManager;
-@synthesize reverseGeocoder;
 @synthesize navbar;
 @synthesize delegate;
 @synthesize pageControl;
@@ -56,6 +57,8 @@
 @synthesize nearLocations;
 @synthesize tableView;
 @synthesize replyTo;
+@synthesize reverseGeocoder;
+@synthesize currentLocation;
 
 
 - (void)viewDidUnload {
@@ -68,6 +71,7 @@
 	self.reverseGeocoder = nil;
 	self.image = nil;
 	self.nearLocations = nil;
+	self.reverseGeocoder = nil;
 	
 	[self setLocation:nil];
 	[self setScrollView:nil];
@@ -162,17 +166,14 @@
 	
 	[self.scrollView scrollRectToVisible:CGRectMake(320*selectedIndex, 0, 320, self.scrollView.frame.size.height) animated:NO];
 	
-	RFLocation *nearestLocation = nil;
-	self.nearLocations = [LocationManager locationObjectsForPosition:CLLocationCoordinate2DMake(55.614628318584074, 12.078001721170397) nearest:&nearestLocation];
+	self.currentLocation = nil;
+	self.reverseGeocoder = nil;
 	
-	for (RFLocation *l in self.nearLocations) {
-		if ([l.type isEqualToString:@"stage"]) {
-			nearestLocation = l;
-			break;
-		}
-	}
+	self.locationButton.hidden = YES;
 	
-	self.location.text = nearestLocation.name;
+	self.locationManager = [[[CLLocationManager alloc] init] autorelease];
+	self.locationManager.delegate = self;
+	[self.locationManager startUpdatingLocation];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -313,6 +314,12 @@
 	[self.uploadView addSubview:waitView];*/
 	
 	
+	UIWindow *mainWindow = [[UIApplication sharedApplication] keyWindow];
+	UIView *darkView = [[UIView alloc] initWithFrame:mainWindow.bounds];
+	darkView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.2];
+	[mainWindow addSubview:darkView];
+	
+	
 	ATMHud *hud = [[ATMHud alloc] initWithDelegate:self];
 	[hud setCaption:@"Uploading photo..."];
 	[hud setProgress:0];
@@ -385,10 +392,14 @@
 		
 		[UIView animateWithDuration:0.3 delay:1 options:0 animations:^(void) {
 			hud.view.alpha = 0;
+			darkView.alpha = 0;
 		} completion:^(BOOL finished) {
 			if (self.delegate && [self.delegate respondsToSelector:@selector(CamPreview:didSucceedUploadingIndex:)]) {
 				[self.delegate CamPreview:self didSucceedUploadingIndex:selectedIndex];
 			}
+			
+			[darkView removeFromSuperview];
+			[darkView release];
 			
 //			[waitView removeFromSuperview];
 			[hud.view removeFromSuperview];
@@ -406,10 +417,14 @@
 //		waitLabel.text = @":(";
 		[UIView animateWithDuration:0.3 delay:1 options:0 animations:^(void) {
 			hud.view.alpha = 0;
+			darkView.alpha = 0;
 		} completion:^(BOOL finished) {
 			if (self.delegate && [self.delegate respondsToSelector:@selector(CamPreview:didFailUploadingIndex:)]) {
 				[self.delegate CamPreview:self didFailUploadingIndex:selectedIndex];
 			}
+			
+			[darkView removeFromSuperview];
+			[darkView release];
 			
 //			[waitView removeFromSuperview];
 			[hud.view removeFromSuperview];
@@ -532,6 +547,53 @@
 			self.tableView = nil;
 		}];
 	}
+}
+
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+	if (self.currentLocation != nil) {
+		return;
+	}
+	
+	self.currentLocation = newLocation;
+	
+	[self.locationManager stopUpdatingLocation];
+	
+	RFLocation *nearestLocation = nil;
+	self.nearLocations = [LocationManager locationObjectsForPosition:newLocation.coordinate nearest:&nearestLocation];
+	
+	if (self.nearLocations == nil || [self.nearLocations count] == 0) {
+		self.reverseGeocoder = [[MKReverseGeocoder alloc] initWithCoordinate:newLocation.coordinate];
+		self.reverseGeocoder.delegate = self;
+		[self.reverseGeocoder start];
+	} else {
+		self.locationButton.hidden = YES;
+		
+		if ([self.location.text isEqualToString:@""]) {
+			for (RFLocation *l in self.nearLocations) {
+				if ([l.type isEqualToString:@"stage"]) {
+					nearestLocation = l;
+					break;
+				}
+			}
+			
+			self.location.text = nearestLocation.name;
+		}
+	}
+}
+
+
+- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFindPlacemark:(MKPlacemark *)placemark {
+	if ([self.location.text isEqualToString:@""]) {
+		self.location.text = [NSString stringWithFormat:@"%@", placemark.locality];
+	}
+	
+	self.reverseGeocoder = nil;
+}
+
+
+- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFailWithError:(NSError *)error {
+	self.reverseGeocoder = nil;
 }
 
 

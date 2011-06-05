@@ -9,6 +9,8 @@
 #import "RFArtistsTableViewController.h"
 #import "RFConcertDetailViewController.h"
 #import "RFModelController.h"
+#import "NSDate+Helper.h"
+
 
 
 @interface RFArtistsTableViewController ()
@@ -167,7 +169,8 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 	// Return the number of sections.
 
-	if (sortBy == SortByDate || sortBy == SortByStarred) {
+	if (self.currentfetchedResultsController == self.datefetchedResultsController
+        || self.currentfetchedResultsController == self.starredfetchedResultsController) {
 		return 1;
 	}
 
@@ -178,7 +181,8 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
 	
-	if (sortBy == SortByDate || sortBy == SortByStarred) {
+	if (self.currentfetchedResultsController == self.datefetchedResultsController
+        || self.currentfetchedResultsController == self.starredfetchedResultsController) {
 		return [[self.currentfetchedResultsController fetchedObjects] count];
 	}
 	
@@ -218,9 +222,17 @@
 - (void)configureCell:(UITableViewCell *)cell 
           atIndexPath:(NSIndexPath*)indexPath
 {
+    RFMusic *m = [[self.currentfetchedResultsController fetchedObjects] objectAtIndex:indexPath.row];
+    
+    LOG_EXPR(m.artist);
+    LOG_EXPR(sortBy);
+    
 	RFMusic *music = [self.currentfetchedResultsController objectAtIndexPath:indexPath];
 	cell.textLabel.text = music.artist;
-//	cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@, %@", [music.beginDate formattedDateStringForDisplay], [music.beginDate formattedTimeStringForDisplay], music.venue];
+    
+    if (music.beginDate) {
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@, %@", [music.beginDate formattedDateStringForDisplay], [music.beginDate formattedTimeStringForDisplay], music.scene];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -229,7 +241,7 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
     
     // Configure the cell...
@@ -366,7 +378,7 @@
 	NSFetchedResultsController *frc = nil;
 	frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest 
 											  managedObjectContext:managedObjectContext
-												sectionNameKeyPath:nil //@"beginDate"
+												sectionNameKeyPath:@"beginDateString"
 														 cacheName:nil];
 	[frc setDelegate:self];
 	self.datefetchedResultsController = frc;
@@ -395,7 +407,9 @@
 	
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"genre"
 																   ascending:YES];
-	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"artist"
+																   ascending:YES];
+	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, sortDescriptor2, nil];
 	
 	[fetchRequest setSortDescriptors:sortDescriptors];
 	
@@ -410,6 +424,7 @@
 	
 	[fetchRequest release], fetchRequest = nil;
 	[sortDescriptor release], sortDescriptor = nil;
+    [sortDescriptor2 release], sortDescriptor2 = nil;
 	[sortDescriptors release], sortDescriptors = nil;
 	
 	return genrefetchedResultsController;
@@ -429,6 +444,9 @@
 	
 	[fetchRequest setFetchBatchSize:20];
 	
+//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isFavorite == %d", YES];
+//	[fetchRequest setPredicate:predicate];
+    
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"isFavorite"
 																   ascending:YES];
 	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
@@ -490,8 +508,8 @@
 									withRowAnimation:UITableViewRowAnimationFade];
 			break;
 		case NSFetchedResultsChangeUpdate:
-			[self configureCell:[[self tableView] cellForRowAtIndexPath:indexPath]
-					atIndexPath:indexPath];
+//			[self configureCell:[[self tableView] cellForRowAtIndexPath:indexPath]
+//					atIndexPath:indexPath];
 			break;
 		case NSFetchedResultsChangeMove:
 			[[self tableView] deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
@@ -515,6 +533,8 @@
 	sortBy = SortByArtist;
 	
 	self.currentfetchedResultsController = self.artistsfetchedResultsController;
+    
+    [NSFetchedResultsController deleteCacheWithName:nil];
 	
 	NSError *error;
 	if (![[self currentfetchedResultsController] performFetch:&error]) {
@@ -529,6 +549,8 @@
 	
 	self.currentfetchedResultsController = self.datefetchedResultsController;
 	
+    [NSFetchedResultsController deleteCacheWithName:nil];
+    
 	NSError *error;
 	if (![[self currentfetchedResultsController] performFetch:&error]) {
         // Handle you error here
@@ -542,6 +564,8 @@
 	
 	self.currentfetchedResultsController = self.genrefetchedResultsController;
 	
+    [NSFetchedResultsController deleteCacheWithName:nil];
+    
 	NSError *error;
 	if (![[self currentfetchedResultsController] performFetch:&error]) {
         // Handle you error here
@@ -555,6 +579,8 @@
 	
 	self.currentfetchedResultsController = self.starredfetchedResultsController;
 	
+    [NSFetchedResultsController deleteCacheWithName:nil];
+    
 	NSError *error;
 	if (![[self currentfetchedResultsController] performFetch:&error]) {
         // Handle you error here
@@ -562,5 +588,25 @@
 	
 	[self.tableView reloadData];
 }
+
+
+#pragma mark -
+#pragma mark Content Filtering
+
+//- (void)filterContent {
+//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@ AND userId != %d", query, profile.userIdValue];
+//    [NSFetchedResultsController deleteCacheWithName:nil];
+//    [self.currentfetchedResultsController.fetchRequest setPredicate:predicate];
+//    
+//	NSError *error = nil;
+//	if (![self.currentfetchedResultsController performFetch:&error]) {
+//		// Handle error
+//		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+//		exit(-1);  // Fail
+//	}
+//	
+//	[self.tableView reloadData];
+//}
+
 
 @end

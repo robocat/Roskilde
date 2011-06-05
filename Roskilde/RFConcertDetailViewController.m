@@ -258,7 +258,7 @@
 		[self.starButton setImage:[UIImage imageNamed:@"button_starit.png"] forState:UIControlStateNormal];
 	}
 	
-	[[RFModelController defaultModelController] save];
+//	[[RFModelController defaultModelController] save];
 }
 
 - (IBAction)websitePressed:(id)sender {

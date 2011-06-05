@@ -29,5 +29,6 @@
 + (NSString *)username;
 + (NSString *)password;
 + (void)saveUsername:(NSString *)username password:(NSString *)password;
++ (BOOL)connected;
 
 @end

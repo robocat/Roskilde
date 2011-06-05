@@ -18,6 +18,7 @@
 #import "NSDictionaryHelper.h"
 
 
+
 #define kImageDisplayWidth		280.0
 #define kImageDisplayHeight		210.0
 #define kImageDownloadWidth		320.0
@@ -38,6 +39,8 @@
 @synthesize spinner;
 @synthesize showMyPictures;
 @synthesize xbg;
+@synthesize filters;
+
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -56,6 +59,7 @@
 	self.entries = nil;
 	self.spinner = nil;
 	self.xbg = nil;
+    self.filters = nil;
 	
     [super dealloc];
 }
@@ -85,7 +89,42 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLoggedIn) 
 												 name:kUserLoggedIn object:nil];
 	
-	self.title = NSLocalizedString(@"Pictures", @"");
+	self.title = NSLocalizedString(@"Pictures", @"");    
+    
+    // Filters
+//	self.filters = [[[SVSegmentedControl alloc] initWithSectionTitles:[NSArray arrayWithObjects:@"All Pictures", @"My Pictures", nil]] autorelease];
+//	filters.selectedSegmentChangedHandler = ^(id sender) {
+//		SVSegmentedControl *f = (SVSegmentedControl *)sender;
+//		NSLog(@"segmentedControl %i did select index %i (captured via block)", f.tag, f.selectedIndex);
+//		
+//		if (f.selectedIndex == 0)
+//		{
+//			
+//		}
+//		else if (f.selectedIndex == 1)
+//		{
+//			
+//		}
+//		else if (f.selectedIndex == 2)
+//		{
+//			
+//		}
+//		else
+//		{
+//			
+//		}
+//	};
+//	
+//	filters.crossFadeLabelsOnDrag = YES;
+//	filters.font = [UIFont boldSystemFontOfSize:14];
+//	filters.segmentPadding = 5;
+//	filters.height = 30;
+//	filters.thumb.tintColor = [UIColor colorWithRed:0.572 green:0.552 blue:0.529 alpha:1.000];
+//	filters.center = CGPointMake(160, 22);
+//    
+//    self.navigationItem.titleView = filters;
+
+    
 	
 	self.xbg = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"xbg.png"]] autorelease];
 	CGRect xFrame = self.xbg.frame;
@@ -95,8 +134,6 @@
 	
 	self.entries = [[[NSMutableArray alloc] init] autorelease];
 	loadedCount = 0;
-	
-//	self.tableView.backgroundView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"xbg.png"]] autorelease];
 	
 	if ([RFGlobal username]) {
 		[self userLoggedIn];
@@ -323,7 +360,7 @@
 }
 
 - (void)refreshDone {
-	if (self.xbg) {
+	if ([RFGlobal connected] && self.xbg) {
 		[UIView animateWithDuration:0.2 animations:^{
 			self.xbg.alpha = 0;
 		} completion:^(BOOL finished) {

@@ -7,6 +7,7 @@
 //
 
 #import "RFGlobal.h"
+#import "Reachability.h"
 
 
 @implementation RFGlobal
@@ -39,5 +40,16 @@
 	[userDefauls setObject:password forKey:kUserDefaultsPassword];
 	[userDefauls synchronize];
 }
+
+
+
++ (BOOL)connected
+{
+	//return NO; // force for offline testing
+	Reachability *hostReach = [Reachability reachabilityForInternetConnection];	
+	NetworkStatus netStatus = [hostReach currentReachabilityStatus];	
+	return !(netStatus == NotReachable);
+}
+
 
 @end

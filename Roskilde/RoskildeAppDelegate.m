@@ -11,6 +11,7 @@
 #import "RFModelController.h"
 #import "TBXML.h"
 #import "NSDateHelper.h"
+
 #import "RFCreateProfileViewController.h"
 
 
@@ -44,7 +45,7 @@
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(createProfile) 
 												 name:kPromptCreateProfile object:nil];
-	
+    
 	
 	// Custom tabbar icons
 	self.scheduleIcon = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"schedule_icon_active.png"]] autorelease];
@@ -238,7 +239,28 @@
 					music.artist			= [name stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
 					music.artistId			= [TBXML valueOfAttributeNamed:@"id" forElement:concert];
 					music.artistInitial		= [TBXML valueOfAttributeNamed:@"artist_initial" forElement:concert];
-					music.beginDate			= [NSDate dateWithISO8601String:[TBXML valueOfAttributeNamed:@"begin_timestamp" forElement:concert]];
+                    
+                    NSDate *beginDate       = [NSDate dateWithISO8601String:[TBXML valueOfAttributeNamed:@"begin_timestamp" forElement:concert]];
+                    
+                    music.beginDate         = beginDate;
+                    
+                    NSDate *beginDateTime   = [NSDate dateWithDateTimeString:[NSString stringWithFormat:@"%@ 06:00:00", [beginDate dateOnlyString]]];
+                    NSDate *endDateTime     = [beginDateTime dateByAddingDays:1];
+                    BOOL between            = [beginDate isBetweenDate:beginDateTime andDate:endDateTime];
+                    
+                    
+                    if (!between) {
+                        beginDate           = [beginDate dateByAddingDays:-1];
+                    }
+                    
+                    if (beginDate) {
+                        music.beginDateString     = [beginDate dateOnlyString];
+                    }
+                    else {
+                        music.beginDateString     = @"";
+                    }
+                    
+                    
 					music.country			= [TBXML valueOfAttributeNamed:@"country" forElement:concert];
 					music.isFavoriteValue	= NO;
 					

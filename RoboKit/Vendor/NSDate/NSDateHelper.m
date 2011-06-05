@@ -455,7 +455,7 @@
 		return YES;
 	} else {
 		return NO;
-	}	
+	}
 }
 
 - (BOOL)isDateToday {
@@ -566,6 +566,15 @@
 
 - (NSString*)dateOnlyString {
 	return [self formattedDateWithFormatString:@"YYYY-MM-dd"];
+}
+
+
+
+- (BOOL)isBetweenDate:(NSDate *)date1 andDate:(NSDate *)date2 {
+    if ([self compare:date1] >= NSOrderedSame 
+        && [self compare:date2] <= NSOrderedSame)
+        return YES;
+    return NO;
 }
 
 @end

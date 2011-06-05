@@ -492,6 +492,7 @@
 		3E61372A138EF2120008833A /* RFCreateProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E613728138EF2120008833A /* RFCreateProfileViewController.xib */; };
 		3E61372E138EF5FC0008833A /* RFLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E61372C138EF5FC0008833A /* RFLoginViewController.m */; };
 		3E61372F138EF5FC0008833A /* RFLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E61372D138EF5FC0008833A /* RFLoginViewController.xib */; };
+		3E8E01D0139ABC3E004FF697 /* NSDate+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E8E01CF139ABC3E004FF697 /* NSDate+Helper.m */; };
 		3EE0B9BE138FAB8800CF0531 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EE0B9B7138FAB8800CF0531 /* Icon-72.png */; };
 		3EE0B9BF138FAB8800CF0531 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EE0B9B8138FAB8800CF0531 /* Icon-Small-50.png */; };
 		3EE0B9C0138FAB8800CF0531 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EE0B9B9138FAB8800CF0531 /* Icon-Small.png */; };
@@ -1179,6 +1180,8 @@
 		3E61372B138EF5FC0008833A /* RFLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFLoginViewController.h; sourceTree = "<group>"; };
 		3E61372C138EF5FC0008833A /* RFLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFLoginViewController.m; sourceTree = "<group>"; };
 		3E61372D138EF5FC0008833A /* RFLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RFLoginViewController.xib; sourceTree = "<group>"; };
+		3E8E01CE139ABC3E004FF697 /* NSDate+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Helper.h"; sourceTree = "<group>"; };
+		3E8E01CF139ABC3E004FF697 /* NSDate+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Helper.m"; sourceTree = "<group>"; };
 		3EE0B9B7138FAB8800CF0531 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		3EE0B9B8138FAB8800CF0531 /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
 		3EE0B9B9138FAB8800CF0531 /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
@@ -2569,6 +2572,8 @@
 		3EEF29E3138A955400A8E34A /* NSDate */ = {
 			isa = PBXGroup;
 			children = (
+				3E8E01CE139ABC3E004FF697 /* NSDate+Helper.h */,
+				3E8E01CF139ABC3E004FF697 /* NSDate+Helper.m */,
 				3EEF29E4138A955400A8E34A /* NSDateHelper.h */,
 				3EEF29E5138A955400A8E34A /* NSDateHelper.m */,
 			);
@@ -3298,6 +3303,7 @@
 				3E1076CD13997682005E9A09 /* ATMProgressLayer.m in Sources */,
 				3E1076CE13997682005E9A09 /* ATMSoundFX.m in Sources */,
 				3E1076CF13997682005E9A09 /* ATMTextLayer.m in Sources */,
+				3E8E01D0139ABC3E004FF697 /* NSDate+Helper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

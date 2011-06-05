@@ -111,23 +111,6 @@
 									<string key="NSResourceName">artist_container.png</string>
 								</object>
 							</object>
-							<object class="IBUIImageView" id="803341614">
-								<reference key="NSNextResponder" ref="1036014396"/>
-								<int key="NSvFlags">256</int>
-								<string key="NSFrame">{{0, 174}, {268, 51}}</string>
-								<reference key="NSSuperview" ref="1036014396"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="697804145"/>
-								<bool key="IBUIOpaque">NO</bool>
-								<bool key="IBUIClipsSubviews">YES</bool>
-								<int key="IBUIContentMode">4</int>
-								<bool key="IBUIMultipleTouchEnabled">YES</bool>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<object class="NSCustomResource" key="IBUIImage">
-									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">artist_container_shadow.png</string>
-								</object>
-							</object>
 							<object class="IBUITextView" id="820311726">
 								<reference key="NSNextResponder" ref="1036014396"/>
 								<int key="NSvFlags">292</int>
@@ -153,6 +136,23 @@
 								<object class="IBUITextInputTraits" key="IBUITextInputTraits">
 									<int key="IBUIAutocapitalizationType">2</int>
 									<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								</object>
+							</object>
+							<object class="IBUIImageView" id="803341614">
+								<reference key="NSNextResponder" ref="1036014396"/>
+								<int key="NSvFlags">256</int>
+								<string key="NSFrame">{{0, 174}, {268, 51}}</string>
+								<reference key="NSSuperview" ref="1036014396"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="697804145"/>
+								<bool key="IBUIOpaque">NO</bool>
+								<bool key="IBUIClipsSubviews">YES</bool>
+								<int key="IBUIContentMode">4</int>
+								<bool key="IBUIMultipleTouchEnabled">YES</bool>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<object class="NSCustomResource" key="IBUIImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">artist_container_shadow.png</string>
 								</object>
 							</object>
 							<object class="IBUIImageView" id="240632869">
@@ -335,7 +335,6 @@
 						<string key="NSFrame">{{216, 310}, {93, 46}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
@@ -575,13 +574,13 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="1026638620"/>
-							<reference ref="803341614"/>
 							<reference ref="820311726"/>
 							<reference ref="240632869"/>
 							<reference ref="314223119"/>
 							<reference ref="779649343"/>
 							<reference ref="363803932"/>
 							<reference ref="873888779"/>
+							<reference ref="803341614"/>
 						</object>
 						<reference key="parent" ref="191373211"/>
 						<string key="objectName">info View</string>

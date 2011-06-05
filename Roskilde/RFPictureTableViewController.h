@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseRefreshTableViewController.h"
+#import "SVSegmentedControl.h"
+
 
 
 @interface RFPictureTableViewController : BaseRefreshTableViewController {
@@ -18,11 +20,14 @@
 	
 	BOOL showMyPictures;
 	UIImageView *xbg;
+    
+    SVSegmentedControl *filters;
 }
 
 @property (nonatomic, retain) NSMutableArray *entries;
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *spinner;
 @property (nonatomic, assign, getter=isShowMyPictures) BOOL showMyPictures;
 @property (nonatomic, retain) IBOutlet UIImageView *xbg;
+@property (nonatomic, retain) SVSegmentedControl *filters;
 
 @end

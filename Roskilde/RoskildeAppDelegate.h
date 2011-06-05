@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseTabBarController.h"
+#import "NSDate+Helper.h"
 
 @interface RoskildeAppDelegate : NSObject <UIApplicationDelegate, UITabBarControllerDelegate> {
 	UIImageView *scheduleIcon;

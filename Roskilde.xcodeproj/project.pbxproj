@@ -489,6 +489,9 @@
 		3E8E01D0139ABC3E004FF697 /* NSDate+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E8E01CF139ABC3E004FF697 /* NSDate+Helper.m */; };
 		3E96DE41139C18680001C6E3 /* loaderbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E96DE3F139C18680001C6E3 /* loaderbg.png */; };
 		3E96DE42139C18680001C6E3 /* loaderbg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E96DE40139C18680001C6E3 /* loaderbg@2x.png */; };
+		3E96DE45139C2BC50001C6E3 /* pull.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3E96DE43139C2BC50001C6E3 /* pull.caf */; };
+		3E96DE46139C2BC50001C6E3 /* release.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3E96DE44139C2BC50001C6E3 /* release.caf */; };
+		3E96DE48139C2FAF0001C6E3 /* upload_complete.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3E96DE47139C2FAF0001C6E3 /* upload_complete.caf */; };
 		3EE0B9BE138FAB8800CF0531 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EE0B9B7138FAB8800CF0531 /* Icon-72.png */; };
 		3EE0B9BF138FAB8800CF0531 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EE0B9B8138FAB8800CF0531 /* Icon-Small-50.png */; };
 		3EE0B9C0138FAB8800CF0531 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EE0B9B9138FAB8800CF0531 /* Icon-Small.png */; };
@@ -1173,6 +1176,9 @@
 		3E8E01CF139ABC3E004FF697 /* NSDate+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Helper.m"; sourceTree = "<group>"; };
 		3E96DE3F139C18680001C6E3 /* loaderbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loaderbg.png; sourceTree = "<group>"; };
 		3E96DE40139C18680001C6E3 /* loaderbg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loaderbg@2x.png"; sourceTree = "<group>"; };
+		3E96DE43139C2BC50001C6E3 /* pull.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pull.caf; sourceTree = "<group>"; };
+		3E96DE44139C2BC50001C6E3 /* release.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = release.caf; sourceTree = "<group>"; };
+		3E96DE47139C2FAF0001C6E3 /* upload_complete.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = upload_complete.caf; sourceTree = "<group>"; };
 		3EE0B9B7138FAB8800CF0531 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		3EE0B9B8138FAB8800CF0531 /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
 		3EE0B9B9138FAB8800CF0531 /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
@@ -2642,6 +2648,9 @@
 		3EF92FBA138D84A300AFFC2D /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				3E96DE47139C2FAF0001C6E3 /* upload_complete.caf */,
+				3E96DE43139C2BC50001C6E3 /* pull.caf */,
+				3E96DE44139C2BC50001C6E3 /* release.caf */,
 				3EF92FBB138D84A300AFFC2D /* tick.aiff */,
 			);
 			path = Sounds;
@@ -3132,6 +3141,9 @@
 				3E1076D913997C71005E9A09 /* altnavbar@2x.png in Resources */,
 				3E96DE41139C18680001C6E3 /* loaderbg.png in Resources */,
 				3E96DE42139C18680001C6E3 /* loaderbg@2x.png in Resources */,
+				3E96DE45139C2BC50001C6E3 /* pull.caf in Resources */,
+				3E96DE46139C2BC50001C6E3 /* release.caf in Resources */,
+				3E96DE48139C2FAF0001C6E3 /* upload_complete.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3517,12 +3529,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: icelantern";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Roskilde/Roskilde-Prefix.pch";
 				INFOPLIST_FILE = "Roskilde/Roskilde-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "99EE1C50-B26A-4B2D-9096-8464C0375298";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};

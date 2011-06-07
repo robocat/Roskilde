@@ -188,6 +188,11 @@
 			if (statusCode == 200 || statusCode == 201) {
 				[RFGlobal saveUsername:self.username password:self.password];
 				[[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedIn object:nil];
+                
+                if (self.navigationController) {
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
+                
 				[self.parentViewController dismissModalViewControllerAnimated:YES];
 			}
 			else {

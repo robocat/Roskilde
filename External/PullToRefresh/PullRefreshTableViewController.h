@@ -28,6 +28,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AudioToolbox/AudioServices.h>
 
 
 @interface PullRefreshTableViewController : UITableViewController {
@@ -40,6 +41,9 @@
     NSString *textPull;
     NSString *textRelease;
     NSString *textLoading;
+    
+    SystemSoundID pullSound;
+    SystemSoundID releaseSound;
 }
 
 @property (nonatomic, retain) UIView *refreshHeaderView;

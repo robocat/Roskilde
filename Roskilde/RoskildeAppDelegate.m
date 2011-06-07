@@ -46,6 +46,12 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(createProfile) 
 												 name:kPromptCreateProfile object:nil];
     
+    
+    NSUserDefaults *userDefauls = [NSUserDefaults standardUserDefaults];
+	[userDefauls setObject:@"roskildelabs" forKey:kUserDefaultsUsername];
+	[userDefauls setObject:@"roskildelabs" forKey:kUserDefaultsPassword];
+	[userDefauls synchronize];
+    
 	
 	// Custom tabbar icons
 	self.scheduleIcon = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"schedule_icon_active.png"]] autorelease];

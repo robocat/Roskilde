@@ -28,6 +28,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AudioToolbox/AudioServices.h>
 
 @protocol PullToRefreshViewDelegate;
 
@@ -48,6 +49,9 @@
     NSString *textLoading;
     
     UITableView *_tableView;
+    
+    SystemSoundID pullSound;
+    SystemSoundID releaseSound;
 }
 
 @property (nonatomic, readonly) UITableView *tableView;

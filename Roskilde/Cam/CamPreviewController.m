@@ -174,6 +174,8 @@
 	self.locationManager = [[[CLLocationManager alloc] init] autorelease];
 	self.locationManager.delegate = self;
 	[self.locationManager startUpdatingLocation];
+    
+    AudioServicesCreateSystemSoundID((CFURLRef)[NSURL fileURLWithPath: [[NSBundle mainBundle] pathForResource:@"upload_complete" ofType:@"caf"]], &uploadCompleteSound);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -411,6 +413,9 @@
 //			[waitView removeFromSuperview];
 			[hud.view removeFromSuperview];
 			[hud release];
+            
+            AudioServicesPlaySystemSound(uploadCompleteSound);
+            
 			[self back:self];
 		}];
 	}];

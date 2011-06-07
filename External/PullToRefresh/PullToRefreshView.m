@@ -70,6 +70,11 @@
         [self addSubview:refreshLabel];
 //        [self addSubview:refreshArrow];
         [self addSubview:refreshSpinner];
+        
+        
+        AudioServicesCreateSystemSoundID((CFURLRef)[NSURL fileURLWithPath: [[NSBundle mainBundle] pathForResource:@"pull" ofType:@"caf"]], &pullSound);
+        
+        AudioServicesCreateSystemSoundID((CFURLRef)[NSURL fileURLWithPath: [[NSBundle mainBundle] pathForResource:@"release" ofType:@"caf"]], &releaseSound);
     }
     
     return self;
@@ -144,6 +149,8 @@
             [refreshArrow layer].transform = CATransform3DMakeRotation(M_PI * 2, 0, 0, 1);
         }
         [UIView commitAnimations];
+        
+        AudioServicesPlaySystemSound(pullSound);
     }
 }
 
@@ -153,6 +160,8 @@
     if (scrollView.contentOffset.y <= -REFRESH_HEADER_HEIGHT) {
         // Released above the header
         [self startLoading];
+        
+        AudioServicesPlaySystemSound(releaseSound);
     }
 }
 

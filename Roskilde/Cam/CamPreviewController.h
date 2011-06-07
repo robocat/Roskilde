@@ -10,6 +10,9 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 #import "RKCustomNavigationBar.h"
+#import <AudioToolbox/AudioServices.h>
+
+
 
 @class CamPreviewController;
 
@@ -24,6 +27,8 @@
 @interface CamPreviewController : UIViewController <UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, MKReverseGeocoderDelegate> {
 	NSUInteger selectedIndex;
 	NSString *replyTo;
+    
+    SystemSoundID uploadCompleteSound;
 }
 
 @property (nonatomic, retain) IBOutlet UIView *uploadView;

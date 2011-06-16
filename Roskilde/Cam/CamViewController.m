@@ -46,6 +46,22 @@
 @synthesize replyTo;
 
 
+- (void)dealloc {
+	AudioServicesDisposeSystemSoundID(tickSound);
+	
+	[takePhotoButton release];
+	[timerView release];
+	[timerIcon release];
+	[libraryButton release];
+	[timerButton release];
+	[flipButton release];
+	
+	self.replyTo = nil;
+	
+	[super dealloc];
+}
+
+
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
@@ -77,7 +93,10 @@
 		self.view.userInteractionEnabled = YES;
 	}];
 	
-	[[NSNotificationCenter defaultCenter] addObserverForName:@"UIDeviceOrientationDidChangeNotification" object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *lol) {
+	[[NSNotificationCenter defaultCenter] addObserverForName:@"UIDeviceOrientationDidChangeNotification"
+                                                      object:nil
+                                                       queue:[NSOperationQueue mainQueue]
+                                                  usingBlock:^(NSNotification *lol) {
 		[self rotateInterfaceToOrientation:[UIDevice currentDevice].orientation animated:YES];
 	}];
 	
@@ -89,6 +108,22 @@
 	self.flashLabel.text = @"auto";
 	self.flashLabel.textAlignment = UITextAlignmentCenter;
 	[self.flashButton addSubview:self.flashLabel];
+}
+
+
+- (void)viewDidUnload {
+	[self setTakePhotoButton:nil];
+	[self setTimerView:nil];
+	[self setTimerIcon:nil];
+	[self setLibraryButton:nil];
+	[self setTimerButton:nil];
+	[self setFlipButton:nil];
+	[super viewDidUnload];
+	
+	self.camview = nil;
+	self.camdevice = nil;
+	self.slideView = nil;
+	self.thumbnailView = nil;
 }
 
 
@@ -118,6 +153,39 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
 	self.camdevice = nil;
+}
+
+
+- (void)rotateInterfaceToOrientation:(UIDeviceOrientation)orientation animated:(BOOL)animated {
+	void (^changeBlock)(void) = ^{
+		CGFloat rotation = (orientation == UIInterfaceOrientationPortrait? 0:
+							orientation == UIInterfaceOrientationPortraitUpsideDown? M_PI:
+							orientation == UIInterfaceOrientationLandscapeLeft? -M_PI_2:
+							orientation == UIInterfaceOrientationLandscapeRight? M_PI_2: 0);
+		self.libraryButton.transform = CGAffineTransformMakeRotation(rotation);
+		self.timerButton.transform = CGAffineTransformMakeRotation(rotation);
+		self.flipButton.transform = CGAffineTransformMakeRotation(rotation);
+		self.flashButton.transform = CGAffineTransformMakeRotation(rotation);
+		
+		if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
+			self.flipButton.frame = CGRectMake(271, 20, 31, 60);
+			self.flashButton.frame = CGRectMake(20, 20, 31, 60);
+		} else {
+			self.flipButton.frame = CGRectMake(240, 20, 60, 31);
+			self.flashButton.frame = CGRectMake(20, 20, 60, 31);
+		}
+	};
+	
+	if (animated) {
+		[UIView animateWithDuration:0.3 animations:changeBlock];
+	} else {
+		changeBlock();
+	}
+}
+
+
+- (void)didRotateToInterfaceOrientation:(UIDeviceOrientation)orientation {
+	[self rotateInterfaceToOrientation:orientation animated:YES];
 }
 
 
@@ -193,11 +261,11 @@
 	[self.camdevice takePhotoWithCompletionHandler:^(UIImage *image) {
 		[flash removeFromSuperview];
 		
-		UIImage *fixedImage = [image imageByScalingToSize:image.size];
+//		UIImage *fixedImage = [image imageByScalingToSize:image.size];
 		
-		[UIImagePNGRepresentation(fixedImage) writeToFile:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingString:@"/lol.jpg"] atomically:YES];
+//		[UIImagePNGRepresentation(fixedImage) writeToFile:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingString:@"/lol.jpg"] atomically:YES];
 		
-		[self.thumbnailView addThumbnail:fixedImage];
+		[self.thumbnailView addThumbnail:image];
 		
 		[takePhotoButton setImage:[UIImage imageNamed:@"camera.png"] forState:UIControlStateNormal];
 		takePhotoButton.userInteractionEnabled = YES;
@@ -272,39 +340,6 @@
 }
 
 
-- (void)rotateInterfaceToOrientation:(UIDeviceOrientation)orientation animated:(BOOL)animated {
-	void (^changeBlock)(void) = ^{
-		CGFloat rotation = (orientation == UIInterfaceOrientationPortrait? 0:
-							orientation == UIInterfaceOrientationPortraitUpsideDown? M_PI:
-							orientation == UIInterfaceOrientationLandscapeLeft? -M_PI_2:
-							orientation == UIInterfaceOrientationLandscapeRight? M_PI_2: 0);
-		self.libraryButton.transform = CGAffineTransformMakeRotation(rotation);
-		self.timerButton.transform = CGAffineTransformMakeRotation(rotation);
-		self.flipButton.transform = CGAffineTransformMakeRotation(rotation);
-		self.flashButton.transform = CGAffineTransformMakeRotation(rotation);
-		
-		if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
-			self.flipButton.frame = CGRectMake(271, 20, 31, 60);
-			self.flashButton.frame = CGRectMake(20, 20, 31, 60);
-		} else {
-			self.flipButton.frame = CGRectMake(240, 20, 60, 31);
-			self.flashButton.frame = CGRectMake(20, 20, 60, 31);
-		}
-	};
-	
-	if (animated) {
-		[UIView animateWithDuration:0.3 animations:changeBlock];
-	} else {
-		changeBlock();
-	}
-}
-
-
-- (void)didRotateToInterfaceOrientation:(UIDeviceOrientation)orientation {
-	[self rotateInterfaceToOrientation:orientation animated:YES];
-}
-
-
 - (void)ThumbnailViewThumbnailPressed:(NSUInteger)index {
 	CamPreviewController *previewController = [[CamPreviewController alloc] initWithImages:thumbnailView.allThumbnails selectedIndex:index];
 	previewController.replyTo = self.replyTo;
@@ -321,22 +356,6 @@
 
 - (void)CamPreview:(CamPreviewController*)camPreview didSucceedUploadingIndex:(int)index {
 	[self.thumbnailView removeThumbnailAtIndex:index];
-}
-
-
-- (void)viewDidUnload {
-	[self setTakePhotoButton:nil];
-	[self setTimerView:nil];
-	[self setTimerIcon:nil];
-	[self setLibraryButton:nil];
-	[self setTimerButton:nil];
-	[self setFlipButton:nil];
-	[super viewDidUnload];
-	
-	self.camview = nil;
-	self.camdevice = nil;
-	self.slideView = nil;
-	self.thumbnailView = nil;
 }
 
 
@@ -366,20 +385,5 @@
 	[self dismissModalViewControllerAnimated:YES];
 }
 
-
-- (void)dealloc {
-	AudioServicesDisposeSystemSoundID(tickSound);
-	
-	[takePhotoButton release];
-	[timerView release];
-	[timerIcon release];
-	[libraryButton release];
-	[timerButton release];
-	[flipButton release];
-	
-	self.replyTo = nil;
-	
-	[super dealloc];
-}
 
 @end

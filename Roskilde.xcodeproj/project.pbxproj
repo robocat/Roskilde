@@ -486,6 +486,7 @@
 		3E61372A138EF2120008833A /* RFCreateProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E613728138EF2120008833A /* RFCreateProfileViewController.xib */; };
 		3E61372E138EF5FC0008833A /* RFLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E61372C138EF5FC0008833A /* RFLoginViewController.m */; };
 		3E61372F138EF5FC0008833A /* RFLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E61372D138EF5FC0008833A /* RFLoginViewController.xib */; };
+		3E71D6C1139FF529000661CA /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E71D6C0139FF529000661CA /* libz.1.2.5.dylib */; };
 		3E8E01D0139ABC3E004FF697 /* NSDate+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E8E01CF139ABC3E004FF697 /* NSDate+Helper.m */; };
 		3E96DE41139C18680001C6E3 /* loaderbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E96DE3F139C18680001C6E3 /* loaderbg.png */; };
 		3E96DE42139C18680001C6E3 /* loaderbg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E96DE40139C18680001C6E3 /* loaderbg@2x.png */; };
@@ -527,7 +528,6 @@
 		3EEF29FB138A958100A8E34A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EEF29FA138A958000A8E34A /* CFNetwork.framework */; };
 		3EEF29FD138A958800A8E34A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EEF29FC138A958800A8E34A /* SystemConfiguration.framework */; };
 		3EEF29FF138A958F00A8E34A /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EEF29FE138A958F00A8E34A /* MobileCoreServices.framework */; };
-		3EEF2A01138A95A100A8E34A /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EEF2A00138A95A100A8E34A /* libz.1.2.3.dylib */; };
 		3EEF2A03138A95AF00A8E34A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EEF2A02138A95AF00A8E34A /* QuartzCore.framework */; };
 		3EEF2A0D138AA05400A8E34A /* RFModelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF2A0C138AA05400A8E34A /* RFModelController.m */; };
 		3EEF2A15138AA0D500A8E34A /* NSManagedObjectContext+UpdateEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF2A10138AA0D500A8E34A /* NSManagedObjectContext+UpdateEntity.m */; };
@@ -1172,6 +1172,7 @@
 		3E61372B138EF5FC0008833A /* RFLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFLoginViewController.h; sourceTree = "<group>"; };
 		3E61372C138EF5FC0008833A /* RFLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFLoginViewController.m; sourceTree = "<group>"; };
 		3E61372D138EF5FC0008833A /* RFLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RFLoginViewController.xib; sourceTree = "<group>"; };
+		3E71D6C0139FF529000661CA /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		3E8E01CE139ABC3E004FF697 /* NSDate+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Helper.h"; sourceTree = "<group>"; };
 		3E8E01CF139ABC3E004FF697 /* NSDate+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Helper.m"; sourceTree = "<group>"; };
 		3E96DE3F139C18680001C6E3 /* loaderbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loaderbg.png; sourceTree = "<group>"; };
@@ -1238,7 +1239,6 @@
 		3EEF29FA138A958000A8E34A /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		3EEF29FC138A958800A8E34A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3EEF29FE138A958F00A8E34A /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		3EEF2A00138A95A100A8E34A /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = usr/lib/libz.1.2.3.dylib; sourceTree = SDKROOT; };
 		3EEF2A02138A95AF00A8E34A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3EEF2A0B138AA05400A8E34A /* RFModelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFModelController.h; sourceTree = "<group>"; };
 		3EEF2A0C138AA05400A8E34A /* RFModelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFModelController.m; sourceTree = "<group>"; };
@@ -1319,6 +1319,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E71D6C1139FF529000661CA /* libz.1.2.5.dylib in Frameworks */,
 				3E1076BB139962FE005E9A09 /* Security.framework in Frameworks */,
 				3E1075C613994D9D005E9A09 /* MessageUI.framework in Frameworks */,
 				3EE0BA05138FCFC400CF0531 /* ImageIO.framework in Frameworks */,
@@ -1331,7 +1332,6 @@
 				3EF92FA3138D80FC00AFFC2D /* AVFoundation.framework in Frameworks */,
 				3EEF2A19138AA0E000A8E34A /* CoreData.framework in Frameworks */,
 				3EEF2A03138A95AF00A8E34A /* QuartzCore.framework in Frameworks */,
-				3EEF2A01138A95A100A8E34A /* libz.1.2.3.dylib in Frameworks */,
 				3EEF29FF138A958F00A8E34A /* MobileCoreServices.framework in Frameworks */,
 				3EEF29FD138A958800A8E34A /* SystemConfiguration.framework in Frameworks */,
 				3EEF29FB138A958100A8E34A /* CFNetwork.framework in Frameworks */,
@@ -2149,6 +2149,7 @@
 		3E5F0AEA1385B5F400555871 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3E71D6C0139FF529000661CA /* libz.1.2.5.dylib */,
 				3E1076BA139962FD005E9A09 /* Security.framework */,
 				3E1075C513994D9D005E9A09 /* MessageUI.framework */,
 				3EE0BA04138FCFC300CF0531 /* ImageIO.framework */,
@@ -2161,7 +2162,6 @@
 				3EF92FA2138D80FB00AFFC2D /* AVFoundation.framework */,
 				3EEF2A18138AA0E000A8E34A /* CoreData.framework */,
 				3EEF2A02138A95AF00A8E34A /* QuartzCore.framework */,
-				3EEF2A00138A95A100A8E34A /* libz.1.2.3.dylib */,
 				3EEF29FE138A958F00A8E34A /* MobileCoreServices.framework */,
 				3EEF29FC138A958800A8E34A /* SystemConfiguration.framework */,
 				3EEF29FA138A958000A8E34A /* CFNetwork.framework */,

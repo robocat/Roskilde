@@ -9,7 +9,9 @@
 #import "RFRobocatViewController.h"
 #import "RKCustomNavigationBar.h"
 #import "SVWebViewController.h"
-
+#import "ASIHTTPRequest.h"
+#import "ASIDownloadCache.h"
+#import "JSONKit.h"
 
 
 @implementation RFRobocatViewController
@@ -22,6 +24,7 @@
 @synthesize artistLabel;
 @synthesize playtimeLabel;
 @synthesize descriptionTextView;
+@synthesize msgLabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -43,6 +46,7 @@
 	[infoView release];
 	
 	[descriptionTextView release];
+	[msgLabel release];
     [super dealloc];
 }
 
@@ -71,12 +75,12 @@
 	//	self.infoView.frame = CGRectMake(-frame.size.width, 40.0, frame.size.width, frame.size.height);
 	self.infoView.frame = CGRectMake(0.0, 258.0, frame.size.width, frame.size.height);
 	
+	self.msgLabel.frame = CGRectMake(0.0, -32.0, 320.0, 32.0);
 	
 	// Artist label
 	self.artistLabel.text = @"Robocat";
 	self.descriptionTextView.text = @"hej";
 	self.playtimeLabel.text = @"hello";
-	
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -84,6 +88,7 @@
     [super viewDidAppear:animated];
 	
 	[self performSelector:@selector(showInfoView) withObject:nil afterDelay:0.0];
+	[self performSelector:@selector(fetchMessage) withObject:nil afterDelay:0.0];
 }
 
 - (void)viewDidUnload
@@ -96,6 +101,7 @@
 	[self setPlaytimeLabel:nil];
 	[self setInfoView:nil];
 	[self setDescriptionTextView:nil];
+	[self setMsgLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -147,8 +153,7 @@
 
 
 - (IBAction) starButtonPressed:(id)sender {
-	NSString *templateReviewURL = @"https://userpub.itunes.apple.com/WebObjects/MZUserPublishing.woa/wa/addUserReview?id=APP_ID&type=Purple+Software";
-	NSString *reviewURL = [templateReviewURL stringByReplacingOccurrencesOfString:@"APP_ID" withString:[NSString stringWithFormat:@"%d", 378065061]];
+	NSString *reviewURL = @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=378065061";
 	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:reviewURL]];
 }
 
@@ -160,7 +165,7 @@
 
 
 - (IBAction) itunesButtonPressed:(id)sender {
-	NSString *appsURL = @"http://itunes.com/apps/robocat";
+	NSString *appsURL = @"itms-apps://itunes.com/apps/robocat";
 	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:appsURL]];
 }
 
@@ -170,5 +175,48 @@
 			constrainedToSize:CGSizeMake(width, FLT_MAX) 
 				lineBreakMode:lineBreakMode];
 }
+
+
+- (void)fetchMessage {
+	NSString *urlString = [NSString stringWithFormat:@"%@/msgfromrobocat", kXdkAPIBaseUrl];
+	NSURL *url = [NSURL URLWithString:urlString];
+	__block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    
+    // Disabling secure certificate validation
+    [request setValidatesSecureCertificate:NO];
+    
+	[request setDownloadCache:[ASIDownloadCache sharedCache]];
+	[request setCachePolicy:ASIAskServerIfModifiedCachePolicy|ASIFallbackToCacheIfLoadFailsCachePolicy];
+	[request setCacheStoragePolicy:ASICachePermanentlyCacheStoragePolicy];
+	[request setSecondsToCache:3600];
+	
+	[request setCompletionBlock:^{
+		// Use when fetching text data
+		NSString *responseString = [request responseString];
+		
+		// JSONKit parse
+		id parsedData = [responseString objectFromJSONString];
+		
+		NSString *msg = [parsedData objectForKey:@"msg"];
+		
+		if (![msg isEqualToString:@""]) {
+			self.msgLabel.text = msg;
+			
+			[UIView animateWithDuration:0.1 animations:^(void) {
+				self.msgLabel.frame = CGRectMake(0.0, 0.0, 320.0, 32.0);
+			} completion:^(BOOL finished) {
+			}];
+		}
+		else {
+			self.msgLabel.frame = CGRectMake(0.0, -32.0, 320.0, 32.0);
+		}
+	}];
+	[request setFailedBlock:^{
+		NSError *error = [request error];
+		NSLog(@"error: %@", error);
+	}];
+	[request startAsynchronous];
+}
+
 
 @end

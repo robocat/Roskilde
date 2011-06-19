@@ -189,9 +189,9 @@
 				[RFGlobal saveUsername:self.username password:self.password];
 				[[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedIn object:nil];
                 
-                if (self.navigationController) {
-                    [self.navigationController popViewControllerAnimated:YES];
-                }
+//                if (self.navigationController) {
+//                    [self.navigationController popViewControllerAnimated:YES];
+//                }
                 
 				[self.parentViewController dismissModalViewControllerAnimated:YES];
 			}
@@ -205,7 +205,7 @@
 			NSLog(@"error: %@", error);
 			
 			// Show alert
-			[[[[UIAlertView alloc] initWithTitle:@"Login Failed" message:@"Login info incorrect" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
+			[[[[UIAlertView alloc] initWithTitle:@"Connection Failed" message:@"Your internet connection is weak. Have another beer, move around and try again." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
 		}];
 			
 		[request startAsynchronous];

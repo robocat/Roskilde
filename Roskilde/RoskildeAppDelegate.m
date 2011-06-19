@@ -42,15 +42,21 @@
 	
 	application.applicationIconBadgeNumber = 0;
 	
+	// Handle launching from a notification
+	UILocalNotification *localNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
+    if (localNotif) {
+		NSLog(@"Recieved Notification %@", localNotif);
+	}
+	
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(createProfile) 
 												 name:kPromptCreateProfile object:nil];
     
     
-    NSUserDefaults *userDefauls = [NSUserDefaults standardUserDefaults];
-	[userDefauls setObject:@"roskildelabs" forKey:kUserDefaultsUsername];
-	[userDefauls setObject:@"roskildelabs" forKey:kUserDefaultsPassword];
-	[userDefauls synchronize];
+//    NSUserDefaults *userDefauls = [NSUserDefaults standardUserDefaults];
+//	[userDefauls setObject:@"roskildelabs" forKey:kUserDefaultsUsername];
+//	[userDefauls setObject:@"roskildelabs" forKey:kUserDefaultsPassword];
+//	[userDefauls synchronize];
     
 	
 	// Custom tabbar icons
@@ -76,18 +82,19 @@
 	[self.tabBarController.tabBar bringSubviewToFront:self.scheduleIcon];
 	
 	[self performSelector:@selector(showSplash)];
-	
-	NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithContentsOfFile:[PREF_FOLDER stringByAppendingPathComponent:@"com.apple.Preferences.plist"]];
-	[dict setObject:[NSNumber numberWithBool:YES] forKey:@"KeyboardEmojiEverywhere"];
-	[dict writeToFile:[PREF_FOLDER stringByAppendingPathComponent:@"com.apple.Preferences.plist"] atomically:NO];
-	[dict release];
-	
-//	[self performSelector:@selector(importMusicData) withObject:nil afterDelay:0.0];
-	[self importMusicData];
+		
+	[self performSelector:@selector(importMusicData) withObject:nil afterDelay:0.0];
 	[LocationManager loadLocationData];
 	
     return YES;
 }
+
+- (void)application:(UIApplication *)app didReceiveLocalNotification:(UILocalNotification *)notif {
+	// Handle the notificaton when the app is running
+//	NSLog(@"Did recieve Notification %@",notif);
+	[[[[UIAlertView alloc] initWithTitle:nil message:notif.alertBody delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
@@ -103,6 +110,8 @@
 	 Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
 	 If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 	 */
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:kAppEnterBackground object:nil];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -236,70 +245,67 @@
 				TBXMLElement * concert = [TBXML childElementNamed:@"Concert" parentElement:root];
 				
 				while (concert != nil) {
-					
-					RFMusic *music = [modelController newMusic]; // retained
-					
-					
-					NSString * name = [TBXML valueOfAttributeNamed:@"artist" forElement:concert];
-					
-					music.artist			= [name stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
-					music.artistId			= [TBXML valueOfAttributeNamed:@"id" forElement:concert];
-					music.artistInitial		= [TBXML valueOfAttributeNamed:@"artist_initial" forElement:concert];
-                    
-                    NSDate *beginDate       = [NSDate dateWithISO8601String:[TBXML valueOfAttributeNamed:@"begin_timestamp" forElement:concert]];
-                    
-                    music.beginDate         = beginDate;
-                    
-                    NSDate *beginDateTime   = [NSDate dateWithDateTimeString:[NSString stringWithFormat:@"%@ 06:00:00", [beginDate dateOnlyString]]];
-                    NSDate *endDateTime     = [beginDateTime dateByAddingDays:1];
-                    BOOL between            = [beginDate isBetweenDate:beginDateTime andDate:endDateTime];
-                    
-                    
-                    if (!between) {
-                        beginDate           = [beginDate dateByAddingDays:-1];
-                    }
+					NSDate *beginDate      = [NSDate dateWithISO8601String:[TBXML valueOfAttributeNamed:@"begin_timestamp" forElement:concert]];
                     
                     if (beginDate) {
-                        music.beginDateString     = [beginDate dateOnlyString];
+						RFMusic2011 *music = [modelController newMusic]; // retained
+						
+                        music.beginDateString     = [beginDate formattedDateWithFormatString:@"MM-dd"]; //EEEE, 
+						
+						music.beginDate         = beginDate;
+						
+						NSString * name = [TBXML valueOfAttributeNamed:@"artist" forElement:concert];
+						
+						music.artist			= [name stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
+						music.artistId			= [TBXML valueOfAttributeNamed:@"id" forElement:concert];
+						music.artistInitial		= [TBXML valueOfAttributeNamed:@"artist_initial" forElement:concert];
+						
+						music.country			= [TBXML valueOfAttributeNamed:@"country" forElement:concert];
+						music.isFavoriteValue	= NO;
+						
+						
+						NSString * descriptionText = [TBXML valueOfAttributeNamed:@"description" forElement:concert];
+						
+						music.descriptionText	= [[descriptionText stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"] stringByReplacingOccurrencesOfString:@"&quot;" withString:@"&\""];
+						
+						int duration			= [[TBXML valueOfAttributeNamed:@"duration" forElement:concert] intValue];
+						
+						if (duration > 300) duration = 180;
+						
+						music.durationValue		= duration;
+						music.endDate			= [NSDate dateWithISO8601String:[TBXML valueOfAttributeNamed:@"end_timestamp" forElement:concert]];
+						
+						NSString *genre			= [TBXML valueOfAttributeNamed:@"genre" forElement:concert];
+						music.genre				= ([genre isEqualToString:@""]) ? @"#" : genre;
+						music.imageThumbUrl		= [TBXML valueOfAttributeNamed:@"thumb_url" forElement:concert];
+						music.imageUrl			= [TBXML valueOfAttributeNamed:@"image_url" forElement:concert];
+						music.itunes			= [TBXML valueOfAttributeNamed:@"itunes" forElement:concert];
+						music.link				= [TBXML valueOfAttributeNamed:@"link" forElement:concert];
+						music.scene				= [TBXML valueOfAttributeNamed:@"scene" forElement:concert];
+						music.title				= [TBXML valueOfAttributeNamed:@"title" forElement:concert];
+						music.web				= [TBXML valueOfAttributeNamed:@"web" forElement:concert];
+						// updatedDate
+						
+						
+						[music release];
                     }
                     else {
-                        music.beginDateString     = @"";
+//                        music.beginDateString     = @"";
                     }
-                    
-                    
-					music.country			= [TBXML valueOfAttributeNamed:@"country" forElement:concert];
-					music.isFavoriteValue	= NO;
-					
-					
-					NSString * descriptionText = [TBXML valueOfAttributeNamed:@"description" forElement:concert];
-					
-					music.descriptionText	= [[descriptionText stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"] stringByReplacingOccurrencesOfString:@"&quot;" withString:@"&\""];
-					music.durationValue		= [[TBXML valueOfAttributeNamed:@"duration" forElement:concert] intValue];
-					music.endDate			= [NSDate dateWithISO8601String:[TBXML valueOfAttributeNamed:@"end_timestamp" forElement:concert]];
-					music.genre				= [TBXML valueOfAttributeNamed:@"genre" forElement:concert];
-					music.imageThumbUrl		= [TBXML valueOfAttributeNamed:@"thumb_url" forElement:concert];
-					music.imageUrl			= [TBXML valueOfAttributeNamed:@"image_url" forElement:concert];
-					music.itunes			= [TBXML valueOfAttributeNamed:@"itunes" forElement:concert];
-					music.link				= [TBXML valueOfAttributeNamed:@"link" forElement:concert];
-					music.scene				= [TBXML valueOfAttributeNamed:@"scene" forElement:concert];
-					music.title				= [TBXML valueOfAttributeNamed:@"title" forElement:concert];
-					music.web				= [TBXML valueOfAttributeNamed:@"web" forElement:concert];
-					// updatedDate
-					
-					
-					[music release];
 					
 					// find the next sibling element named "author"
 					concert = [TBXML nextSiblingNamed:@"Concert" searchFromElement:concert];
 				}
 				
-				// release resources
-				[tbxml release];
-				
 				[modelController save];
 			}
+			
+			// release resources
+			[tbxml release];
 		}
 //	});
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:kMusicDataImported object:nil];
 }
 
 

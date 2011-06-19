@@ -52,6 +52,7 @@
     
     SystemSoundID pullSound;
     SystemSoundID releaseSound;
+	BOOL	isPullSoundPlayed;
 }
 
 @property (nonatomic, readonly) UITableView *tableView;

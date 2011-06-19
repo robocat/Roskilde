@@ -274,7 +274,11 @@ BOOL SHKinit;
 		switch (type) 
 		{
 			case SHKShareTypeURL:
-				favoriteSharers = [NSArray arrayWithObjects:@"SHKTwitter",@"SHKFacebook",@"SHKReadItLater",nil];
+				favoriteSharers = [NSArray arrayWithObjects:@"SHKTwitter",@"SHKFacebook",@"SHKMail",nil];
+				break;
+			
+			case SHKShareTypeImageURL:
+				favoriteSharers = [NSArray arrayWithObjects:@"SHKTwitter",@"SHKFacebook",@"SHKMail",nil];
 				break;
 				
 			case SHKShareTypeImage:

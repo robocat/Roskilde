@@ -185,7 +185,7 @@
 
 - (void)show
 {
-	if (item.shareType == SHKShareTypeURL)
+	if (item.shareType == SHKShareTypeURL || item.shareType == SHKShareTypeImageURL)
 	{
 		[self shortenURL];
 	}
@@ -230,26 +230,26 @@
 
 - (void)shortenURL
 {	
-	if (![SHK connected])
-	{
+//	if (![SHK connected])
+//	{
 		[item setCustomValue:[NSString stringWithFormat:@"%@ %@", item.title, [item.URL.absoluteString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] forKey:@"status"];
 		[self showTwitterForm];		
 		return;
-	}
-	
-	if (!quiet)
-		[[SHKActivityIndicator currentIndicator] displayActivity:SHKLocalizedString(@"Shortening URL...")];
-	
-	self.request = [[[SHKRequest alloc] initWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"http://api.bit.ly/v3/shorten?login=%@&apikey=%@&longUrl=%@&format=txt",
-																		 SHKBitLyLogin,
-																		  SHKBitLyKey,																		  
-																		  SHKEncodeURL(item.URL)
-																		 ]]
-											params:nil
-										  delegate:self
-								isFinishedSelector:@selector(shortenURLFinished:)
-											method:@"GET"
-										  autostart:YES] autorelease];
+//	}
+//	
+//	if (!quiet)
+//		[[SHKActivityIndicator currentIndicator] displayActivity:SHKLocalizedString(@"Shortening URL...")];
+//	
+//	self.request = [[[SHKRequest alloc] initWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"http://api.bit.ly/v3/shorten?login=%@&apikey=%@&longUrl=%@&format=txt",
+//																		 SHKBitLyLogin,
+//																		  SHKBitLyKey,																		  
+//																		  SHKEncodeURL(item.URL)
+//																		 ]]
+//											params:nil
+//										  delegate:self
+//								isFinishedSelector:@selector(shortenURLFinished:)
+//											method:@"GET"
+//										  autostart:YES] autorelease];
 }
 
 - (void)shortenURLFinished:(SHKRequest *)aRequest

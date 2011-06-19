@@ -22,7 +22,6 @@
 			<string>IBUINavigationBar</string>
 			<string>IBUINavigationItem</string>
 			<string>IBUITabBarItem</string>
-			<string>IBUIBarButtonItem</string>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -105,13 +104,6 @@
 						<object class="IBUIViewController" id="635702757">
 							<object class="IBUINavigationItem" key="IBUINavigationItem" id="82011565">
 								<string key="IBUITitle">Schedule</string>
-								<object class="IBUIBarButtonItem" key="IBUILeftBarButtonItem" id="17572212">
-									<bool key="IBUIEnabled">NO</bool>
-									<string key="IBUITitle">Today</string>
-									<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-									<int key="IBUIStyle">1</int>
-									<reference key="IBUINavigationItem" ref="82011565"/>
-								</object>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
 							<reference key="IBUIParentViewController" ref="848355863"/>
@@ -402,7 +394,6 @@
 						<reference key="object" ref="82011565"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="17572212"/>
 						</object>
 						<reference key="parent" ref="635702757"/>
 					</object>
@@ -531,11 +522,6 @@
 						<reference key="object" ref="419948005"/>
 						<reference key="parent" ref="189415422"/>
 					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">156</int>
-						<reference key="object" ref="17572212"/>
-						<reference key="parent" ref="82011565"/>
-					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -574,7 +560,6 @@
 					<string>153.IBPluginDependency</string>
 					<string>154.CustomClassName</string>
 					<string>154.IBPluginDependency</string>
-					<string>156.IBPluginDependency</string>
 					<string>2.IBAttributePlaceholdersKey</string>
 					<string>2.IBEditorWindowLastContentRect</string>
 					<string>2.IBPluginDependency</string>
@@ -614,7 +599,6 @@
 					<string>RFRobocatViewController</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>RKCustomNavigationBar</string>
-					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSMutableDictionary">
 						<bool key="EncodedWithXMLCoder">YES</bool>

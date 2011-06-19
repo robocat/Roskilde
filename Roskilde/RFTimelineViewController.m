@@ -9,11 +9,12 @@
 #import "RFTimelineViewController.h"
 #import "RFModelController.h"
 #import "NSDateHelper.h"
+#import "NSDate+Helper.h"
 #import "RFConcertDetailViewController.h"
 
 @interface ConcertButton : UIButton 
 
-@property (nonatomic, retain) RFMusic *music;
+@property (nonatomic, retain) RFMusic2011 *music;
 
 @end
 
@@ -35,6 +36,15 @@
 @synthesize fetchedResultsController;
 @synthesize navigationController;
 @synthesize currentDate;
+@synthesize redline;
+
+- (void)dealloc {
+	[currentDate release];
+	[redline release];
+	
+    [super dealloc];
+}
+
 
 #pragma mark - View lifecycle
 
@@ -69,17 +79,19 @@
 
 - (CGFloat) yForVenue:(NSString *)venue {
 	if ([venue isEqualToString:@"Pavilion Junior"]) {
-		return 25;
+		return 245;
 	} else if ([venue isEqualToString:@"Pavilion"]) {
-		return 25;
+		return 245;
 	} else if ([venue isEqualToString:@"Odeon"]) {
-		return 80;
+		return 190;
 	} else if ([venue isEqualToString:@"Cosmopol"]) {
 		return 135;
 	} else if ([venue isEqualToString:@"Arena"]) {
-		return 190;
+		return 80;
+	} else if ([venue isEqualToString:@"Orange"]) {
+		return 25;
 	} else {
-		return 245;
+		return 900;
 	}
 }
 
@@ -95,56 +107,79 @@
 
 - (void)changeDate:(NSDate*)newDate {
 	self.currentDate = newDate;
+	self.redline = nil;
 	
 	[self clearTimeLine];
 	[self drawTimeLine];
 }
 
+- (CGFloat) widthBetweenDate:(NSDate *)bDate andDate:(NSDate *)eDate {
+	return ([eDate timeIntervalSinceDate:bDate] / 60.0f) + 11; // 11 pixels extra for 11:00
+}
+
+- (void)drawRedLine {
+	NSDate * now = [NSDate date];// [NSDate dateFromString:@"2011-07-03 00:00:00"];
+	
+	if (self.redline == nil) {
+		self.redline = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"redline.png"]] autorelease];
+		[self.view addSubview:self.redline];
+	}
+	
+	CGFloat x = [self widthBetweenDate:self.currentDate andDate:now] - 4; // line is 9 pixels
+
+	self.redline.frame = CGRectMake(x, 0.0f, 9.0f, 296.0f);
+	[self.view bringSubviewToFront:self.redline];
+}
 
 - (void)drawTimeLine {
 	NSDate *thisDay = self.currentDate;
 	
-	for (RFMusic *music in [fetchedResultsController fetchedObjects]) {
-		NSDate *date = music.beginDate;
-		
-		if ([date timeIntervalSinceDate:thisDay] > 0 && [date timeIntervalSinceDate:thisDay] < 72000) {
-			ConcertButton *button = [[ConcertButton buttonWithType:UIButtonTypeCustom] retain];
-			button.frame = CGRectMake(([date timeIntervalSinceDate:thisDay]/3600)*60+11+.5, [self yForVenue:music.scene], music.durationValue, 50);
-			button.music = music;
-			[self.view addSubview:button];
+	for (RFMusic2011 *music in [fetchedResultsController fetchedObjects]) {
+		if (music.durationValue > 0) {
+			NSDate *date = [NSDate localDateFromUTCFormattedDate:music.beginDate];
 			
-			[button addTarget:self action:@selector(artistButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-			
-			CGRect labelFrame = CGRectMake(2.0f, 3.0f, button.frame.size.width - 4.0f, button.frame.size.height - 6.0f);
-			UILabel *label = [[UILabel alloc] initWithFrame:labelFrame];
-			label.textAlignment = UITextAlignmentCenter;
-			label.numberOfLines = 0;
-			label.text = music.artist;
-			
-			if (music.isFavoriteValue) {
-				label.textColor = [UIColor colorWithWhite:0.103 alpha:1.000];
-				label.shadowColor = [UIColor darkGrayColor];
-				label.shadowOffset = CGSizeMake(0.0f, -1.0f);
-				[button setBackgroundImage:[UIImage imageNamed:@"gigstar_container.png"] forState:UIControlStateNormal];
-			} else {
-				label.textColor = [UIColor whiteColor];
-				label.shadowColor = [UIColor darkGrayColor];
-				label.shadowOffset = CGSizeMake(0.0f, -1.0f);				
-				[button setBackgroundImage:[UIImage imageNamed:@"gig_container.png"] forState:UIControlStateNormal];
+			if ([date timeIntervalSinceDate:thisDay] > 0 && [date timeIntervalSinceDate:thisDay] < 72000) {
+				ConcertButton *button = [[ConcertButton buttonWithType:UIButtonTypeCustom] retain];
+				button.frame = CGRectMake(([date timeIntervalSinceDate:thisDay]/3600)*60+11+.5, [self yForVenue:music.scene], music.durationValue, 50);
+				button.music = music;
+				[self.view addSubview:button];
+				
+				[button addTarget:self action:@selector(artistButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+				
+				CGRect labelFrame = CGRectMake(2.0f, 3.0f, button.frame.size.width - 4.0f, button.frame.size.height - 6.0f);
+				UILabel *label = [[UILabel alloc] initWithFrame:labelFrame];
+				label.textAlignment = UITextAlignmentCenter;
+				label.numberOfLines = 0;
+				label.text = music.artist;
+				
+				if (music.isFavoriteValue) {
+					label.textColor = [UIColor colorWithWhite:0.103 alpha:1.000];
+					//				label.shadowColor = [UIColor darkGrayColor];
+					//				label.shadowOffset = CGSizeMake(0.0f, -1.0f);
+					[button setBackgroundImage:[UIImage imageNamed:@"gigstar_container.png"] forState:UIControlStateNormal];
+				} else {
+					label.textColor = [UIColor whiteColor];
+					//				label.shadowColor = [UIColor darkGrayColor];
+					//				label.shadowOffset = CGSizeMake(0.0f, -1.0f);				
+					[button setBackgroundImage:[UIImage imageNamed:@"gig_container.png"] forState:UIControlStateNormal];
+				}
+				
+				label.font = [UIFont boldSystemFontOfSize:12];
+				label.lineBreakMode = UILineBreakModeTailTruncation;
+				label.backgroundColor = [UIColor clearColor];
+				[button addSubview:label];
+				[label release];
+				[button release];
 			}
-			
-			label.font = [UIFont boldSystemFontOfSize:12];
-			label.lineBreakMode = UILineBreakModeTailTruncation;
-			label.backgroundColor = [UIColor clearColor];
-			[button addSubview:label];
-			[label release];
 		}
 	}
+	
+	[self drawRedLine];
 }
 
 
 - (void)artistButtonPressed:(ConcertButton*)sender {
-	RFMusic *music = sender.music;
+	RFMusic2011 *music = sender.music;
 	
 	RFConcertDetailViewController *concertViewController = [[RFConcertDetailViewController alloc] init];
 	concertViewController.concert = music;
@@ -163,7 +198,7 @@
 	NSManagedObjectContext *managedObjectContext = [[[RFModelController defaultModelController] coreDataManager] managedObjectContext];
 	
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Music" 
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Music2011" 
 											  inManagedObjectContext:managedObjectContext];
 	[fetchRequest setEntity:entity];
 	

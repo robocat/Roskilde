@@ -138,4 +138,13 @@
     [_scrollView scrollRectToVisible:frame animated:YES];
 }
 
+- (void)goToPage:(NSInteger)page {
+	// update the scroll view to the appropriate page
+    CGRect frame = _scrollView.frame;
+    frame.origin.x = frame.size.width * page;
+    frame.origin.y = 0;
+    [_scrollView scrollRectToVisible:frame animated:YES];
+}
+
+
 @end

@@ -26,12 +26,6 @@
 	
 	id target;
 	SEL action;
-	
-@private
-	UIImage *imageRepliesIcon;
-	UIImage *viewsIcon;
-	UIImage *repliesIcon;
-	UIImage *likesIcon;
 }
 
 @property (nonatomic, assign) NSInteger imageReplies;

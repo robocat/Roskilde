@@ -12,6 +12,7 @@
 #import "UIInputToolbar.h"
 
 
+@class FullscreenViewController;
 
 @protocol RFPictureDetailTableViewControllerDelegate
 - (void)dismissTextInput;
@@ -31,6 +32,8 @@
 	UIButton *cameraButton;
 	UIButton *inputButton;
 	UIButton *likeButton;
+	
+	FullscreenViewController *fullscreenViewController;
 	
 @private
     BOOL keyboardIsVisible;
@@ -53,5 +56,6 @@
 - (void)cameraButtonPressed:(id)sender;
 - (void)replyButtonPressed:(id)sender;
 - (void)likeButtonPressed:(id)sender;
+- (void)share:(id)sender;
 
 @end

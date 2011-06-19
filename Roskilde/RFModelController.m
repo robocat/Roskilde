@@ -26,7 +26,7 @@ static RFModelController *defaultModelController = nil;
 
 - (id)init {
 	if ((self = [super init])) {
-		coreDataManager = [[RKCoreDataManager alloc] initWithInitialType:NSSQLiteStoreType modelName:@"Roskilde" dataStoreName:@"Roskilde.sqlite"];
+		coreDataManager = [[RKCoreDataManager alloc] initWithInitialType:NSSQLiteStoreType modelName:@"Roskilde2011" dataStoreName:@"Roskilde2011.sqlite"];
 		simpleCoreData = [[RKSimpleCoreData alloc] init];
 		[simpleCoreData setManagedObjectModel:[coreDataManager managedObjectModel]];
 		[simpleCoreData setManagedObjectContext:[coreDataManager managedObjectContext]];
@@ -122,7 +122,7 @@ static RFModelController *defaultModelController = nil;
 
 
 - (BOOL) hasMusic {
-	NSArray *items = [simpleCoreData objectsInEntityWithName:@"Music" predicate:nil sortedWithDescriptors:nil limit:1];
+	NSArray *items = [simpleCoreData objectsInEntityWithName:@"Music2011" predicate:nil sortedWithDescriptors:nil limit:1];
 	if ([items count])
 		return YES;
 	return NO;
@@ -132,36 +132,36 @@ static RFModelController *defaultModelController = nil;
 
 - (NSArray *)musicSortedByDate {
 	NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"beginDate" ascending:YES] autorelease];
-	return [simpleCoreData objectsInEntityWithName:@"Music" predicate:nil sortedWithDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+	return [simpleCoreData objectsInEntityWithName:@"Music2011" predicate:nil sortedWithDescriptors:[NSArray arrayWithObject:sortDescriptor]];
 }
 
 - (NSArray *)musicSortedByArtist {
 	NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"artist" ascending:YES] autorelease];
-	return [simpleCoreData objectsInEntityWithName:@"Music" predicate:nil sortedWithDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+	return [simpleCoreData objectsInEntityWithName:@"Music2011" predicate:nil sortedWithDescriptors:[NSArray arrayWithObject:sortDescriptor]];
 }
 
 - (NSArray *)favoritesSortedByDate {
 	NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"beginDate" ascending:YES] autorelease];
-	return [simpleCoreData objectsInEntityWithName:@"Music" predicate:nil sortedWithDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+	return [simpleCoreData objectsInEntityWithName:@"Music2011" predicate:nil sortedWithDescriptors:[NSArray arrayWithObject:sortDescriptor]];
 }
 
-- (RFMusic *) newMusic {
-	[self willChangeValueForKey:@"music"];
-	RFMusic *music = (RFMusic *)[simpleCoreData newObjectInEntityWithName:@"Music" values:nil];
-	[self didChangeValueForKey:@"music"];
+- (RFMusic2011 *) newMusic {
+	[self willChangeValueForKey:@"music2011"];
+	RFMusic2011 *music = (RFMusic2011 *)[simpleCoreData newObjectInEntityWithName:@"Music2011" values:nil];
+	[self didChangeValueForKey:@"music2011"];
 	return music;
 }
 
 
-- (void)deleteMusic:(RFMusic *)music {
-	[self willChangeValueForKey:@"music"];
+- (void)deleteMusic:(RFMusic2011 *)music {
+	[self willChangeValueForKey:@"music2011"];
 	[[simpleCoreData managedObjectContext] deleteObject:music];
-	[self didChangeValueForKey:@"music"];
+	[self didChangeValueForKey:@"music2011"];
 }
 
 
 - (void)deleteAllMusic {
-	[simpleCoreData deleteAllEntitiesWithName:@"Music"];
+	[simpleCoreData deleteAllEntitiesWithName:@"Music2011"];
 }
 
 

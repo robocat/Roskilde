@@ -11,10 +11,13 @@
 
 @interface RFTimelineViewController : UIViewController <NSFetchedResultsControllerDelegate> {
     NSFetchedResultsController *fetchedResultsController;
+	
+	UIImageView * redline;
 }
 
-@property (nonatomic, retain) UINavigationController *navigationController;
+@property (nonatomic, assign) UINavigationController *navigationController;
 @property (nonatomic, retain) NSDate *currentDate;
+@property (nonatomic, retain) UIImageView *redline;
 
 - (void)changeDate:(NSDate*)newDate;
 

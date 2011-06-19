@@ -9,11 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 
-@class RFMusic;
+@class RFMusic2011;
 
 @interface RFConcertDetailViewController : BaseViewController {
     
-	RFMusic *_concert;
+	RFMusic2011 *_concert;
 	
 	UIButton *starButton;
 	UIButton *websiteButton;
@@ -28,7 +28,7 @@
 	UIView *infoView;
 }
 
-@property (nonatomic, retain) RFMusic *concert;
+@property (nonatomic, retain) RFMusic2011 *concert;
 
 @property (nonatomic, retain) IBOutlet UIView *infoView;
 @property (nonatomic, retain) IBOutlet UIButton *titleButton;

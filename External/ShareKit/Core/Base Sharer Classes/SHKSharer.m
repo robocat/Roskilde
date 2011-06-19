@@ -210,6 +210,21 @@
 	return [controller autorelease];
 }
 
++ (id)shareImageURL:(NSString *)imageurl url:(NSURL *)url title:(NSString *)title
+{
+	// Create controller and set share options
+	SHKSharer *controller = [[self alloc] init];
+	controller.item.shareType = SHKShareTypeImageURL;
+	controller.item.URL = url;
+	controller.item.imageURL = imageurl;
+	controller.item.title = title;
+	
+	// share and/or show UI
+	[controller share];
+	
+	return [controller autorelease];
+}
+
 + (id)shareImage:(UIImage *)image title:(NSString *)title
 {
 	// Create controller and set share options
@@ -554,7 +569,11 @@
 	{
 		case SHKShareTypeURL:
 			return (item.URL != nil);
-			break;			
+			break;
+		
+		case SHKShareTypeImageURL:
+			return (item.URL != nil);
+			break;
 			
 		case SHKShareTypeImage:
 			return (item.image != nil);

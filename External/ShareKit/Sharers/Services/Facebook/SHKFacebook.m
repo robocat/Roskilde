@@ -138,6 +138,34 @@
 #pragma mark -
 #pragma mark Share API Methods
 
+-(BOOL) sendWithImage:(NSString*)creativeUrl
+{
+	self.pendingFacebookAction = SHKFacebookPendingStatus;
+	
+	SHKFBStreamDialog* dialog = [[[SHKFBStreamDialog alloc] init] autorelease];
+	dialog.delegate = self;
+	dialog.userMessagePrompt = SHKLocalizedString(@"Enter your message:");
+	dialog.attachment = [NSString stringWithFormat:
+						 @"{\
+						 \"name\":\"%@\",\
+						 \"href\":\"%@\",\
+						 \"media\":[{\"type\":\"image\",\"src\":\"%@\",\"href\":\"%@\"}]\
+						 }",
+						 item.title == nil ? SHKEncodeURL(item.URL) : SHKEncode(item.title),
+						 SHKEncodeURL(item.URL),
+						 creativeUrl,
+						 SHKEncodeURL(item.URL)
+						 ];
+    dialog.defaultStatus = item.text;
+    dialog.actionLinks = [NSString stringWithFormat:@"[{\"text\":\"Get %@\",\"href\":\"%@\"}]",
+						  SHKEncode(SHKMyAppName),
+						  SHKEncode(SHKMyAppURL)];
+    [dialog show];
+    return YES; 
+	
+}
+
+
 - (BOOL)send
 {			
 	if (item.shareType == SHKShareTypeURL)
@@ -161,6 +189,13 @@
 							  SHKEncode(SHKMyAppURL)];
 		[dialog show];
 		
+	}
+	
+	else if (item.shareType == SHKShareTypeImageURL)
+	{
+		if (item.imageURL) {
+			[self sendWithImage:item.imageURL];
+		}
 	}
 	
 	else if (item.shareType == SHKShareTypeText)
@@ -190,6 +225,7 @@
 	
 	return YES;
 }
+
 
 - (void)sendImage
 {

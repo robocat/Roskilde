@@ -31,6 +31,9 @@
 - (id)init {
 	if ((self = [super init])) {
 		self.isFullscreen = NO;
+		
+//		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeFullscreen) 
+//													 name:kAppEnterBackground object:nil];
 	}
 	
 	return self;
@@ -54,9 +57,16 @@
 }
 
 
+//- (void)removeFullscreen {
+//	[self.fullscreenView removeFromSuperview];
+//}
+
+
 - (void)fullscreen {
 	if (self.isFullscreen) {
-		[[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+		if ([[UIApplication sharedApplication] isStatusBarHidden]) {
+			[[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+		}
 		
 		[UIView animateWithDuration:.3 animations:^(void) {
 			if ([self.view isKindOfClass:[UIImageView class]]) {
@@ -98,7 +108,9 @@
 		self.fullscreenView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		self.fullscreenView.alpha = 0;
 		
-		[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+		if (![[UIApplication sharedApplication] isStatusBarHidden]) {
+			[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+		}
 		[[[UIApplication sharedApplication] keyWindow] addSubview:self.fullscreenView];
 		
 //		self.view.hidden = YES;

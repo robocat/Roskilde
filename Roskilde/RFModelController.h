@@ -6,7 +6,7 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "RFMusic.h"
+#import "RFMusic2011.h"
 #import "RFLocation.h"
 #import <CoreLocation/CoreLocation.h>
 
@@ -44,9 +44,9 @@
 - (NSArray *)musicSortedByArtist;
 - (NSArray *)favoritesSortedByDate;
 
-- (RFMusic *) newMusic;
+- (RFMusic2011 *) newMusic;
 
-- (void)deleteMusic:(RFMusic *)music;
+- (void)deleteMusic:(RFMusic2011 *)music;
 - (void)deleteAllMusic;
 
 @end

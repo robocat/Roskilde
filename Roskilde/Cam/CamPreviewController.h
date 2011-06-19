@@ -35,7 +35,7 @@
 @property (nonatomic, retain) IBOutlet UIView *previewView;
 @property (nonatomic, retain) IBOutlet UILabel *descriptionPlaceholder;
 @property (nonatomic, retain) IBOutlet UITextView *description;
-@property (nonatomic, retain) IBOutlet UITextField *location;
+@property (nonatomic, retain) IBOutlet UITextField *locationTextField;
 @property (nonatomic, retain) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, retain) IBOutlet RKCustomNavigationBar *navbar;
 @property (nonatomic, assign) id<CamPreviewDelegate> delegate;

@@ -35,13 +35,9 @@
 
 
 
-@property (nonatomic, retain) NSNumber *lat;
+@property (nonatomic, retain) NSString *map;
 
-@property float latValue;
-- (float)latValue;
-- (void)setLatValue:(float)value_;
-
-//- (BOOL)validateLat:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateMap:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -61,9 +57,13 @@
 
 
 
-@property (nonatomic, retain) NSString *map;
+@property (nonatomic, retain) NSNumber *lat;
 
-//- (BOOL)validateMap:(id*)value_ error:(NSError**)error_;
+@property float latValue;
+- (float)latValue;
+- (void)setLatValue:(float)value_;
+
+//- (BOOL)validateLat:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -90,11 +90,8 @@
 
 
 
-- (NSNumber*)primitiveLat;
-- (void)setPrimitiveLat:(NSNumber*)value;
-
-- (float)primitiveLatValue;
-- (void)setPrimitiveLatValue:(float)value_;
+- (NSString*)primitiveMap;
+- (void)setPrimitiveMap:(NSString*)value;
 
 
 
@@ -114,8 +111,11 @@
 
 
 
-- (NSString*)primitiveMap;
-- (void)setPrimitiveMap:(NSString*)value;
+- (NSNumber*)primitiveLat;
+- (void)setPrimitiveLat:(NSNumber*)value;
+
+- (float)primitiveLatValue;
+- (void)setPrimitiveLatValue:(float)value_;
 
 
 

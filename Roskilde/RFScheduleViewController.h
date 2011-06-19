@@ -14,6 +14,8 @@
 @interface RFScheduleViewController : BaseViewController <RFDateScrollerViewControllerDelegate> {
     RFDateScrollerViewController * dateScroller;
 	
+	NSArray *pageBeginDates;
+	
 	UIButton *orangeButton;
 	UIButton *arenaButton;
 	UIButton *cosmopolButton;
@@ -32,5 +34,7 @@
 @property (nonatomic, retain) IBOutlet UIButton *cosmopolButton;
 @property (nonatomic, retain) IBOutlet UIButton *odeonButton;
 @property (nonatomic, retain) IBOutlet UIButton *pavilionButton;
+
+- (IBAction)jumpToNow:(id)sender;
 
 @end

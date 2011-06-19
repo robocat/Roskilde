@@ -8,6 +8,7 @@
 
 #import "RFScheduleViewController.h"
 #import "NSDateHelper.h"
+#import "NSDate+Helper.h"
 #import "RFModelController.h"
 #import "RFTimelineViewController.h"
 
@@ -33,12 +34,16 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+		
     }
     return self;
 }
 
 - (void)dealloc
 {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	
+	[pageBeginDates release];
 	self.dateScroller = nil;
 	self.timelineScrollView = nil;
 	self.orangeButton = nil;
@@ -65,7 +70,26 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 	
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(jumpToNow:) 
+												 name:kMusicDataImported object:nil];
+	
 	self.title = NSLocalizedString(@"Schedule", @"");
+	
+	UIBarButtonItem *nowButton = [[UIBarButtonItem alloc] initWithTitle:@"Now" style:UIBarButtonItemStyleBordered target:self action:@selector(jumpToNow:)];
+	self.navigationItem.leftBarButtonItem = nowButton;
+	[nowButton release];
+	
+	
+	pageBeginDates = [[NSArray alloc] initWithObjects:
+					  [NSDate dateWithString:@"2011-06-26 11:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"],
+					  [NSDate dateWithString:@"2011-06-27 11:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"],
+					  [NSDate dateWithString:@"2011-06-28 11:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"],
+					  [NSDate dateWithString:@"2011-06-29 11:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"],
+					  [NSDate dateWithString:@"2011-06-30 11:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"],
+					  [NSDate dateWithString:@"2011-07-01 11:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"],
+					  [NSDate dateWithString:@"2011-07-02 11:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"],
+					  [NSDate dateWithString:@"2011-07-03 11:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"], nil];
 	
 	self.timelineScrollView.decelerationRate = UIScrollViewDecelerationRateFast;
 	self.timelineScrollView.contentSize = CGSizeMake(1212.0f, 296.0f);
@@ -85,6 +109,8 @@
 	self.timelineViewController = [[RFTimelineViewController alloc] init];
 	self.timelineViewController.navigationController = self.navigationController;
 	self.timelineViewController.view = timelineScrollView;
+	
+	[self performSelector:@selector(jumpToCurrentDate) withObject:nil afterDelay:0.0];
 }
 
 - (void)viewDidUnload
@@ -156,49 +182,106 @@
 	[self performSelector:@selector(hideSceneButton:) withObject:self.cosmopolButton afterDelay:time + 0.2];
 	[self performSelector:@selector(hideSceneButton:) withObject:self.odeonButton afterDelay:time + 0.3];
 	[self performSelector:@selector(hideSceneButton:) withObject:self.pavilionButton afterDelay:time + 0.4];
+
 }
 
+- (CGFloat) widthBetweenDate:(NSDate *)bDate andDate:(NSDate *)eDate {
+	return ([eDate timeIntervalSinceDate:bDate] / 60.0f) + 11; // 11 pixels extra for 11:00
+}
+
+- (void)jumpToDate:(NSDate *)aDate {
+	NSDate * date = [pageBeginDates objectAtIndex:currentPageNumber];
+	CGFloat x = [self widthBetweenDate:date andDate:aDate];
+	
+	[self.timelineScrollView scrollRectToVisible:CGRectMake(x, 0, 320, 296) animated:YES];
+}
+
+- (void)jumpToCurrentDate {
+	NSDate * date;
+	
+	switch (currentPageNumber) {
+		case 0:
+			date = [NSDate dateWithString:@"2011-06-26 13:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"];
+			break;
+		case 1:
+			date = [NSDate dateWithString:@"2011-06-27 13:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"];
+			break;
+		case 2:
+			date = [NSDate dateWithString:@"2011-06-28 13:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"];
+			break;
+		case 3:
+			date = [NSDate dateWithString:@"2011-06-29 13:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"];
+			break;
+		case 4:
+			date = [NSDate dateWithString:@"2011-06-30 15:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"];
+			break;
+		case 5:
+			date = [NSDate dateWithString:@"2011-07-01 09:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"];
+			break;
+		case 6:
+			date = [NSDate dateWithString:@"2011-07-02 09:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"];
+			break;
+		case 7:
+			date = [NSDate dateWithString:@"2011-07-03 09:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"];
+			break;
+		default:
+			date = [NSDate dateWithString:@"2011-07-01 09:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"];
+			break;
+	}
+	
+	[self jumpToDate:date];
+}
 
 - (void) dateScrollview:(RFDateScrollerViewController *)scollview didSwitchToPage:(NSUInteger)page {
 	if (currentPageNumber != page) {
 		currentPageNumber = page;
 		
-		NSDate * date;
-		
-		switch (page) {
-			case 0:
-				date = [NSDate dateWithString:@"2011-06-26 11:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"];
-				break;
-			case 1:
-				date = [NSDate dateWithString:@"2011-06-27 11:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"];
-				break;
-			case 2:
-				date = [NSDate dateWithString:@"2011-06-28 11:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"];
-				break;
-			case 3:
-				date = [NSDate dateWithString:@"2011-06-29 11:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"];
-				break;
-			case 4:
-				date = [NSDate dateWithString:@"2011-06-30 11:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"];
-				break;
-			case 5:
-				date = [NSDate dateWithString:@"2011-07-01 11:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"];
-				break;
-			case 6:
-				date = [NSDate dateWithString:@"2011-07-02 11:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"];
-				break;
-			case 7:
-				date = [NSDate dateWithString:@"2011-07-03 11:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"];
-				break;
-			default:
-                date = [NSDate dateWithString:@"2011-07-01 11:00:00 GMT" formatString:@"yyyy-MM-dd HH:mm:ss ZZZ"];
-				break;
-		}
-		
+		NSDate * date = [pageBeginDates objectAtIndex:page];
 		[self.timelineViewController changeDate:date];
 		
-//		[self setupTimelineForDate:date scroll:YES];
+		[self jumpToCurrentDate];
 	}
 }
+
+- (NSInteger)pageForDate:(NSDate *)date {
+	NSDate *beginDate = [pageBeginDates objectAtIndex:0];
+	NSDate *endDate = [[pageBeginDates lastObject] dateByAddingDays:1];
+	
+	if ([date compare:beginDate] <= NSOrderedSame) {
+		return 0;
+	}
+	else if (![date isBetweenDate:beginDate andDate:endDate]) {
+		return -1;
+	}
+	
+	NSInteger page = 0;
+	for (int i = 0; i < [pageBeginDates count]; i ++) {
+		NSComparisonResult result = [date compare:[pageBeginDates objectAtIndex:i]];
+		if (result > NSOrderedAscending) {
+			page = i;
+		}
+		else {
+			break;
+		}
+	}
+	
+	return page;
+}
+
+- (IBAction)jumpToNow:(id)sender {
+	NSDate * now = [NSDate date];  //[NSDate dateFromString:@"2011-07-02 10:00:00"];
+	
+	NSInteger page = [self pageForDate:now];
+	
+	if (page > -1) {
+		currentPageNumber = page;
+		[self.dateScroller goToPage:page];
+		[self.timelineViewController changeDate:[pageBeginDates objectAtIndex:page]];
+		
+		NSDate *newDate = [now dateByAddingHours:-3];
+		[self performSelector:@selector(jumpToDate:) withObject:newDate afterDelay:0.0];
+	}
+}
+
 
 @end

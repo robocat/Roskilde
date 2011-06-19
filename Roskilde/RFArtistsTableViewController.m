@@ -10,6 +10,8 @@
 #import "RFConcertDetailViewController.h"
 #import "RFModelController.h"
 #import "NSDate+Helper.h"
+#import "NSDateHelper.h"
+#import "ArtistsTableViewCell.h"
 
 
 
@@ -113,7 +115,7 @@
 	filters.crossFadeLabelsOnDrag = YES;
 	filters.font = [UIFont boldSystemFontOfSize:14];
 	filters.segmentPadding = 5;
-	filters.height = 30;
+	filters.height = 38;
 	
 	filters.thumb.tintColor = [UIColor colorWithRed:0.572 green:0.552 blue:0.529 alpha:1.000];
 	
@@ -169,8 +171,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 	// Return the number of sections.
 
-	if (self.currentfetchedResultsController == self.datefetchedResultsController
-        || self.currentfetchedResultsController == self.starredfetchedResultsController) {
+	if (self.currentfetchedResultsController == self.starredfetchedResultsController) {
 		return 1;
 	}
 
@@ -181,8 +182,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
 	
-	if (self.currentfetchedResultsController == self.datefetchedResultsController
-        || self.currentfetchedResultsController == self.starredfetchedResultsController) {
+	if (self.currentfetchedResultsController == self.starredfetchedResultsController) {
 		return [[self.currentfetchedResultsController fetchedObjects] count];
 	}
 	
@@ -197,20 +197,63 @@
 	}
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	return 53.0;
+}
+
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+	id <NSFetchedResultsSectionInfo> sectionInfo = [[self.currentfetchedResultsController sections] objectAtIndex:section];
+	
+	if (!sectionInfo)
+		return nil;
+	
 	UIImageView * imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator.png"]];
 	UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 1.0f, 200.f, 20.0f)];
-	id <NSFetchedResultsSectionInfo> sectionInfo = [[self.currentfetchedResultsController sections] objectAtIndex:section];
 	label.backgroundColor = [UIColor clearColor];
-	label.text = [sectionInfo name];
 	label.textColor = [UIColor whiteColor];
 	label.font = [UIFont boldSystemFontOfSize:18];
+	
+	if (self.currentfetchedResultsController == self.datefetchedResultsController) {
+		NSString *date = [sectionInfo name];
+		
+		if ([date isEqualToString:@"06-26"]) {
+			label.text = @"Sunday, June 26th";
+		}
+		else if ([date isEqualToString:@"06-27"]) {
+			label.text = @"Monday, June 27th";
+		}
+		else if ([date isEqualToString:@"06-28"]) {
+			label.text = @"Tuesday, June 28th";
+		}
+		else if ([date isEqualToString:@"06-29"]) {
+			label.text = @"Wednesday, June 29th";
+		}
+		else if ([date isEqualToString:@"06-30"]) {
+			label.text = @"Thursday, June 30th";
+		}
+		else if ([date isEqualToString:@"07-01"]) {
+			label.text = @"Friday, July 1st";
+		}
+		else if ([date isEqualToString:@"07-02"]) {
+			label.text = @"Saturday, July 2nd";
+		}
+		else if ([date isEqualToString:@"07-03"]) {
+			label.text = @"Sunday, July 3rd";
+		}
+	}
+	else {
+		label.text = [sectionInfo name];
+	}
+	
 	[imageview addSubview:label];
     [label release];
 	return [imageview autorelease];
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+	if (self.currentfetchedResultsController == self.datefetchedResultsController)
+		return nil;
     return [self.currentfetchedResultsController sectionIndexTitles];
 }
 
@@ -218,25 +261,30 @@
     return [self.currentfetchedResultsController sectionForSectionIndexTitle:title atIndex:index];
 }
 
-
-- (void)configureCell:(UITableViewCell *)cell 
+- (void)configureCell:(UITableViewCell *)cell_ 
           atIndexPath:(NSIndexPath*)indexPath
 {
-	RFMusic *music = [self.currentfetchedResultsController objectAtIndexPath:indexPath];
-	cell.textLabel.text = music.artist;
-    
-    if (music.beginDate) {
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@, %@", [music.beginDate formattedDateStringForDisplay], [music.beginDate formattedTimeStringForDisplay], music.scene];
-    }
+	RFMusic2011 *music = [self.currentfetchedResultsController objectAtIndexPath:indexPath];
+	
+	ArtistsTableViewCell *cell = (ArtistsTableViewCell *) cell_;
+	cell.artistId = music.artistId;
+	cell.name = music.artist;
+	
+	if (self.currentfetchedResultsController != self.datefetchedResultsController) {
+		cell.timeScene = [NSString stringWithFormat:@"%@, %@, %@", [music.beginDate formattedTimeStringForDisplay], [music.beginDate formattedDateStringForDisplay], music.scene];
+	}
+	else {
+		cell.timeScene = [NSString stringWithFormat:@"%@, %@", [music.beginDate formattedTimeStringForDisplay], music.scene];
+	}
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    ArtistsTableViewCell *cell = (ArtistsTableViewCell *) [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[ArtistsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
     // Configure the cell...
@@ -246,58 +294,6 @@
     return cell;
 }
 
-
-//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-//	cell.textLabel.textColor = [UIColor colorWithWhite:0.90 alpha:1.000];
-//	
-//	if (indexPath.row % 2)
-//	{
-//        cell.backgroundColor = [UIColor colorWithRed:0.166 green:0.163 blue:0.163 alpha:1.000];
-//	}
-//	else {
-//		cell.backgroundColor = [UIColor colorWithWhite:0.101 alpha:1.000];
-//	}
-//}
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
@@ -323,7 +319,7 @@
 	NSManagedObjectContext *managedObjectContext = [[[RFModelController defaultModelController] coreDataManager] managedObjectContext];
 	
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Music" 
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Music2011" 
 											  inManagedObjectContext:managedObjectContext];
 	[fetchRequest setEntity:entity];
 	
@@ -358,7 +354,7 @@
 	NSManagedObjectContext *managedObjectContext = [[[RFModelController defaultModelController] coreDataManager] managedObjectContext];
 	
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Music" 
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Music2011" 
 											  inManagedObjectContext:managedObjectContext];
 	[fetchRequest setEntity:entity];
 	
@@ -394,7 +390,7 @@
 	NSManagedObjectContext *managedObjectContext = [[[RFModelController defaultModelController] coreDataManager] managedObjectContext];
 	
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Music" 
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Music2011" 
 											  inManagedObjectContext:managedObjectContext];
 	[fetchRequest setEntity:entity];
 	
@@ -433,16 +429,16 @@
 	NSManagedObjectContext *managedObjectContext = [[[RFModelController defaultModelController] coreDataManager] managedObjectContext];
 	
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Music" 
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Music2011" 
 											  inManagedObjectContext:managedObjectContext];
 	[fetchRequest setEntity:entity];
 	
 	[fetchRequest setFetchBatchSize:20];
 	
-//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isFavorite == %d", YES];
-//	[fetchRequest setPredicate:predicate];
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isFavorite == %d", YES];
+	[fetchRequest setPredicate:predicate];
     
-	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"isFavorite"
+	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"beginDate"
 																   ascending:YES];
 	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
 	
@@ -467,6 +463,9 @@
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController*)controller 
 {
+	if (controller != self.currentfetchedResultsController)
+		return ;
+	
 	[[self tableView] beginUpdates];
 }
 
@@ -475,6 +474,9 @@
            atIndex:(NSUInteger)sectionIndex 
      forChangeType:(NSFetchedResultsChangeType)type 
 {
+	if (controller != self.currentfetchedResultsController)
+		return ;
+	
 	switch(type) {
 		case NSFetchedResultsChangeInsert:
 			[[self tableView] insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] 
@@ -493,6 +495,9 @@
      forChangeType:(NSFetchedResultsChangeType)type 
       newIndexPath:(NSIndexPath*)newIndexPath 
 {
+	if (controller != self.currentfetchedResultsController)
+		return ;
+	
 	switch(type) {
 		case NSFetchedResultsChangeInsert:
 			[[self tableView] insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
@@ -517,6 +522,9 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController*)controller 
 {
+	if (controller != self.currentfetchedResultsController)
+		return ;
+	
 	[[self tableView] endUpdates];
 	
 	[self.tableView bringSubviewToFront:self.filters];

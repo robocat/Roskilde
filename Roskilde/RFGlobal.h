@@ -10,8 +10,7 @@
 
 #define kConcertsFeed		@"http://roskildefeed.mads379.cloudbees.net/feed/xml"
 #define kXdkAPIKey			@""
-#define kXdkAPIBaseUrl		@"https://xdkapp.appspot.com/api/roskilde"
-//#define kXdkAPIBaseUrl		@"https://xdkapi.appspot.com/api/roskilde"
+#define kXdkAPIBaseUrl		@"https://xdkapi.appspot.com/api/roskilde"
 
 
 
@@ -21,6 +20,9 @@
 #define kPromptCreateProfile		@"kPromptCreateProfile"
 #define kUserLoggedIn				@"kUserLoggedIn"
 
+#define kMusicDataImported			@"kMusicDataImported"
+
+#define kAppEnterBackground			@"kAppEnterBackground"
 
 
 @interface RFGlobal : NSObject {

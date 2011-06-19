@@ -102,11 +102,15 @@
 	[[UIColor colorWithRed:0.651 green:0.651 blue:0.651 alpha:1.000] set];
 	
 	if (self.imageReplies > 0) {
-		[imageRepliesIcon drawAtPoint:CGPointMake(kPadding + 10, y)];
-		CGSize imageRepliesSize = [self infoSize:imageReplies];
-		[int2str(imageReplies) drawInRect:CGRectMake(kPadding + 12 + kIconSpaceX + imageRepliesIcon.size.width, y+kIconSpaceY,
-													 imageRepliesSize.width, imageRepliesSize.height)
-								 withFont:infoFont];
+		[imageRepliesIcon drawAtPoint:CGPointMake(10, y)];
+		NSString *replyText = (self.imageReplies == 1) ? @"reply" : @"replies";
+		NSString *imgreplies = [NSString stringWithFormat:@"%@ picture %@", int2str(self.imageReplies), replyText];
+		CGSize imageRepliesSize = [imgreplies sizeWithFont:infoFont
+										 constrainedToSize:CGSizeMake(100.0, kInfoMaxHeight)
+											 lineBreakMode:UILineBreakModeTailTruncation];
+		[imgreplies drawInRect:CGRectMake(14 + imageRepliesIcon.size.width, y,
+										  imageRepliesSize.width, imageRepliesSize.height)
+					  withFont:infoFont];
 	}
 	
 	CGSize likesSize = [self infoSize:likes];
@@ -134,14 +138,25 @@
 	
 	// Author
 	
+	UIFont *timeFont		= [UIFont boldSystemFontOfSize:12];
+	
 	x = 310.0;
 	y = kStatsBarHieght;
+	CGFloat commentHeight = kAuthMinHieght;
+	
+	if (![self.comment isEqualToString:@""]) {
+		[[UIColor blackColor] set];
+		
+		CGSize commentSize = [self.comment sizeWithFont:timeFont
+									  constrainedToSize:CGSizeMake(200.0f, FLT_MAX)
+										  lineBreakMode:UILineBreakModeTailTruncation];
+		
+		commentHeight = commentSize.height + kAuthMinHieght;
+	}
 	
 	[[UIColor colorWithRed:0.965 green:0.932 blue:0.885 alpha:1.000] setFill];
-	CGRect commentRect = CGRectMake(0.0, y, 320.0, kAuthMinHieght);
+	CGRect commentRect = CGRectMake(0.0, y, 320.0, commentHeight);
 	CGContextFillRect( context , commentRect );
-	
-	UIFont *timeFont		= [UIFont boldSystemFontOfSize:12];
 	
 	[[UIColor darkGrayColor] set];
 	

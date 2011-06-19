@@ -8,10 +8,12 @@
 
 #import "RFConcertDetailViewController.h"
 #import "RKCustomNavigationBar.h"
-#import "RFMusic.h"
+#import "RFMusic2011.h"
 #import "NSDateHelper.h"
+#import "NSDate+Helper.h"
 #import "RFModelController.h"
 #import "SVWebViewController.h"
+#import "SHK.h"
 
 
 @interface RFConcertDetailViewController ()
@@ -82,6 +84,12 @@
 	RKCustomNavigationBar *navBar = (RKCustomNavigationBar*)self.navigationController.navigationBar;
 	[navBar setBackgroundWith:[UIImage imageNamed:@"navbar.png"]];
 	
+	// Create action button and assign it
+	UIBarButtonItem *actionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(share:)];
+	self.navigationItem.rightBarButtonItem = actionButton;
+	[actionButton release];
+	
+	
 	CGRect frame = self.infoView.frame;
 //	self.infoView.frame = CGRectMake(-frame.size.width, 40.0, frame.size.width, frame.size.height);
 	self.infoView.frame = CGRectMake(0.0, 258.0, frame.size.width, frame.size.height);
@@ -91,6 +99,16 @@
 	
 	NSString *imgName = [NSString stringWithFormat:@"%@.jpg", self.concert.artistId];
 	self.artistImage.image = [UIImage imageNamed:imgName];
+	
+	NSString *scene = nil;
+	if ([self.concert.scene isEqualToString:@"Pavilion Junior"]) {
+		scene = @"pavilion_small.png";
+	}
+	else {
+		scene = [NSString stringWithFormat:@"%@_small.png", [self.concert.scene lowercaseString]];
+	}
+	
+	self.sceneImageView.image = [UIImage imageNamed:scene];
 	
 //	CGRect sceneFrame = self.sceneImageView.frame;
 //	
@@ -173,7 +191,9 @@
 	artistLabel.text = artistString;
 	
 	self.descriptionTextView.text = self.concert.descriptionText;
-	self.playtimeLabel.text = [self.concert.beginDate formattedDate];
+//	self.playtimeLabel.text = [self.concert.beginDate formattedDate];
+	self.playtimeLabel.text = [NSString stringWithFormat:@"%@, %@", [self.concert.beginDate formattedTimeStringForDisplay], [self.concert.beginDate formattedDateStringForDisplay]];
+	
 	self.websiteButton.hidden = ([self.concert.web isEqualToString:@""]);
 	self.itunesButton.hidden = ([self.concert.itunes isEqualToString:@""]);
 	
@@ -248,6 +268,44 @@
 	}
 }
 
+
+- (void)scheduleNotification:(int)minutesBefore {
+	NSDate * itemDate = self.concert.beginDate;
+	 
+	UILocalNotification* localNotif = [[UILocalNotification alloc] init];
+	
+	if (localNotif == nil)
+		return;
+	
+	localNotif.fireDate = [itemDate dateByAddingTimeInterval:-(minutesBefore*60)];
+	localNotif.timeZone = [NSTimeZone defaultTimeZone];
+	
+	localNotif.alertBody = [NSString stringWithFormat:NSLocalizedString(@"%@ will play at %@ in %i minutes.", nil),
+							self.concert.artist, self.concert.scene, minutesBefore];
+	localNotif.alertAction = NSLocalizedString(@"View", nil);
+	
+	localNotif.soundName = UILocalNotificationDefaultSoundName;
+	
+	NSDictionary *infoDict = [NSDictionary dictionaryWithObject:self.concert.artistId forKey:@"artistId"];
+	localNotif.userInfo = infoDict;
+	
+	[[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
+	[localNotif release];
+}
+
+- (void)cancelNotification {
+	UIApplication * application = [UIApplication sharedApplication];
+	
+	if ([application respondsToSelector:@selector(cancelLocalNotification:)]) {
+		for (UILocalNotification *not in [application scheduledLocalNotifications]) {
+			if ([[not.userInfo objectForKey:@"artistId"] isEqualToString:self.concert.artistId]) {
+				[application cancelLocalNotification:not];
+				break;
+			}
+		}
+	}
+}
+
 - (IBAction)favorite:(id)sender {
 	self.concert.isFavoriteValue = !self.concert.isFavoriteValue;
 	
@@ -258,7 +316,14 @@
 		[self.starButton setImage:[UIImage imageNamed:@"button_starit.png"] forState:UIControlStateNormal];
 	}
 	
-//	[[RFModelController defaultModelController] save];
+	[[RFModelController defaultModelController] save];
+	
+	if (self.concert.isFavoriteValue) {
+		[self scheduleNotification:30];
+	}
+	else {
+		[self cancelNotification];
+	}
 }
 
 - (IBAction)websitePressed:(id)sender {
@@ -280,5 +345,15 @@
 			constrainedToSize:CGSizeMake(width, FLT_MAX) 
 				lineBreakMode:lineBreakMode];
 }
+
+
+- (void)share:(id)sender
+{	
+	NSString *text = [NSString stringWithFormat:@"I'm at the concert with '%@'. Join me at %@ scene at Roskilde Festival! #rf11", self.concert.artist, self.concert.scene];
+	SHKItem *item = [SHKItem text:text];
+	SHKActionSheet *actionSheet = [SHKActionSheet actionSheetForItem:item];
+	[actionSheet showFromToolbar:self.navigationController.toolbar]; 
+}
+
 
 @end

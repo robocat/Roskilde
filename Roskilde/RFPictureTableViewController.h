@@ -21,13 +21,17 @@
 	BOOL showMyPictures;
 	UIImageView *xbg;
     
+	UIView *filtersView;
     SVSegmentedControl *filters;
 }
 
+@property (nonatomic, retain) IBOutlet UIView *filtersView;
 @property (nonatomic, retain) NSMutableArray *entries;
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *spinner;
 @property (nonatomic, assign, getter=isShowMyPictures) BOOL showMyPictures;
 @property (nonatomic, retain) IBOutlet UIImageView *xbg;
 @property (nonatomic, retain) SVSegmentedControl *filters;
+
+- (IBAction)refresh;
 
 @end

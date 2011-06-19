@@ -67,12 +67,12 @@
 		}
 	}
 	
-	// Add More button
-	[as addButtonWithTitle:SHKLocalizedString(@"More...")];
+//	// Add More button
+//	[as addButtonWithTitle:SHKLocalizedString(@"More...")];
 	
 	// Add Cancel button
 	[as addButtonWithTitle:SHKLocalizedString(@"Cancel")];
-	as.cancelButtonIndex = as.numberOfButtons -1;
+	as.cancelButtonIndex = as.numberOfButtons;
 	
 	return [as autorelease];
 }
@@ -93,13 +93,13 @@
 	}
 	
 	// More
-	else if (buttonIndex == sharers.count)
-	{
-		SHKShareMenu *shareMenu = [[SHKCustomShareMenu alloc] initWithStyle:UITableViewStyleGrouped];
-		shareMenu.item = item;
-		[[SHK currentHelper] showViewController:shareMenu];
-		[shareMenu release];
-	}
+//	else if (buttonIndex == sharers.count)
+//	{
+//		SHKShareMenu *shareMenu = [[SHKCustomShareMenu alloc] initWithStyle:UITableViewStyleGrouped];
+//		shareMenu.item = item;
+//		[[SHK currentHelper] showViewController:shareMenu];
+//		[shareMenu release];
+//	}
 	
 	[super dismissWithClickedButtonIndex:buttonIndex animated:animated];
 }

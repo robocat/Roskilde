@@ -23,6 +23,7 @@
 @property (nonatomic, retain) IBOutlet UIScrollView	*_scrollView;
 
 - (void)changePage:(NSString *)date;
+- (void)goToPage:(NSInteger)page;
 
 @end
 

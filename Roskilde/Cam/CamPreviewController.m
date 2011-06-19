@@ -46,7 +46,7 @@
 @synthesize previewView;
 @synthesize descriptionPlaceholder;
 @synthesize description;
-@synthesize location;
+@synthesize locationTextField;
 @synthesize scrollView;
 @synthesize locationManager;
 @synthesize navbar;
@@ -73,7 +73,7 @@
 	self.nearLocations = nil;
 	self.reverseGeocoder = nil;
 	
-	[self setLocation:nil];
+	[self setLocationTextField:nil];
 	[self setScrollView:nil];
 	[self setPageControl:nil];
 	[self setPageControl:nil];
@@ -213,7 +213,7 @@
 	[self.scrollView addGestureRecognizer:self.showUploadGesture];
 	
 	[self.description resignFirstResponder];
-	[self.location resignFirstResponder];
+	[self.locationTextField resignFirstResponder];
 	
 	[UIView animateWithDuration:0.3 animations:^(void) {
 		self.uploadView.frame = CGRectMake(0, -220, self.view.frame.size.width, 200);
@@ -226,14 +226,14 @@
 
 - (void)removeKeyboard:(id)sender {
 	[self.description resignFirstResponder];
-	[self.location resignFirstResponder];
+	[self.locationTextField resignFirstResponder];
 	
 	self.locationButton.hidden = NO;
 }
 
 
 - (void)stopOrHideKeyboard:(id)sender {
-	if ([self.description isFirstResponder] || [self.location isFirstResponder]) {
+	if ([self.description isFirstResponder] || [self.locationTextField isFirstResponder]) {
 		[self removeKeyboard:sender];
 	} else {
 		[self stopUpload:sender];
@@ -258,7 +258,7 @@
 		return;
 	}
 	
-	[self.location resignFirstResponder];
+	[self.locationTextField resignFirstResponder];
 	
 	self.tableView = [[[UITableView alloc] initWithFrame:CGRectMake(0, -(self.view.frame.size.height - self.uploadView.frame.size.height*2), 320, self.view.frame.size.height - self.uploadView.frame.size.height) style:UITableViewStylePlain] autorelease];
 	self.tableView.dataSource = self;
@@ -332,7 +332,7 @@
 	// Prepare data
 	
 	NSString * comment = (self.description.text) ? self.description.text : @"";
-	NSString * loc = (self.location.text) ? self.location.text : @"";
+	NSString * loc = (self.locationTextField.text) ? self.locationTextField.text : @"";
 	
 	NSMutableDictionary *data = [NSMutableDictionary dictionaryWithCapacity:6];
 	[data setObject:[RFGlobal username] forKey:@"username"];
@@ -426,7 +426,7 @@
 		
 		[hud setCaption:@"A network error occured"];
         
-        [[[[UIAlertView alloc] initWithTitle:@"Upload Failed" message:@"A network error occured" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
+        [[[[UIAlertView alloc] initWithTitle:@"Upload Failed" message:@"Your internet connection is weak. Have another beer, move around and try again." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
 		
 //		waitLabel.text = @":(";
 		[UIView animateWithDuration:0.3 delay:1 options:0 animations:^(void) {
@@ -475,7 +475,7 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	self.location.text = [[self.nearLocations objectAtIndex:indexPath.row] name];
+	self.locationTextField.text = [[self.nearLocations objectAtIndex:indexPath.row] name];
 	
 	[UIView animateWithDuration:0.3 animations:^(void) {
 		self.tableView.frame = CGRectOffset(self.tableView.frame, 0, -(self.view.frame.size.height - self.uploadView.frame.size.height));
@@ -583,7 +583,7 @@
 	} else {
 		self.locationButton.hidden = YES;
 		
-		if ([self.location.text isEqualToString:@""]) {
+		if ([self.locationTextField.text isEqualToString:@""]) {
 			for (RFLocation *l in self.nearLocations) {
 				if ([l.type isEqualToString:@"stage"]) {
 					nearestLocation = l;
@@ -591,15 +591,15 @@
 				}
 			}
 			
-			self.location.text = nearestLocation.name;
+			self.locationTextField.text = nearestLocation.name;
 		}
 	}
 }
 
 
 - (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFindPlacemark:(MKPlacemark *)placemark {
-	if ([self.location.text isEqualToString:@""]) {
-		self.location.text = [NSString stringWithFormat:@"%@", placemark.locality];
+	if ([self.locationTextField.text isEqualToString:@""]) {
+		self.locationTextField.text = [NSString stringWithFormat:@"%@, %@", placemark.locality, placemark.countryCode];
 	}
 	
 	self.reverseGeocoder = nil;
@@ -614,7 +614,7 @@
 - (void)dealloc {
 	[descriptionPlaceholder release];
 	[description release];
-	[location release];
+	[locationTextField release];
 	[scrollView release];
 	[pageControl release];
 	[pageControl release];

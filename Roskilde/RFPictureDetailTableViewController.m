@@ -20,6 +20,7 @@
 #import "CamViewController.h"
 #import "CamDevice.h"
 #import "ASIFormDataRequest.h"
+#import "SHK.h"
 
 
 #define kImageDisplayWidth		120.0
@@ -70,6 +71,7 @@
 
 - (void)dealloc
 {
+	[fullscreenViewController release];
 	self.entry = nil;
 	self.replies = nil;
 	
@@ -112,10 +114,11 @@
 	self.imageView.userInteractionEnabled = YES;
 	[self.zoomingView addSubview:self.imageView];
 	
-	FullscreenViewController *fullscreenViewController = [[FullscreenViewController alloc] init];
+	fullscreenViewController = [[FullscreenViewController alloc] init];
 //	fullscreenViewController.view = [[self.zoomingView subviews] objectAtIndex:0];
 	fullscreenViewController.view = self.imageView;
 	fullscreenViewController.delegate = self;
+	
 }
 
 - (void)viewDidLoad
@@ -131,7 +134,7 @@
 	[navBar setBackgroundWith:[UIImage imageNamed:@"altnavbar.png"]];
 	
 	// Create action button and assign it
-	UIBarButtonItem *actionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showActions:)];
+	UIBarButtonItem *actionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(share:)];
 	self.navigationItem.rightBarButtonItem = actionButton;
 	[actionButton release];
 	
@@ -263,15 +266,34 @@
 	}
 	else if (indexPath.row > 1)
 	{
+		CGFloat minHeight = kAuthMinHieght;
 		NSDictionary *reply = [self.replies objectAtIndex:(indexPath.row - kRowOffset)];
 		NSString *comment = [reply objectOrEmptyStringForKey:@"comment"];
-		CGSize commentSize = [comment sizeWithFont:[UIFont boldSystemFontOfSize:12]
-								 constrainedToSize:CGSizeMake(200.0f, FLT_MAX)
-									 lineBreakMode:UILineBreakModeTailTruncation];
+		NSString *imageUrl			= [reply objectOrEmptyStringForKey:@"image_url"];
+		BOOL hasImage				= ![imageUrl isEqualToString:@""];
 		
-		CGFloat height = commentSize.height + kAuthMinHieght;
+		CGSize commentSize;
+		CGFloat height;
 		
-		if (height > kAuthMinHieght)
+		if (hasImage) {
+			commentSize = [comment sizeWithFont:[UIFont boldSystemFontOfSize:12]
+							  constrainedToSize:CGSizeMake(110.0f, FLT_MAX)
+								  lineBreakMode:UILineBreakModeTailTruncation];
+			
+			minHeight += 80.0;
+			height = commentSize.height + minHeight;
+		}
+		else {
+			commentSize = [comment sizeWithFont:[UIFont boldSystemFontOfSize:12]
+							  constrainedToSize:CGSizeMake(200.0f, FLT_MAX)
+								  lineBreakMode:UILineBreakModeTailTruncation];
+			
+			height = commentSize.height + kAuthMinHieght;
+		}
+		
+		
+		
+		if (height >= minHeight)
 			return height;
 	}
 	
@@ -343,9 +365,8 @@
 	cell.creationDate			= [NSDate localDateFromUTCFormattedDate:[NSDate dateWithDateTimeString:[reply objectForKey:@"created_at"]]];
 	cell.comment				= [reply objectOrEmptyStringForKey:@"comment"];
 	
-//	NSString *imageUrl			= [reply objectOrEmptyStringForKey:@"image_url"];
-//	BOOL hasImage				= ![imageUrl isEqualToString:@""];
-	BOOL hasImage				= NO;
+	NSString *imageUrl			= [reply objectOrEmptyStringForKey:@"image_url"];
+	BOOL hasImage				= ![imageUrl isEqualToString:@""];
 	cell.hasImage				= hasImage;
 	
 	[cell setAvatarUrl:[author objectForKey:@"avatar_url"] size:CGSizeMake(44.0, 44.0)];
@@ -404,57 +425,24 @@
 	return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+	if (indexPath.row > kRowOffset) {
+		NSDictionary *reply = [self.replies objectAtIndex:indexPath.row-kRowOffset];
+		NSString *imageUrl			= [reply objectOrEmptyStringForKey:@"image_url"];
+		BOOL hasImage				= ![imageUrl isEqualToString:@""];
+		
+		if (hasImage) {
+			RFPictureDetailTableViewController *detailViewController = [[RFPictureDetailTableViewController alloc] init];
+			detailViewController.entry = [self.replies objectAtIndex:indexPath.row-kRowOffset];
+			detailViewController.hidesBottomBarWhenPushed = YES;
+			[self.navigationController pushViewController:detailViewController animated:YES];
+			[detailViewController release];
+		}
+	}
 }
 
 
@@ -462,15 +450,16 @@
 #pragma mark - PullToRefreshAppDelegate Methods
 
 - (void)refreshRequestedForTableView:(UITableView *)tableView {
-	[self performSelector:@selector(fetchReplies) withObject:nil afterDelay:0.0];
+	[self performSelector:@selector(fetchEntry) withObject:nil afterDelay:0.0];
 }
 
 - (void)refresh {
-    [self performSelector:@selector(fetchReplies) withObject:nil afterDelay:0.0];
+    [self performSelector:@selector(fetchEntry) withObject:nil afterDelay:0.0];
 	[self performSelector:@selector(checkLike) withObject:nil afterDelay:0.0];
 }
 
 - (void)refreshDone {
+	self.tableView.scrollEnabled = YES;
 	[self.tableView reloadData];
 //	[self stopLoading];
 	[_pullToRefreshView stopLoading];
@@ -479,7 +468,7 @@
 
 - (CGFloat) entryHeightWithWidth2:(CGFloat)width height:(CGFloat)height {
 	float defaultWidth = self.imageView.bounds.size.width;
-	if (width == 0)
+	if (width ==0)
 		width = 640;
 	if (height == 0)
 		height = 480;
@@ -487,7 +476,9 @@
 	return (defaultWidth / ((float)width / (float)height));
 }
 
-- (void)fetchReplies {
+
+- (void)fetchEntry {
+	self.tableView.scrollEnabled = NO;
 	
 	int width	= [[self.entry objectForKey:@"width"] intValue];
 	int height	= [[self.entry objectForKey:@"height"] intValue];
@@ -496,9 +487,9 @@
 	[self setImageUrl:[self.entry objectForKey:@"image_url"]
 				 size:CGSizeMake(self.imageView.bounds.size.width, self.imageView.bounds.size.height)
 			   dlsize:CGSizeMake(self.imageView.bounds.size.width, dlHeight)];
-
 	
-	NSString *urlString = [NSString stringWithFormat:@"%@/entries/%@/replies", kXdkAPIBaseUrl, [self.entry objectForKey:@"entry_id"]];
+	
+	NSString *urlString = [NSString stringWithFormat:@"%@/entries/%@", kXdkAPIBaseUrl, [self.entry objectForKey:@"entry_id"]];
 	NSURL *url = [NSURL URLWithString:urlString];
 	__block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     
@@ -516,10 +507,16 @@
 		
 		// JSONKit parse
 		id parsedData = [responseString objectFromJSONString];
+		NSDictionary *entryDict = [parsedData objectForKey:@"entry"];
+		NSMutableArray *repliesArray = [parsedData objectForKey:@"replies"];
+		
+		
+		self.entry = nil;
+		self.entry = [[[NSDictionary alloc] initWithDictionary:entryDict] autorelease];
 		
 		self.replies = nil;
 		//		[self.entries addObjectsFromArray:parsedData];
-		self.replies = [[[NSMutableArray alloc] initWithArray:parsedData] autorelease];
+		self.replies = [[[NSMutableArray alloc] initWithArray:repliesArray] autorelease];
 		
 		[self refreshDone];
 	}];
@@ -527,14 +524,11 @@
 		NSError *error = [request error];
 		NSLog(@"error: %@", error);
 		
+		[[[[UIAlertView alloc] initWithTitle:@"Connection Failed" message:@"Your internet connection is weak. Have another beer, move around and try again." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
+		
 		[self refreshDone];
 	}];
 	[request startAsynchronous];
-}
-
-
-- (void) showActions:(id)sender {
-	
 }
 
 
@@ -586,6 +580,8 @@
 		return;
 	}
 	
+	self.toolbarImageView.image = [UIImage imageNamed:@"commentbox_liked.png"];
+	
 	NSString *urlString = [NSString stringWithFormat:@"%@/entries/%@/like", kXdkAPIBaseUrl, [self.entry objectForKey:@"entry_id"]];
 	NSURL *url = [NSURL URLWithString:urlString];
 	
@@ -624,6 +620,8 @@
 			else {
 				self.toolbarImageView.image = [UIImage imageNamed:@"commentbox.png"];
 			}
+			
+			[self fetchEntry];
 		}
 		else {
 		}
@@ -632,6 +630,10 @@
 	[formRequest setFailedBlock:^{
 		NSError *error = [formRequest error];
 		NSLog(@"error: %@", error);
+		
+		[[[[UIAlertView alloc] initWithTitle:@"Connection Failed" message:@"Your internet connection is weak. Have another beer, move around and try again." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
+		
+		self.toolbarImageView.image = [UIImage imageNamed:@"commentbox.png"];
 	}];
 	
 	[formRequest startAsynchronous];
@@ -683,6 +685,7 @@
 	[formRequest setFailedBlock:^{
 		NSError *error = [formRequest error];
 		NSLog(@"error: %@", error);
+		
 	}];
 	
 	[formRequest startAsynchronous];
@@ -787,17 +790,19 @@
 		
 		[formRequest setCompletionBlock:^{
 			// Use when fetching text data
-			NSString *responseString = [formRequest responseString];
-			int statusCode = [formRequest responseStatusCode];
-			LOG_EXPR(statusCode);
-			LOG_EXPR(responseString);
+//			NSString *responseString = [formRequest responseString];
+//			int statusCode = [formRequest responseStatusCode];
+//			LOG_EXPR(statusCode);
+//			LOG_EXPR(responseString);
 			
-			[self fetchReplies];
+			[self fetchEntry];
 		}];
 		
 		[formRequest setFailedBlock:^{
 			NSError *error = [formRequest error];
 			NSLog(@"error: %@", error);
+			
+			[[[[UIAlertView alloc] initWithTitle:@"Connection Failed" message:@"Your internet connection is weak. Have another beer, move around and try again." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
 		}];
 		
 		[formRequest startAsynchronous];
@@ -811,5 +816,25 @@
 	[self.inputToolbar.textView resignFirstResponder];
 //	[self.inputToolbar.textView.internalTextView resignFirstResponder];
 }
+
+
+- (void)share:(id)sender
+{
+	NSDictionary *author = [self.entry objectForKey:@"created_by"];
+	NSString *fullname = [author objectForKey:@"fullname"];
+	NSString *title = [NSString stringWithFormat:@"See %@'s picture from Roskilde Festival", fullname];
+	NSString *link = [self.entry objectForKey:@"shorturl"];
+	NSString *imgUrl = [self.entry objectForKey:@"image_url"];
+	
+//	SHKItem *item = [SHKItem URL:[NSURL URLWithString:link] title:title];
+//	NSString *text = [NSString stringWithFormat:@"%@ %@", title, link];
+//	
+//	SHKItem *item = [SHKItem text:text];
+	
+	SHKItem *item = [SHKItem URL:[NSURL URLWithString:link] imageURL:imgUrl title:title];
+	SHKActionSheet *actionSheet = [SHKActionSheet actionSheetForItem:item];
+	[actionSheet showFromToolbar:self.navigationController.toolbar]; 
+}
+
 
 @end

@@ -16,6 +16,8 @@
 #import "NSDateHelper.h"
 #import "RFCreateProfileViewController.h"
 #import "NSDictionaryHelper.h"
+#import "RFLoginViewController.h"
+#import "RFVIewProfileViewController.h"
 
 
 
@@ -35,6 +37,7 @@
 
 @implementation RFPictureTableViewController
 
+@synthesize filtersView;
 @synthesize entries = _entries;
 @synthesize spinner;
 @synthesize showMyPictures;
@@ -55,6 +58,7 @@
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
+	[filtersView release];
 	[_entries release];
 	self.entries = nil;
 	self.spinner = nil;
@@ -91,41 +95,6 @@
 	
 	self.title = NSLocalizedString(@"Pictures", @"");    
     
-    // Filters
-//	self.filters = [[[SVSegmentedControl alloc] initWithSectionTitles:[NSArray arrayWithObjects:@"All Pictures", @"My Pictures", nil]] autorelease];
-//	filters.selectedSegmentChangedHandler = ^(id sender) {
-//		SVSegmentedControl *f = (SVSegmentedControl *)sender;
-//		NSLog(@"segmentedControl %i did select index %i (captured via block)", f.tag, f.selectedIndex);
-//		
-//		if (f.selectedIndex == 0)
-//		{
-//			
-//		}
-//		else if (f.selectedIndex == 1)
-//		{
-//			
-//		}
-//		else if (f.selectedIndex == 2)
-//		{
-//			
-//		}
-//		else
-//		{
-//			
-//		}
-//	};
-//	
-//	filters.crossFadeLabelsOnDrag = YES;
-//	filters.font = [UIFont boldSystemFontOfSize:14];
-//	filters.segmentPadding = 5;
-//	filters.height = 30;
-//	filters.thumb.tintColor = [UIColor colorWithRed:0.572 green:0.552 blue:0.529 alpha:1.000];
-//	filters.center = CGPointMake(160, 22);
-//    
-//    self.navigationItem.titleView = filters;
-
-    
-	
 	self.xbg = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"xbg.png"]] autorelease];
 	CGRect xFrame = self.xbg.frame;
 	xFrame.origin.y = -50;
@@ -143,6 +112,49 @@
 		self.navigationItem.leftBarButtonItem = createButton;
 		[createButton release];
 	}
+	
+	UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refresh)];
+	self.navigationItem.rightBarButtonItem = refreshButton;
+	[refreshButton release];
+
+	
+	
+	// Filters
+	self.filters = [[[SVSegmentedControl alloc] initWithSectionTitles:[NSArray arrayWithObjects:@"All Pictures", @"My Pictures", nil]] autorelease];
+	filters.selectedSegmentChangedHandler = ^(id sender) {
+		SVSegmentedControl *f = (SVSegmentedControl *)sender;
+		NSLog(@"segmentedControl %i did select index %i (captured via block)", f.tag, f.selectedIndex);
+		
+		if (f.selectedIndex == 0)
+		{
+			isLoading = YES;
+			loadedCount = 0;
+			showMyPictures = NO;
+			[self refresh];
+		}
+		else
+		{
+			if ([RFGlobal username]) {
+				isLoading = YES;
+				loadedCount = 0;
+				showMyPictures = YES;
+				[self refresh];
+			}
+		}
+	};
+	
+	filters.crossFadeLabelsOnDrag = YES;
+	filters.font = [UIFont boldSystemFontOfSize:14];
+	filters.segmentPadding = 10;
+	filters.height = 38;
+	filters.thumb.tintColor = [UIColor colorWithRed:0.572 green:0.552 blue:0.529 alpha:1.000];
+	filters.center = CGPointMake(160, 22);
+    
+    [self.filtersView addSubview:self.filters];
+	
+	if (![RFGlobal username]) {
+		self.filtersView.hidden = YES;
+	}
 
 	
 	[self performSelector:@selector(refresh) withObject:nil afterDelay:0.0];
@@ -155,6 +167,7 @@
     // e.g. self.myOutlet = nil;
 	
 	self.xbg = nil;
+	self.filtersView = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -285,50 +298,12 @@
 	return cell;
 }
 
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
- }   
- else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }   
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {	
-	if (!isLoading)
+	if (!isLoading && self.entries)
 	{
 		RFPictureDetailTableViewController *detailViewController = [[RFPictureDetailTableViewController alloc] init];
 		detailViewController.entry = [self.entries objectAtIndex:indexPath.row];
@@ -354,7 +329,7 @@
 
 #pragma mark - Fetch data
 
-- (void)refresh {
+- (IBAction)refresh {
 	loadedCount = 0;
     [self performSelector:@selector(fetchLiveFeed) withObject:nil afterDelay:0.0];
 }
@@ -369,12 +344,15 @@
 		}];
 	}
 	
+	self.tableView.scrollEnabled = YES;
 	[self.tableView reloadData];
 	[self stopLoading];
 	[self.spinner stopAnimating];
 }
 
 - (void)fetchLiveFeed {
+	self.tableView.scrollEnabled = NO;
+	
 	if (loadedCount == 0) {
 		[self.entries removeAllObjects];
 	}
@@ -423,6 +401,8 @@
 		NSError *error = [request error];
 		NSLog(@"error: %@", error);
 		
+		[[[[UIAlertView alloc] initWithTitle:@"Connection Failed" message:@"Your internet connection is weak. Have another beer, move around and try again." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
+		
 		[self refreshDone];
 	}];
 	[request startAsynchronous];
@@ -452,27 +432,36 @@
 
 }
 
-- (void)myPicturesButtonPressed:(id)sender {
-	UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:@"All Pictures" style:UIBarButtonItemStyleBordered target:self action:@selector(allPicturesButtonPressed:)];
-	self.navigationItem.leftBarButtonItem = button;
-	[button release];
-	loadedCount = 0;
-	showMyPictures = YES;
-	[self refresh];
-}
-
-- (void)allPicturesButtonPressed:(id)sender {
-	[self userLoggedIn];
-	loadedCount = 0;
-	showMyPictures = NO;
-	[self refresh];
+- (void)viewProfile {
+	RFVIewProfileViewController *controller = [[RFVIewProfileViewController alloc] initWithNibName:@"RFVIewProfileViewController" bundle:nil];
+	
+	// Create navigation controller and adjust tint color
+	UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
+	navigationController.navigationBar.barStyle = UIBarStyleBlack;
+	
+	// Create cancel button and assign it
+	UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(dismissModal)];
+	controller.navigationItem.leftBarButtonItem = cancelButton;
+	[cancelButton release];
+	
+	// Present controller and release it
+	[self presentModalViewController:navigationController animated:YES];
+	[controller release];
+	[navigationController release];
 }
 
 - (void)userLoggedIn {
 	if ([RFGlobal username]) {
-		UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:@"My Pictures" style:UIBarButtonItemStyleBordered target:self action:@selector(myPicturesButtonPressed:)];
-		self.navigationItem.leftBarButtonItem = button;
-		[button release];
+		UIBarButtonItem *createButton = [[UIBarButtonItem alloc] initWithTitle:@"My Profile" style:UIBarButtonItemStyleBordered target:self action:@selector(viewProfile)];
+		self.navigationItem.leftBarButtonItem = createButton;
+		[createButton release];
+		self.filtersView.hidden = NO;
+	}
+	else {
+		UIBarButtonItem *createButton = [[UIBarButtonItem alloc] initWithTitle:@"Join the fun" style:UIBarButtonItemStyleBordered target:self action:@selector(createProfile)];
+		self.navigationItem.leftBarButtonItem = createButton;
+		[createButton release];
+		self.filtersView.hidden = YES;
 	}
 }
 

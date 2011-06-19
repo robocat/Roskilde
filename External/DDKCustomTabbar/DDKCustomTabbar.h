@@ -35,8 +35,6 @@
 	CGFloat topBorderHeight;
 	CGFloat bottomBorderHeight;
 	
-	CGRect contentRect;
-	
 	NSUInteger selectedIndex;
 	
 	DDKBorderView* currentToolBarViewBorder;

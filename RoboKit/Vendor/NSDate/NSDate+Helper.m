@@ -165,7 +165,7 @@
 }
 
 - (NSString *)formattedDateStringForDisplay {
-    return [self formattedStringUsingFormat:@"MMM d, YYYY"];
+    return [self formattedStringUsingFormat:@"EEEE MMM d"]; //MMM d, YYYY
 }
 
 - (NSString *)formattedTimeStringForDisplay {

@@ -44,6 +44,7 @@
     
     SystemSoundID pullSound;
     SystemSoundID releaseSound;
+	BOOL	isPullSoundPlayed;
 }
 
 @property (nonatomic, retain) UIView *refreshHeaderView;

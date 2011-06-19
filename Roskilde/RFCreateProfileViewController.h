@@ -26,5 +26,6 @@
 @property (nonatomic, retain) NSString *email;
 
 - (IBAction) loginButtonPressed:(id)sender;
+- (IBAction) termsButtonPressed:(id)sender;
 
 @end

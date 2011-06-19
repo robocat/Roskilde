@@ -112,6 +112,7 @@ typedef enum
 
 + (id)shareItem:(SHKItem *)i;
 
++ (id)shareImageURL:(NSString *)imageurl url:(NSURL *)url title:(NSString *)title;
 + (id)shareURL:(NSURL *)url;
 + (id)shareURL:(NSURL *)url title:(NSString *)title;
 

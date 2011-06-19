@@ -51,6 +51,8 @@
     [super viewDidLoad];
     [self addPullToRefreshHeader];
     
+	isPullSoundPlayed = NO;
+	
     AudioServicesCreateSystemSoundID((CFURLRef)[NSURL fileURLWithPath: [[NSBundle mainBundle] pathForResource:@"pull" ofType:@"caf"]], &pullSound);
     AudioServicesCreateSystemSoundID((CFURLRef)[NSURL fileURLWithPath: [[NSBundle mainBundle] pathForResource:@"release" ofType:@"caf"]], &releaseSound);
 }
@@ -106,7 +108,10 @@
         }
         [UIView commitAnimations];
         
-        AudioServicesPlaySystemSound(pullSound);
+        if (!isPullSoundPlayed) {
+			isPullSoundPlayed = YES;
+			AudioServicesPlaySystemSound(pullSound);
+		}
     }
 }
 
@@ -139,6 +144,7 @@
 
 - (void)stopLoading {
     isLoading = NO;
+	isPullSoundPlayed = NO;
 
     // Hide the header
     [UIView beginAnimations:nil context:NULL];

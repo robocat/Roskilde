@@ -18,6 +18,7 @@
 	UILabel *artistLabel;
 	UILabel *playtimeLabel;
 	UITextView *descriptionTextView;
+	UILabel *msgLabel;
 	UIButton *titleButton;
 	UIView *infoView;
 }
@@ -30,6 +31,7 @@
 @property (nonatomic, retain) IBOutlet UILabel *artistLabel;
 @property (nonatomic, retain) IBOutlet UILabel *playtimeLabel;
 @property (nonatomic, retain) IBOutlet UITextView *descriptionTextView;
+@property (nonatomic, retain) IBOutlet UILabel *msgLabel;
 
 - (IBAction)hideInfoView:(id)sender;
 - (IBAction)toggleInfoView:(id)sender;

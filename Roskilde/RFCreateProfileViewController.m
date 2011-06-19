@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "RFLoginViewController.h"
 #import "ASIFormDataRequest.h"
+#import "SVWebViewController.h"
 
 @interface RFCreateProfileViewController ()
 
@@ -163,7 +164,7 @@
 
 - (void)checkInputs {
 	if (self.username && self.password) {
-		self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Join" style:UIBarButtonItemStylePlain target:self action:nil];
+		self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Join" style:UIBarButtonItemStylePlain target:self action:@selector(joinButtonPressed:)];
 	}
 	else {
 		self.navigationItem.rightBarButtonItem = nil;
@@ -211,7 +212,12 @@
 		return YES;
 	}
 	
-	[[[[UIAlertView alloc] initWithTitle:@"Profile info missing" message:@"Please correct the info and try again" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
+	if (![self isValidForRegex:usernameRegEx string:self.username]) {
+		[[[[UIAlertView alloc] initWithTitle:@"Username Invalid" message:@"Username has to be alphanumeric (letters and/or numbers) and more than 3 characters long." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
+	}
+	else if (![self isValidForRegex:emailRegEx string:self.email]) {
+		[[[[UIAlertView alloc] initWithTitle:@"Email Invalid" message:@"That's not a valid email address!" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
+	}
 	
 	return NO;
 }
@@ -225,19 +231,21 @@
 		UITableViewCell* cell = [self tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
 		[[[cell subviews] objectAtIndex:0] becomeFirstResponder];
 		
-		NSLog(@"Username: %@", textField.text);
+		self.username = textField.text;
+//		NSLog(@"Username: %@", textField.text);
 	}
 	else if (textField.tag == 1)
 	{
 		UITableViewCell* cell = [self tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
 		[[[cell subviews] objectAtIndex:0] becomeFirstResponder];
-		
-		NSLog(@"Password: %@", textField.text);
+		self.password = textField.text;
+//		NSLog(@"Password: %@", textField.text);
 	}
 	else
 	{
+		self.email = textField.text;
 		[self joinButtonPressed:nil];
-		NSLog(@"Email: %@", textField.text);
+//		NSLog(@"Email: %@", textField.text);
 	}
 	
 	return NO;
@@ -256,10 +264,10 @@
         [formRequest setValidatesSecureCertificate:NO];
 
 		formRequest.requestMethod = @"POST";
-				
+		
 		[formRequest setCompletionBlock:^{
 			// Use when fetching text data
-//			NSString *responseString = [formRequest responseString];
+			NSString *responseString = [formRequest responseString];
 			int statusCode = [formRequest responseStatusCode];
 //			LOG_EXPR(statusCode);
 //			LOG_EXPR(responseString);
@@ -277,7 +285,7 @@
 				[self.parentViewController dismissModalViewControllerAnimated:YES];
 			}
 			else {
-				[[[[UIAlertView alloc] initWithTitle:@"Create User Failed" message:@"Please correct the info and try again" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
+				[[[[UIAlertView alloc] initWithTitle:@"User Creation Failed" message:responseString delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
 			}
 		}];
 		
@@ -286,12 +294,17 @@
 			NSLog(@"error: %@", error);
 			
 			// Show alert
-			[[[[UIAlertView alloc] initWithTitle:@"Create User Failed" message:@"Please correct the info and try again" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
+			[[[[UIAlertView alloc] initWithTitle:@"Connection Failed" message:@"Your internet connection is weak. Have another beer, move around and try again." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
 		}];
 		
 		[formRequest startAsynchronous];
 	}
 }
 
+- (IBAction) termsButtonPressed:(id)sender {
+	SVWebViewController *webViewController = [[SVWebViewController alloc] initWithAddress:@"http://www.x.dk/site/legal_roskilde"];
+	[self.navigationController pushViewController:webViewController animated:YES];
+	[webViewController release];
+}
 
 @end

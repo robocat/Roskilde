@@ -66,18 +66,20 @@
 	[super viewDidLoad];
 	
 	self.camdevice = nil;
+	int cameraType = BackCam;
 	
 	if (![CamDevice hasFrontCamera]) {
 		[[NSUserDefaults standardUserDefaults] setInteger:BackCam forKey:@"com.robocat.Roskilde.selectedCameraType"];
 		self.flipButton.hidden = YES;
 	} else if (![CamDevice hasBackCamera]) {
 		[[NSUserDefaults standardUserDefaults] setInteger:FrontCam forKey:@"com.robocat.Roskilde.selectedCameraType"];
+		cameraType = FrontCam;
 		self.flipButton.hidden = YES;
 	}
 	
-	camOrientation = [[NSUserDefaults standardUserDefaults] integerForKey:@"com.robocat.Roskilde.selectedCameraType"];
+	camOrientation = cameraType;
 	
-	self.flashButton.hidden = camOrientation == FrontCam;
+	self.flashButton.hidden = (camOrientation == FrontCam);
 	
 	timer = OFF;
 	timerView.hidden = YES;
@@ -367,7 +369,7 @@
 			image = [image resizedImageWithContentMode:UIViewContentModeScaleAspectFill bounds:CGSizeMake(640*4, 480*4) interpolationQuality:kCGInterpolationHigh];
 		}
 	} else {
-		if (image.size.width > 640*4 && image.size.height > 480*4) {
+		if (image.size.width > 480*4 && image.size.height > 640*4) {
 			image = [image resizedImageWithContentMode:UIViewContentModeScaleAspectFill bounds:CGSizeMake(480*4, 640*4) interpolationQuality:kCGInterpolationHigh];
 		}
 	}

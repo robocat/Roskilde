@@ -4248,7 +4248,7 @@
 					"-all_load",
 					"-ObjC",
 				);
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CA03C973-66AE-4F20-AB41-6627E9C5C030";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "331CC21B-6EBA-4C03-AA50-580E72077F22";
 				SDKROOT = iphoneos;
 			};
 			name = AdHoc;
@@ -4264,7 +4264,7 @@
 				INFOPLIST_FILE = "Roskilde/Roskilde-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CA03C973-66AE-4F20-AB41-6627E9C5C030";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "331CC21B-6EBA-4C03-AA50-580E72077F22";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};

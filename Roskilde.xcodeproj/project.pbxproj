@@ -4147,7 +4147,7 @@
 					"-all_load",
 					"-ObjC",
 				);
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1E4BA9D1-8B25-4076-A489-0A94BE7EE2DE";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F9229254-2285-4C4C-9C6B-76FAC6B1BB54";
 				SDKROOT = iphoneos;
 			};
 			name = Release;
@@ -4180,7 +4180,7 @@
 				INFOPLIST_FILE = "Roskilde/Roskilde-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1E4BA9D1-8B25-4076-A489-0A94BE7EE2DE";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F9229254-2285-4C4C-9C6B-76FAC6B1BB54";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};

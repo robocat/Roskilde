@@ -63,6 +63,14 @@
 {
 	// Subclasses should implement this
 	
+	if (isFavorite) {
+		CGContextRef context = UIGraphicsGetCurrentContext();
+		CGContextSaveGState(context);
+		[[UIColor colorWithRed:0.980 green:0.826 blue:0.227 alpha:1.000] setFill];
+		CGRect commentRect = CGRectMake(0.0, 0.0, 320.0, 53.0);
+		CGContextFillRect( context , commentRect);
+		CGContextRestoreGState(context);
+	}
 	
 	NSString *imageName = [NSString stringWithFormat:@"%@_small.jpg", self.artistId];
 	UIImage *image = [UIImage imageNamed:imageName];

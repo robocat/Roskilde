@@ -475,7 +475,7 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	self.locationTextField.text = [[self.nearLocations objectAtIndex:indexPath.row] name];
+	self.locationTextField.text = [NSString stringWithFormat:@"%@, Roskilde Festival", [[self.nearLocations objectAtIndex:indexPath.row] name]];
 	
 	[UIView animateWithDuration:0.3 animations:^(void) {
 		self.tableView.frame = CGRectOffset(self.tableView.frame, 0, -(self.view.frame.size.height - self.uploadView.frame.size.height));
@@ -591,7 +591,7 @@
 				}
 			}
 			
-			self.locationTextField.text = nearestLocation.name;
+			self.locationTextField.text = [NSString stringWithFormat:@"%@, Roskilde Festival", nearestLocation.name];
 		}
 	}
 }
@@ -599,7 +599,9 @@
 
 - (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFindPlacemark:(MKPlacemark *)placemark {
 	if ([self.locationTextField.text isEqualToString:@""]) {
-		self.locationTextField.text = [NSString stringWithFormat:@"%@, %@", placemark.locality, placemark.countryCode];
+		if (placemark.locality) {
+			self.locationTextField.text = [NSString stringWithFormat:@"%@, %@", placemark.locality, placemark.countryCode];
+		}
 	}
 	
 	self.reverseGeocoder = nil;

@@ -269,6 +269,7 @@
 	ArtistsTableViewCell *cell = (ArtistsTableViewCell *) cell_;
 	cell.artistId = music.artistId;
 	cell.name = music.artist;
+	cell.isFavorite = music.isFavoriteValue;
 	
 	if (self.currentfetchedResultsController != self.datefetchedResultsController) {
 		cell.timeScene = [NSString stringWithFormat:@"%@, %@, %@", [music.beginDate formattedTimeStringForDisplay], [music.beginDate formattedDateStringForDisplay], music.scene];
@@ -526,7 +527,7 @@
 		return ;
 	
 	[[self tableView] endUpdates];
-	
+	[self.tableView reloadData];
 	[self.tableView bringSubviewToFront:self.filters];
 } 
 

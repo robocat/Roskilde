@@ -57,7 +57,7 @@
 //	[userDefauls setObject:@"roskildelabs" forKey:kUserDefaultsUsername];
 //	[userDefauls setObject:@"roskildelabs" forKey:kUserDefaultsPassword];
 //	[userDefauls synchronize];
-    
+	
 	
 	// Custom tabbar icons
 	self.scheduleIcon = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"schedule_icon_active.png"]] autorelease];
@@ -230,10 +230,17 @@
 //	dispatch_async(dispatch_get_global_queue(0, 0), ^(void) {
 		RFModelController *modelController = [RFModelController defaultModelController];
 		
+		NSUserDefaults *userDefauls = [NSUserDefaults standardUserDefaults];
+		
+		
+		if ([modelController hasMusic] && ![userDefauls stringForKey:kAppVersion]) {
+			[modelController deleteAllMusic];
+			[modelController save];
+			[userDefauls setObject:@"2.1" forKey:kAppVersion];
+			[userDefauls synchronize];
+		}
+		
 		if (![modelController hasMusic]) {
-//			[modelController deleteAllMusic];
-//			[modelController save];
-			
 			// Load and parse the books.xml file
 			TBXML *tbxml = [[TBXML tbxmlWithXMLFile:@"music.xml"] retain];
 			
@@ -304,7 +311,7 @@
 			[tbxml release];
 		}
 //	});
-	
+		
 	[[NSNotificationCenter defaultCenter] postNotificationName:kMusicDataImported object:nil];
 }
 

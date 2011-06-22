@@ -430,7 +430,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	if (indexPath.row > kRowOffset) {
+	if (indexPath.row > kRowOffset-1) {
 		NSDictionary *reply = [self.replies objectAtIndex:indexPath.row-kRowOffset];
 		NSString *imageUrl			= [reply objectOrEmptyStringForKey:@"image_url"];
 		BOOL hasImage				= ![imageUrl isEqualToString:@""];

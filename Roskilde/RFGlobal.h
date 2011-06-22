@@ -24,6 +24,8 @@
 
 #define kAppEnterBackground			@"kAppEnterBackground"
 
+#define kAppVersion					@"kAppVersion"
+
 
 @interface RFGlobal : NSObject {
     

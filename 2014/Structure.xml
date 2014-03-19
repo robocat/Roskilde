@@ -1,0 +1,96 @@
+<bandPreview startID="">
+	<item id="0">
+
+		<artistName><![CDATA[ 120 DAYS ]]></artistName>
+
+		<country>N</country>
+		
+		<scene><![CDATA[ Odeon ]]></scene>
+
+		<tidspunkt><![CDATA[ Sat, 07 Jul 2012 23:00:00 +0200 ]]></tidspunkt>
+		
+		<timestamp><![CDATA[ 1341694800 ]]></timestamp>
+
+		<original_timestamp><![CDATA[ 1341694800 ]]></original_timestamp>
+
+		<text>
+		<![CDATA[
+		Electronic dark rock inspired by Manchester and Düsseldorf.
+		]]>
+		</text>
+
+		<description>
+		<![CDATA[
+		<p class="bodytext"> Every now and then temperatures run extremely low in the remote regions of Norway. You can hear it on a band like 120 Days from Kristiansund.
+		</p> <p class="bodytext">The Norwegians play cold, dark electronic rock that sounds like Kraftwerk’s hometown Düsseldorf in the 70s and Manchester in the 90s.
+		</p> <p class="bodytext">120 Days do not overburden their audience with a deluge of albums. Instead, the band's sound has been allowed to mature, grown and mutate. With <em>120 Days II<br /></em> (the follow-up to the debut album from 2006) the Norwegians prove that a long maturation process can do good for electronic dark rock. The record bodes well for a rock rave full of laser lights, Norwegian cold degrees and house hypnosis.
+		</p> <p class="bodytext">Label: Smalltown Supersound/VME</p>
+		]]>
+		</description>
+
+		<prioritet>3</prioritet>
+
+		<tab text="" color="#E74313" textColor="#FFFFFF"/>
+
+		<imageUrl><![CDATA[ typo3temp/pics/5d3bda45e3.jpg ]]></imageUrl>
+
+		<mediumimageUrl><![CDATA[ typo3temp/pics/53e7425e26.jpg ]]></mediumimageUrl>
+
+		<link><![CDATA[ uk/band/singleband/120-days-1/ ]]></link>
+
+	</item>	
+</bandPreview>
+
+
+<!-- XML structure -->
+<bandPreview startID="">
+	<item id="0">
+		<artistName>
+		<country>
+		<scene>
+		<tidspunkt>
+		<timestamp>
+		<original_timestamp>
+		<text>
+		<description>
+		<prioritet>
+		<tab/>
+		<imageUrl>
+		<mediumimageUrl>
+		<link>
+	</item>	
+
+	<item id="1">
+		<artistName>
+		<country>
+		<scene>
+		<tidspunkt>
+		<timestamp>
+		<original_timestamp>
+		<text>
+		<description>
+		<prioritet>
+		<tab/>
+		<imageUrl>
+		<mediumimageUrl>
+		<link>
+	</item>	
+</bandPreview>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
